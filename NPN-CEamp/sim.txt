@@ -1,0 +1,7 @@
+
+.control
+tran 100n 6m
+plot v(in) v(out)
+.endc
+
+.end
