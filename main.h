@@ -8,6 +8,7 @@
 #include <sharedspice.h>
 #include <iostream>
 #include <stdio.h>
+#include <RInside.h>
 
 ControlledExit ng_exit;
 SendData ng_data;

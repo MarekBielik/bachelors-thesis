@@ -1,6 +1,6 @@
 #include "main.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     /*pass the callback functions*/
     ngSpice_Init(ng_getchar, ng_getstat, ng_exit, ng_data, ng_initData,
@@ -36,9 +36,37 @@ int main()
 
     /*run through the voltage vector and print out the values*/
     for (size_t i = 0; i < voltageVector.v_length; i++) {
+        std::cout << i << ". ";
         std::cout << timeVector.v_realdata[i] << " - ";
         std::cout << voltageVector.v_realdata[i] << std::endl;
     }
+
+
+    RInside R(argc, argv);
+
+    /*create standard c++ vectors for time and voltage*/
+    std::vector<double> v(voltageVector.v_realdata,
+                          voltageVector.v_realdata + voltageVector.v_length);
+    std::vector<double> t(timeVector.v_realdata,
+                          timeVector.v_realdata + timeVector.v_length);
+
+    /*plot a graph of the simulation*/
+    R["voltage"] = v;
+    R["time"] = t;
+    std::string cmd;
+
+    /*into a file*/
+    cmd = "tmpf = tempfile('plotOut');"
+            "png('plotOut.png');"
+            "plot(time, voltage, type='l');"
+            "dev.off();"
+            "tmpf";
+    std::string tmpfile = R.parseEval(cmd);
+    unlink(tmpfile.c_str());
+
+    /*to the screen*/
+    cmd = "x11(); plot(time, voltage, type='l'); Sys.sleep(10);";
+    R.parseEvalQ(cmd);
 
     ngSpice_Command("quit");
 
