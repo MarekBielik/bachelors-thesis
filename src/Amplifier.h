@@ -20,7 +20,11 @@ public:
     Amplifier();
     char ** getNetlist();
     void freeNetlist();
+    /*todo: write a generic method*/
     void setR1(const uint32_t resistance);
+    void setR2(const uint32_t resistance);
+    void setRe(const uint32_t resistance);
+    void setRg(const uint32_t resistance);
 };
 
 

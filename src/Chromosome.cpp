@@ -10,10 +10,9 @@ Simulator Chromosome::simulator;
 Amplifier Chromosome::amplifier;
 std::vector<double> Chromosome::referenceVoltage;
 std::vector<double> Chromosome::referenceTime;
+RInside Chromosome::R(0, NULL);
 
 void Chromosome::init() {
-    //N(0, STANDARD_DEVIATION);
-
     /*set the reference vectors*/
     simulator.simulate(amplifier.getNetlist(), &referenceVoltage,
                        &referenceTime);
@@ -24,15 +23,37 @@ Chromosome::Chromosome() {
     objectiveFunctionValue = std::nan("");
     /*todo: check the RAND_MAX*/
     genotype.R1 = rand() % MAX_RESISTANCE;
+    genotype.R2 = rand() % MAX_RESISTANCE;
+    genotype.Re = rand() % MAX_RESISTANCE;
+    genotype.Rg = rand() % MAX_RESISTANCE;
 }
 
 Chromosome::Chromosome(const Genotype & genotype) {
     objectiveFunctionValue = std::nan("");
-    this->genotype.R1 = genotype.R1 + N(generator);
+    int32_t mutation;
+
+    mutation = N(generator);
+
+    this->genotype.R1 = mutate(genotype.R1);
+    this->genotype.R2 = mutate(genotype.R2);
+    this->genotype.Re = mutate(genotype.Re);
+    this->genotype.Rg = mutate(genotype.Rg);
+}
+
+int32_t Chromosome::mutate(int32_t gene) {
+    const int32_t mutation = N(generator);
+
+    if ((gene + mutation) <= 1 || (gene + mutation) >= MAX_RESISTANCE)
+        return gene - mutation;
+    else
+        return gene + mutation;
 }
 
 void Chromosome::runSimulation(bool full /*= false*/) {
     amplifier.setR1(genotype.R1);
+    amplifier.setR2(genotype.R2);
+    amplifier.setRe(genotype.Re);
+    amplifier.setRg(genotype.Rg);
 
     if (full)
         simulator.simulate(amplifier.getNetlist(), &voltage, &time);
@@ -57,7 +78,8 @@ double Chromosome::objectiveFunction()
     double difference = 0.0;
 
     /*todo: fix the vector length difference*/
-    for (int i = 0; i < voltage.size() - 10; i++) {
+    /*todo: figure out the right interval to compare*/
+    for (int i = 100; i < voltage.size() - 10; i++) {
         difference += pow(referenceVoltage[i] - voltage[i], 2);
     }
 
@@ -70,16 +92,9 @@ Chromosome * Chromosome::reproduce() {
 
 void Chromosome::plot()
 {
-    /*run through the voltage vector and print out the values*/
-    for (size_t i = 0; i < voltage.size(); i++) {
-        std::cout << i << ". ";
-        std::cout << voltage[i] << " - ";
-        std::cout << time[i] << std::endl;
-    }
+    runSimulation(true);
 
     /*plot a graph of the simulation*/
-    RInside R(0, NULL);
-
     R["voltage"] = voltage;
     R["time"] = time;
     std::string cmd;
@@ -94,7 +109,8 @@ void Chromosome::plot()
     unlink(tmpfile.c_str());
 
     /*to the screen*/
-    cmd = "x11(); plot(time, voltage, type='l'); Sys.sleep(5);";
+    static bool initialized;
+    cmd = "x11(); plot(time, voltage, type='l'); Sys.sleep(0);";
     R.parseEvalQ(cmd);
 }
 

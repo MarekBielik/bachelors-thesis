@@ -23,7 +23,7 @@ Amplifier::Amplifier() {
     netlistVector[8] = "Rload 0 out 22000";
     netlistVector[9] = "Re 0 5 1000";
     netlistVector[10] = "Rg 5 2 40";
-    netlistVector[11] = "R3 0 3 33000";
+    netlistVector[11] = "R2 0 3 33000";
     netlistVector[12] = "R1 3 4 47000";
     netlistVector[13] = "Q1 1 3 2 bc547c";
     netlistVector[14] = ".TRAN 5u 1.23m";
@@ -34,25 +34,19 @@ void Amplifier::setR1(const uint32_t resistance) {
     netlistVector[12] = "R1 3 4 " + std::to_string(resistance);
 }
 
+void Amplifier::setR2(const uint32_t resistance) {
+    netlistVector[11] = "R2 0 3 " + std::to_string(resistance);
+}
+
+void Amplifier::setRe(const uint32_t resistance) {
+    netlistVector[9] = "Re 0 5 " + std::to_string(resistance);
+}
+
+void Amplifier::setRg(const uint32_t resistance) {
+    netlistVector[10] = "Rg 5 2 " + std::to_string(resistance);
+}
+
 char ** Amplifier::getNetlist() {
-   /* netlist[0] = strdup(description.c_str());
-    netlist[1] = strdup(bc547c.c_str());
-    netlist[2] = strdup(Vin.c_str());
-    netlist[3] = strdup(V1.c_str());
-    netlist[4] = strdup(Ce.c_str());
-    netlist[5] = strdup(Cout.c_str());
-    netlist[6] = strdup(Cin.c_str());
-    netlist[7] = strdup(Rc.c_str());
-    netlist[8] = strdup(Rload.c_str());
-    netlist[9] = strdup(Re.c_str());
-    netlist[10] = strdup(Rg.c_str());
-    netlist[11] = strdup(R2.c_str());
-    netlist[12] = strdup(R1.c_str());
-    netlist[13] = strdup(Q1.c_str());
-    netlist[14] = strdup(tran.c_str());
-    netlist[15] = strdup(end.c_str());
-    netlist[16] = NULL;
-    */
 
     for (int i = 0; i < NETLIST_SIZE; i++)
         netlistArray[i] = strdup(netlistVector[i].c_str());
@@ -61,7 +55,6 @@ char ** Amplifier::getNetlist() {
     return netlistArray;
 }
 
-/*todo: this function probably won't be needed*/
 void Amplifier::freeNetlist() {
     for(int i = 0; i < NETLIST_SIZE; i++) {
         free(netlistArray[i]);

@@ -16,13 +16,15 @@
 #include "Amplifier.h"
 #include "Simulator.h"
 
-#define MAX_RESISTANCE 1000000
+#define MAX_RESISTANCE 500000
 #define MAX_CAPACITY 1000000
-#define STANDARD_DEVIATION 1000
+#define STANDARD_DEVIATION 500
 
 struct Genotype {
     int32_t R1;
     int32_t R2;
+    int32_t Re;
+    int32_t Rg;
 };
 
 class Chromosome {
@@ -38,6 +40,9 @@ class Chromosome {
 
     static Simulator simulator;
     static Amplifier amplifier;
+    static RInside R;
+
+    static int32_t mutate(int32_t gene);
 
     void runSimulation(bool full = false);
     Chromosome(const Genotype & genotype);
