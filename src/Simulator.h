@@ -18,6 +18,7 @@ public:
                   std::vector<double> *time = NULL);
 };
 
+/*ngSPICE helper function*/
 ControlledExit ng_exit;
 
 #endif //BT_SIMULATOR_H

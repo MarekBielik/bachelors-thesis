@@ -26,24 +26,25 @@ Amplifier::Amplifier() {
     netlistVector[11] = "R2 0 3 33000";
     netlistVector[12] = "R1 3 4 47000";
     netlistVector[13] = "Q1 1 3 2 bc547c";
-    netlistVector[14] = ".TRAN 5u 1.23m";
+    netlistVector[14] = ".TRAN 6u 1.23m";
     netlistVector[15] = ".end";
 }
 
-void Amplifier::setR1(const uint32_t resistance) {
-    netlistVector[12] = "R1 3 4 " + std::to_string(resistance);
-}
-
-void Amplifier::setR2(const uint32_t resistance) {
-    netlistVector[11] = "R2 0 3 " + std::to_string(resistance);
-}
-
-void Amplifier::setRe(const uint32_t resistance) {
-    netlistVector[9] = "Re 0 5 " + std::to_string(resistance);
-}
-
-void Amplifier::setRg(const uint32_t resistance) {
-    netlistVector[10] = "Rg 5 2 " + std::to_string(resistance);
+void Amplifier::setComponentValue(const Component component) {
+    switch (component.name) {
+        case R1:
+            netlistVector[12] = "R1 3 4 " + std::to_string(component.value);
+            break;
+        case R2:
+            netlistVector[11] = "R2 0 3 " + std::to_string(component.value);
+            break;
+        case Re:
+            netlistVector[9] = "Re 0 5 " + std::to_string(component.value);
+            break;
+        case Rg:
+            netlistVector[10] = "Rg 5 2 " + std::to_string(component.value);
+            break;
+    }
 }
 
 char ** Amplifier::getNetlist() {

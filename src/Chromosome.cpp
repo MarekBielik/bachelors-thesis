@@ -4,13 +4,15 @@
 
 #include "Chromosome.h"
 
-std::default_random_engine Chromosome::generator;
-std::normal_distribution<double> Chromosome::N(0, STANDARD_DEVIATION);
+std::random_device Chromosome::rd;
+std::mt19937 Chromosome::generator(rd());
+std::normal_distribution<double> Chromosome::N(0, 1);
 Simulator Chromosome::simulator;
 Amplifier Chromosome::amplifier;
 std::vector<double> Chromosome::referenceVoltage;
 std::vector<double> Chromosome::referenceTime;
 RInside Chromosome::R(0, NULL);
+double Chromosome::tau = 1 / sqrt(COMPONENTS);
 
 void Chromosome::init() {
     /*set the reference vectors*/
@@ -21,39 +23,64 @@ void Chromosome::init() {
 
 Chromosome::Chromosome() {
     objectiveFunctionValue = std::nan("");
-    /*todo: check the RAND_MAX*/
-    genotype.R1 = rand() % MAX_RESISTANCE;
-    genotype.R2 = rand() % MAX_RESISTANCE;
-    genotype.Re = rand() % MAX_RESISTANCE;
-    genotype.Rg = rand() % MAX_RESISTANCE;
+    genotype.components.resize(COMPONENTS);
+    genotype.sigma = SIGMA_INIT;
+    Component tmpComp;
+
+    tmpComp.name = R1;
+    tmpComp.type = resistor;
+    tmpComp.value = generator() % MAX_RESISTANCE;
+    genotype.components[0] = tmpComp;
+
+    tmpComp.name = R2;
+    tmpComp.type = resistor;
+    tmpComp.value = generator() % MAX_RESISTANCE;
+    genotype.components[1] = tmpComp;
+
+    tmpComp.name = Re;
+    tmpComp.type = resistor;
+    tmpComp.value = generator() % MAX_RESISTANCE;
+    genotype.components[2] = tmpComp;
+
+    tmpComp.name = Rg;
+    tmpComp.type = resistor;
+    tmpComp.value = generator() % MAX_RESISTANCE;
+    genotype.components[3] = tmpComp;
 }
 
 Chromosome::Chromosome(const Genotype & genotype) {
     objectiveFunctionValue = std::nan("");
-    int32_t mutation;
-
-    mutation = N(generator);
-
-    this->genotype.R1 = mutate(genotype.R1);
-    this->genotype.R2 = mutate(genotype.R2);
-    this->genotype.Re = mutate(genotype.Re);
-    this->genotype.Rg = mutate(genotype.Rg);
+    this->genotype = mutate(genotype);
 }
 
-int32_t Chromosome::mutate(int32_t gene) {
-    const int32_t mutation = N(generator);
+Genotype Chromosome::mutate(Genotype genotype) {
+    /*sigma(t+1) = sigma(t) * e^(tau * N(0,1))*/
+    /*todo: fix the sigma interval*/
+    genotype.sigma = genotype.sigma * exp(tau * N(generator));
+    const int32_t mutation = genotype.sigma * N(generator);
+    int32_t supremum;
 
-    if ((gene + mutation) <= 1 || (gene + mutation) >= MAX_RESISTANCE)
-        return gene - mutation;
-    else
-        return gene + mutation;
+    for (auto & component: genotype.components) {
+        if (component.type == resistor)
+            supremum = MAX_RESISTANCE;
+        else
+            supremum = MAX_CAPACITY;
+
+        /*mutate the component's value and keep it in the valid interval*/
+        if ((component.value + mutation) <= 1 ||
+            (component.value + mutation) >= supremum)
+            component.value -= mutation;
+        else
+            component.value += mutation;
+    }
+
+    return genotype;
 }
 
 void Chromosome::runSimulation(bool full /*= false*/) {
-    amplifier.setR1(genotype.R1);
-    amplifier.setR2(genotype.R2);
-    amplifier.setRe(genotype.Re);
-    amplifier.setRg(genotype.Rg);
+    for(auto & component: genotype.components) {
+        amplifier.setComponentValue(component);
+    }
 
     if (full)
         simulator.simulate(amplifier.getNetlist(), &voltage, &time);
@@ -70,7 +97,6 @@ double Chromosome::objectiveFunction()
     if(! std::isnan(objectiveFunctionValue))
         return objectiveFunctionValue;
 
-    /*otherwise run the simulation and calculate the objective function*/
     runSimulation();
 
     /*compare the voltage waveforms*/
@@ -86,8 +112,8 @@ double Chromosome::objectiveFunction()
     return objectiveFunctionValue = difference;
 }
 
-Chromosome * Chromosome::reproduce() {
-    return new Chromosome(genotype);
+Chromosome Chromosome::reproduce() {
+    return Chromosome(genotype);
 }
 
 void Chromosome::plot()
@@ -114,10 +140,16 @@ void Chromosome::plot()
     R.parseEvalQ(cmd);
 }
 
-bool Chromosome::compare (Chromosome * chromosome1, Chromosome * chromosome2) {
-    return chromosome1->objectiveFunction() < chromosome2->objectiveFunction();
+bool Chromosome::operator<(Chromosome & chromosome){
+    return this->objectiveFunction() < chromosome.objectiveFunction();
 }
 
 const Genotype& Chromosome::getGenotype() const {
     return genotype;
+}
+
+std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
+    os << "objective function: " << chromosome.objectiveFunction() << std::endl
+       << "sigma: " << chromosome.genotype.sigma << std::endl;
+    return os;
 }

@@ -12,6 +12,24 @@
 
 #define NETLIST_SIZE 16
 
+enum ComponentName {
+    R1,
+    R2,
+    Re,
+    Rg
+};
+
+enum ComponentType {
+    resistor,
+    capacitor
+};
+
+struct Component {
+    ComponentName name;
+    ComponentType type;
+    int32_t value;
+};
+
 class Amplifier {
     char * netlistArray[NETLIST_SIZE + 1];
     static std::vector<std::string> netlistVector;
@@ -20,11 +38,7 @@ public:
     Amplifier();
     char ** getNetlist();
     void freeNetlist();
-    /*todo: write a generic method*/
-    void setR1(const uint32_t resistance);
-    void setR2(const uint32_t resistance);
-    void setRe(const uint32_t resistance);
-    void setRg(const uint32_t resistance);
+    void setComponentValue(const Component component);
 };
 
 

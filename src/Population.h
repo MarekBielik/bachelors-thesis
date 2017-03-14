@@ -15,16 +15,15 @@
  * lambda - cardinality of population of descendants
  * */
 #define MU 8
-#define LAMBDA 8
+#define LAMBDA 16
 
 class Population {
-    std::vector<Chromosome *>population;
+    std::vector<Chromosome>population;
 
 public:
     Population();
     void evolve();
     const Chromosome getResult() const;
 };
-
 
 #endif //BT_POPULATION_H

@@ -18,31 +18,31 @@
 
 #define MAX_RESISTANCE 500000
 #define MAX_CAPACITY 1000000
-#define STANDARD_DEVIATION 500
+#define COMPONENTS 4
+#define SIGMA_INIT 1000
 
 struct Genotype {
-    int32_t R1;
-    int32_t R2;
-    int32_t Re;
-    int32_t Rg;
+    std::vector<Component> components;
+    double sigma;
 };
 
 class Chromosome {
-    static std::default_random_engine generator;
+    static std::random_device rd;
+    static std::mt19937 generator;
     static std::normal_distribution<double> N;
     static std::vector<double> referenceVoltage;
     static std::vector<double> referenceTime;
-    std::vector<double> voltage;
-    std::vector<double> time;
-
-    double objectiveFunctionValue;
-    Genotype genotype;
-
     static Simulator simulator;
     static Amplifier amplifier;
     static RInside R;
+    static double tau;
 
-    static int32_t mutate(int32_t gene);
+    std::vector<double> voltage;
+    std::vector<double> time;
+    double objectiveFunctionValue;
+    Genotype genotype;
+
+    static Genotype mutate(Genotype genotype);
 
     void runSimulation(bool full = false);
     Chromosome(const Genotype & genotype);
@@ -52,9 +52,11 @@ public:
     void plot();
     Chromosome();
     double objectiveFunction();
-    Chromosome * reproduce();
-    static bool compare (Chromosome * chromosome1, Chromosome * chromosome2);
+    Chromosome reproduce();
+    bool operator<(Chromosome & chromosome);
     const Genotype& getGenotype () const;
+    friend std::ostream & operator<<(std::ostream & os,
+                                     Chromosome & chromosome);
 };
 
 #endif //BT_CHROMOSOME_H

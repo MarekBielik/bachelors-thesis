@@ -17,13 +17,13 @@ void Simulator::simulate(char **circuit,
     /*load the shematic and run the simulation*/
     ngSpice_Circ(circuit);
 
-    ngSpice_Command("run");
+    ngSpice_Command((char*) "run");
 
     /*get the current plot*/
     /*char * plot =  ngSpice_CurPlot();*/
 
     /*get all the vectors in the plot*/
-    char ** vectors = ngSpice_AllVecs(/*plot*/"tran1");
+    char ** vectors = ngSpice_AllVecs(/*plot*/ (char*) "tran1");
 
     vector_info voltageVector;
     vector_info timeVector;
@@ -51,8 +51,8 @@ void Simulator::simulate(char **circuit,
                    voltageVector.v_realdata + voltageVector.v_length);
 
     ngSpice_free_resources();
-    ngSpice_Command("destroy tran1");
-    ngSpice_Command("remcirc");
+    ngSpice_Command((char*) "destroy tran1");
+    ngSpice_Command((char*) "remcirc");
 }
 
 /* Callback function called from ngspice if fcn controlled_exit()
@@ -71,7 +71,7 @@ ng_exit(int exitstatus, bool immediate, bool quitexit, int ident,
 
     if(immediate) {
         printf("DNote: Unload ngspice\n");
-        ngSpice_Command("quit");
+        ngSpice_Command((char*) "quit");
     }
 
     return exitstatus;
