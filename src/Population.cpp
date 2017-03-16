@@ -20,18 +20,24 @@ const Chromosome Population::getResult() const {
 void Population::evolve() {
     std::random_device rd;
     std::mt19937 generator(rd());
-    unsigned long generationCount = 0;
+    unsigned int generationCount = 0;
+    double prevGeneration = DBL_MAX;
     clock_t lastTime = 0;
     clock_t now;
 
-    /*todo: fix the terminating condition*/
-    while (generationCount < 300) {
+    while (++generationCount < MAX_GEN_COUNT ||
+            population[0].objectiveFunction() > OBJ_FUN_MIN) {
         for (int i = MU; i < LAMBDA + MU; i++)
             population[i] = population[generator() % MU].reproduce();
 
         sort(population.begin(), population.end());
 
-        if ((++generationCount % 20) == 0) {
+//        for (int i = 0; i < MU; i++) {
+//            population[i] = population[i+MU];
+//        }
+
+        /*todo: overload the << operator for cout*/
+        if (!(generationCount % PRINT_EPOCH)) {
             now = clock();
             std::cout << "Generation: " << generationCount << std::endl
                       << population[0]
@@ -40,6 +46,14 @@ void Population::evolve() {
             lastTime = now;
 
             population[0].plot();
+        }
+
+        /*stop the evolution if the objective function doesn't change anymore*/
+        if (!(generationCount % STOP_EPOCH)) {
+            if ((prevGeneration - population[0].objectiveFunction()) <
+                OBJ_FUN_EPS)
+                break;
+            prevGeneration = population[0].objectiveFunction();
         }
     }
 

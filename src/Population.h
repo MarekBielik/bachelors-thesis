@@ -17,6 +17,12 @@
 #define MU 8
 #define LAMBDA 16
 
+#define OBJ_FUN_EPS 0.001
+#define MAX_GEN_COUNT 3000
+#define OBJ_FUN_MIN 0.001
+#define STOP_EPOCH 200
+#define PRINT_EPOCH 50
+
 class Population {
     std::vector<Chromosome>population;
 

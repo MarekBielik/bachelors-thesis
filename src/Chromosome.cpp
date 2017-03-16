@@ -94,7 +94,7 @@ Genotype Chromosome::mutate(Genotype genotype) {
                  genotype.strategyParameters[i] > MUTATION_MAX ||
                  genotype.strategyParameters[i] < -MUTATION_MAX);
 
-        /*choose the right supremum*/
+        /*choose the appropriate supremum*/
         switch (genotype.components[i].type) {
             case resistor:
                 supremum = MAX_RESISTANCE;
@@ -159,6 +159,7 @@ Chromosome Chromosome::reproduce() {
     return Chromosome(genotype);
 }
 
+/*todo: move the code to the plotter class*/
 void Chromosome::plot()
 {
     runSimulation(true);
@@ -208,6 +209,7 @@ bool Chromosome::operator<(Chromosome & chromosome){
     return this->objectiveFunction() < chromosome.objectiveFunction();
 }
 
+/*todo: implement rounding of the values*/
 std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
     os << "objective function: " << chromosome.objectiveFunction() << std::endl;
 
