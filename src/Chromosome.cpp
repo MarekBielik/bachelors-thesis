@@ -9,43 +9,67 @@ std::mt19937 Chromosome::generator(rd());
 std::normal_distribution<double> Chromosome::N(0, 1);
 Simulator Chromosome::simulator;
 Amplifier Chromosome::amplifier;
-std::vector<double> Chromosome::referenceVoltage;
+std::vector<double> Chromosome::referenceOutVoltage;
+std::vector<double> Chromosome::referenceInVoltage;
 std::vector<double> Chromosome::referenceTime;
 RInside Chromosome::R(0, NULL);
-double Chromosome::tau = 1 / sqrt(COMPONENTS);
+/*tau = 1 / sqrt(2 * sqrt(n)) */
+double Chromosome::TAU = 1 / sqrt(2 * sqrt(COMPONENTS));
+/*tau' = 1 / sqrt(n) */
+double Chromosome::TAU_PRIME = 1 / sqrt(COMPONENTS);
+double Chromosome::MUTATION_MAX = (MAX_RESISTANCE + MAX_CAPACITY) / 2 / 4;
 
 void Chromosome::init() {
     /*set the reference vectors*/
-    simulator.simulate(amplifier.getNetlist(), &referenceVoltage,
-                       &referenceTime);
+    simulator.simulate(amplifier.getNetlist(), &referenceOutVoltage,
+                       &referenceInVoltage, &referenceTime);
     amplifier.freeNetlist();
 }
 
 Chromosome::Chromosome() {
     objectiveFunctionValue = std::nan("");
     genotype.components.resize(COMPONENTS);
-    genotype.sigma = SIGMA_INIT;
+    genotype.strategyParameters.resize(COMPONENTS);
     Component tmpComp;
 
-    tmpComp.name = R1;
-    tmpComp.type = resistor;
-    tmpComp.value = generator() % MAX_RESISTANCE;
-    genotype.components[0] = tmpComp;
+    for (int i = 0; i < COMPONENTS; i++) {
+        genotype.strategyParameters[i] = SIGMA_INIT;
 
-    tmpComp.name = R2;
-    tmpComp.type = resistor;
-    tmpComp.value = generator() % MAX_RESISTANCE;
-    genotype.components[1] = tmpComp;
+        switch (i) {
+            case 0:
+                tmpComp.name = R1;
+                tmpComp.type = resistor;
+                tmpComp.value = generator() % MAX_RESISTANCE;
+                break;
+            case 1:
+                tmpComp.name = R2;
+                tmpComp.type = resistor;
+                tmpComp.value = generator() % MAX_RESISTANCE;
+                break;
+            case 2:
+                tmpComp.name = Re;
+                tmpComp.type = resistor;
+                tmpComp.value = generator() % MAX_RESISTANCE;
+                break;
+            case 3:
+                tmpComp.name = Rg;
+                tmpComp.type = resistor;
+                tmpComp.value = generator() % MAX_RESISTANCE;
+                break;
+            case 4:
+                tmpComp.name = Ce;
+                tmpComp.type = capacitor;
+                tmpComp.value = generator() % MAX_CAPACITY;
+                break;
+            case 5:
+                tmpComp.name = Cin;
+                tmpComp.type = capacitor;
+                tmpComp.value = generator() % MAX_CAPACITY;
+                break;
+        }
 
-    tmpComp.name = Re;
-    tmpComp.type = resistor;
-    tmpComp.value = generator() % MAX_RESISTANCE;
-    genotype.components[2] = tmpComp;
-
-    tmpComp.name = Rg;
-    tmpComp.type = resistor;
-    tmpComp.value = generator() % MAX_RESISTANCE;
-    genotype.components[3] = tmpComp;
+        genotype.components[i] = tmpComp;
+    }
 }
 
 Chromosome::Chromosome(const Genotype & genotype) {
@@ -54,24 +78,37 @@ Chromosome::Chromosome(const Genotype & genotype) {
 }
 
 Genotype Chromosome::mutate(Genotype genotype) {
-    /*sigma(t+1) = sigma(t) * e^(tau * N(0,1))*/
-    /*todo: fix the sigma interval*/
-    genotype.sigma = genotype.sigma * exp(tau * N(generator));
-    const int32_t mutation = genotype.sigma * N(generator);
-    int32_t supremum;
+    int32_t mutation, supremum;
 
-    for (auto & component: genotype.components) {
-        if (component.type == resistor)
-            supremum = MAX_RESISTANCE;
-        else
-            supremum = MAX_CAPACITY;
+    for (int i = 0; i < COMPONENTS; i++) {
+        /* get the mutation*/
+        /* sigma(t+1) = sigma(t) * e^(TAU' * N(0,1) + TAU * N(0,1)) */
+        do {
+            genotype.strategyParameters[i] = genotype.strategyParameters[i] *
+                                             exp(TAU_PRIME * N(generator) +
+                                                 TAU * N(generator));
+        } while ((mutation = genotype.strategyParameters[i] * N(generator)) >
+                 MUTATION_MAX);
+
+        /*choose the right supremum*/
+        switch (genotype.components[i].type) {
+            case resistor:
+                supremum = MAX_RESISTANCE;
+                break;
+            case capacitor:
+                supremum = MAX_CAPACITY;
+                break;
+            default:
+                supremum = MAX_RESISTANCE;
+                break;
+        }
 
         /*mutate the component's value and keep it in the valid interval*/
-        if ((component.value + mutation) <= 1 ||
-            (component.value + mutation) >= supremum)
-            component.value -= mutation;
+        if ((genotype.components[i].value + mutation) <= 1 ||
+            (genotype.components[i].value + mutation) >= supremum)
+            genotype.components[i].value -= mutation;
         else
-            component.value += mutation;
+            genotype.components[i].value += mutation;
     }
 
     return genotype;
@@ -83,7 +120,7 @@ void Chromosome::runSimulation(bool full /*= false*/) {
     }
 
     if (full)
-        simulator.simulate(amplifier.getNetlist(), &voltage, &time);
+        simulator.simulate(amplifier.getNetlist(), &voltage, NULL, &time);
     else
         simulator.simulate(amplifier.getNetlist(), &voltage);
 
@@ -103,10 +140,12 @@ double Chromosome::objectiveFunction()
     /*using the least squares method*/
     double difference = 0.0;
 
-    /*todo: fix the vector length difference*/
-    /*todo: figure out the right interval to compare*/
-    for (int i = 100; i < voltage.size() - 10; i++) {
-        difference += pow(referenceVoltage[i] - voltage[i], 2);
+    /*the comparison skips the initial 'unstable area', hence the 30
+     * at the start*/
+    /*the simulator doesn't always return a vector of a constant length,
+     * hence the '- 2' at the end*/
+    for (int i = 0; i < voltage.size(); i++) {
+        difference += pow(referenceOutVoltage[i] - voltage[i], 2);
     }
 
     return objectiveFunctionValue = difference;
@@ -121,22 +160,43 @@ void Chromosome::plot()
     runSimulation(true);
 
     /*plot a graph of the simulation*/
-    R["voltage"] = voltage;
+    R["voltageOut"] = voltage;
+    R["voltageIn"] = referenceInVoltage;
+    R["refVoltageOut"] = referenceOutVoltage;
     R["time"] = time;
     std::string cmd;
 
     /*into a file*/
     cmd = "tmpf = tempfile('plotOut');"
             "png('plotOut.png');"
-            "plot(time, voltage, type='l');"
+            "plot(time, refVoltageOut, type='l', col='red', ylab='Voltage [V]',"
+            "     xlab='Time [s]', lwd=2, ylim=c(-2.5, 2.5));"
+            "lines(time, voltageOut, col='green', lwd=2);"
+            "lines(time, voltageIn, col='blue', lwd=2);"
+            "grid();"
+            "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
+            "       legend=c('Analytical solution output',"
+            "                'Evolved solution output',"
+            "                'input'),"
+            "lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green', 'blue'));"
             "dev.off();"
             "tmpf";
     std::string tmpfile = R.parseEval(cmd);
     unlink(tmpfile.c_str());
 
     /*to the screen*/
-    static bool initialized;
-    cmd = "x11(); plot(time, voltage, type='l'); Sys.sleep(0);";
+    cmd = "x11();"
+            "plot(time, refVoltageOut, type='l', col='red', ylab='Voltage [V]',"
+            "     xlab='Time [s]', lwd=2, ylim=c(-2.5, 2.5));"
+            "lines(time, voltageOut, col='green', lwd=2);"
+            "lines(time, voltageIn, col='blue', lwd=2);"
+            "grid();"
+            "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
+            "       legend=c('Analytical solution output',"
+            "                'Evolved solution output',"
+            "                'input'),"
+            "lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green', 'blue'));"
+            "Sys.sleep(0);";
     R.parseEvalQ(cmd);
 }
 
@@ -144,12 +204,46 @@ bool Chromosome::operator<(Chromosome & chromosome){
     return this->objectiveFunction() < chromosome.objectiveFunction();
 }
 
-const Genotype& Chromosome::getGenotype() const {
-    return genotype;
+std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
+    os << "objective function: " << chromosome.objectiveFunction() << std::endl;
+
+    for (int i = 0; i < COMPONENTS; i++) {
+        switch (chromosome.genotype.components[i].name) {
+            case R1:
+                os << "R1: " << chromosome.genotype.components[i].value << "R"
+                   << " sigma: " << chromosome.genotype.strategyParameters[i]
+                   << std::endl;
+                break;
+            case R2:
+                os << "R2: " << chromosome.genotype.components[i].value << "R"
+                   << " sigma: " << chromosome.genotype.strategyParameters[i]
+                   << std::endl;
+                break;
+            case Re:
+                os << "Re: " << chromosome.genotype.components[i].value << "R"
+                   << " sigma: " << chromosome.genotype.strategyParameters[i]
+                   << std::endl;
+                break;
+            case Rg:
+                os << "Rg: " << chromosome.genotype.components[i].value << "R"
+                   << " sigma: " << chromosome.genotype.strategyParameters[i]
+                   << std::endl;
+                break;
+            case Cin:
+                os << "Cin: " << chromosome.genotype.components[i].value << "nF"
+                   << " sigma: " << chromosome.genotype.strategyParameters[i]
+                   << std::endl;
+                break;
+            case Ce:
+                os << "Ce: " << chromosome.genotype.components[i].value << "nF"
+                   << " sigma: " << chromosome.genotype.strategyParameters[i]
+                   << std::endl;
+                break;
+        }
+    }
+    return os;
 }
 
-std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
-    os << "objective function: " << chromosome.objectiveFunction() << std::endl
-       << "sigma: " << chromosome.genotype.sigma << std::endl;
-    return os;
+const Genotype& Chromosome::getGenotype() const {
+    return genotype;
 }

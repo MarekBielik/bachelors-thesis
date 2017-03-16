@@ -11,7 +11,8 @@ Simulator::Simulator() {
 }
 
 void Simulator::simulate(char **circuit,
-                         std::vector<double> *voltage,
+                         std::vector<double> *voltageOut,
+                         std::vector<double> *voltageIn,
                          std::vector<double> *time /*= NULL*/) {
 
     /*load the shematic and run the simulation*/
@@ -25,7 +26,8 @@ void Simulator::simulate(char **circuit,
     /*get all the vectors in the plot*/
     char ** vectors = ngSpice_AllVecs(/*plot*/ (char*) "tran1");
 
-    vector_info voltageVector;
+    vector_info voltageOutVector;
+    vector_info voltageInVector;
     vector_info timeVector;
 
     /*find the time and voltage vectors*/
@@ -35,20 +37,29 @@ void Simulator::simulate(char **circuit,
 //        /*pick the ones named 'out' (according to the schematic) and 'time'*/
 //        std::string name = vector->v_name;
 //        if (name == "out")
-//            voltageVector = *vector;
-//        else if ( time && (name == "time"))
+//            voltageOutVector = *vector;
+//        else if (time && (name == "time"))
 //            timeVector = *vector;
+//        else if (voltageIn && (name == "in"))
+//            voltageInVector = *vector;
 //    }
 
+    /*todo: possible optimization - set the right length to copy*/
     if (time) {
         timeVector = *ngGet_Vec_Info(vectors[9]);
         time->assign(timeVector.v_realdata,
-                     timeVector.v_realdata + timeVector.v_length);
+                     timeVector.v_realdata + 70);
     }
 
-    voltageVector = *ngGet_Vec_Info(vectors[4]);
-    voltage->assign(voltageVector.v_realdata,
-                   voltageVector.v_realdata + voltageVector.v_length);
+    if (voltageIn) {
+        voltageInVector = *ngGet_Vec_Info(vectors[8]);
+        voltageIn->assign(voltageInVector.v_realdata,
+                          voltageInVector.v_realdata + 70);
+    }
+
+    voltageOutVector = *ngGet_Vec_Info(vectors[4]);
+    voltageOut->assign(voltageOutVector.v_realdata,
+                   voltageOutVector.v_realdata + 70);
 
     ngSpice_free_resources();
     ngSpice_Command((char*) "destroy tran1");

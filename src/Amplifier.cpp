@@ -15,7 +15,7 @@ Amplifier::Amplifier() {
             "tr=.3u tf=.5n cje=12p vje=.48 mje=.5 cjc=6p vjc=.7 mjc=.33 "
             "isc=47.6p kf=2f)";
     netlistVector[2] = "Vin in 0 sin(0 .1 2k)";
-    netlistVector[3] = "V1 4 0 9";
+    netlistVector[3] = "V1 4 0 12";
     netlistVector[4] = "Ce 0 5 5u";
     netlistVector[5] = "Cout 1 out 220n";
     netlistVector[6] = "Cin in 3 220n";
@@ -26,7 +26,7 @@ Amplifier::Amplifier() {
     netlistVector[11] = "R2 0 3 33000";
     netlistVector[12] = "R1 3 4 47000";
     netlistVector[13] = "Q1 1 3 2 bc547c";
-    netlistVector[14] = ".TRAN 6u 1.23m";
+    netlistVector[14] = ".TRAN 20u 1.24m";
     netlistVector[15] = ".end";
 }
 
@@ -44,6 +44,12 @@ void Amplifier::setComponentValue(const Component component) {
         case Rg:
             netlistVector[10] = "Rg 5 2 " + std::to_string(component.value);
             break;
+        case Cin:
+            netlistVector[6] = "Cin in 3 " + std::to_string(component.value) +
+                                             "n";
+        case Ce:
+            netlistVector[4] = "Ce 0 5 " + std::to_string(component.value) +
+                                           "n";
     }
 }
 

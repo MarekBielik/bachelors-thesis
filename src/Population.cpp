@@ -25,19 +25,22 @@ void Population::evolve() {
     clock_t now;
 
     /*todo: fix the terminating condition*/
-    while (generationCount < 1000) {
+    while (generationCount < 500) {
         for (int i = MU; i < LAMBDA + MU; i++)
             population[i] = population[generator() % MU].reproduce();
 
         sort(population.begin(), population.end());
 
-        if ((++generationCount % 10) == 0) {
+        if ((++generationCount % 20) == 0) {
             now = clock();
             std::cout << "Generation: " << generationCount << std::endl
                       << population[0]
                       << " time: " << double(now - lastTime) / CLOCKS_PER_SEC
                       << std::endl;
             lastTime = now;
+
+            population[0].plot();
         }
     }
+
 }

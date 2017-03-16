@@ -16,7 +16,9 @@ enum ComponentName {
     R1,
     R2,
     Re,
-    Rg
+    Rg,
+    Cin,
+    Ce
 };
 
 enum ComponentType {

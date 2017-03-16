@@ -17,25 +17,28 @@
 #include "Simulator.h"
 
 #define MAX_RESISTANCE 500000
-#define MAX_CAPACITY 1000000
-#define COMPONENTS 4
-#define SIGMA_INIT 1000
+#define MAX_CAPACITY 500000
+#define COMPONENTS 6
+#define SIGMA_INIT 100
 
 struct Genotype {
     std::vector<Component> components;
-    double sigma;
+    std::vector<double> strategyParameters;
 };
 
 class Chromosome {
     static std::random_device rd;
     static std::mt19937 generator;
     static std::normal_distribution<double> N;
-    static std::vector<double> referenceVoltage;
+    static std::vector<double> referenceOutVoltage;
+    static std::vector<double> referenceInVoltage;
     static std::vector<double> referenceTime;
     static Simulator simulator;
     static Amplifier amplifier;
     static RInside R;
-    static double tau;
+    static double TAU;
+    static double TAU_PRIME;
+    static double MUTATION_MAX;
 
     std::vector<double> voltage;
     std::vector<double> time;

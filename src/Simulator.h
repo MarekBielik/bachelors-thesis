@@ -14,7 +14,8 @@ class Simulator {
 
 public:
     Simulator();
-    void simulate(char *circuit[], std::vector<double> *voltage,
+    void simulate(char *circuit[], std::vector<double> *voltageOut,
+                  std::vector<double> *voltageIn = NULL,
                   std::vector<double> *time = NULL);
 };
 
