@@ -81,14 +81,18 @@ Genotype Chromosome::mutate(Genotype genotype) {
     int32_t mutation, supremum;
 
     for (int i = 0; i < COMPONENTS; i++) {
+        double prevSigma = genotype.strategyParameters[i];
         /* get the mutation*/
         /* sigma(t+1) = sigma(t) * e^(TAU' * N(0,1) + TAU * N(0,1)) */
         do {
-            genotype.strategyParameters[i] = genotype.strategyParameters[i] *
-                                             exp(TAU_PRIME * N(generator) +
-                                                 TAU * N(generator));
-        } while ((mutation = genotype.strategyParameters[i] * N(generator)) >
-                 MUTATION_MAX);
+            genotype.strategyParameters[i] = prevSigma *
+                    exp(TAU_PRIME * N(generator) + TAU * N(generator));
+            mutation = genotype.strategyParameters[i] * N(generator);
+            /*keep the mutation and strategy parameter in the valid interval*/
+        } while (mutation > MUTATION_MAX ||
+                 mutation < -MUTATION_MAX ||
+                 genotype.strategyParameters[i] > MUTATION_MAX ||
+                 genotype.strategyParameters[i] < -MUTATION_MAX);
 
         /*choose the right supremum*/
         switch (genotype.components[i].type) {

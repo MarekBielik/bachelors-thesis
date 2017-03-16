@@ -25,7 +25,7 @@ void Population::evolve() {
     clock_t now;
 
     /*todo: fix the terminating condition*/
-    while (generationCount < 500) {
+    while (generationCount < 300) {
         for (int i = MU; i < LAMBDA + MU; i++)
             population[i] = population[generator() % MU].reproduce();
 
