@@ -25,8 +25,7 @@ void Population::evolve() {
     clock_t lastTime = 0;
     clock_t now;
 
-    while (++generationCount < MAX_GEN_COUNT ||
-            population[0].objectiveFunction() > OBJ_FUN_MIN) {
+    while (++generationCount < MAX_GEN_COUNT) {
         for (int i = MU; i < LAMBDA + MU; i++)
             population[i] = population[generator() % MU].reproduce();
 

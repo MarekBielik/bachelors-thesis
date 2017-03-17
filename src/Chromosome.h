@@ -19,7 +19,7 @@
 #define MAX_RESISTANCE 500000
 #define MAX_CAPACITY 500000
 #define COMPONENTS 6
-#define SIGMA_INIT 100
+#define SIGMA_INIT 10
 
 struct Genotype {
     std::vector<Component> components;

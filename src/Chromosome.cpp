@@ -140,6 +140,20 @@ double Chromosome::objectiveFunction()
 
     runSimulation();
 
+    double min = 0.0;
+    double max = 0.0;
+
+    for (int i = 30; i < voltage.size(); i++) {
+        if (voltage[i] > max)
+            max = voltage[i];
+
+        if (voltage[i] < min)
+            min = voltage[i];
+    }
+
+
+    //return objectiveFunctionValue = /*fabs(max + min) +*/ 1 / pow((max - min) + 1, 2);
+
     /*compare the voltage waveforms*/
     /*using the least squares method*/
     double difference = 0.0;
@@ -148,7 +162,9 @@ double Chromosome::objectiveFunction()
      * at the start*/
     /*the simulator doesn't always return a vector of a constant length,
      * hence the '- 2' at the end*/
-    for (int i = 0; i < voltage.size(); i++) {
+    /*todo: statistics needed to figure out if the starting point has any
+     *todo: influence on the overall evolution*/
+    for (int i = 30; i < voltage.size(); i++) {
         difference += pow(referenceOutVoltage[i] - voltage[i], 2);
     }
 
@@ -168,7 +184,7 @@ void Chromosome::plot()
     R["voltageOut"] = voltage;
     R["voltageIn"] = referenceInVoltage;
     R["refVoltageOut"] = referenceOutVoltage;
-    R["time"] = time;
+    R["time"] = referenceTime;
     std::string cmd;
 
     /*into a file*/
@@ -192,7 +208,7 @@ void Chromosome::plot()
     /*to the screen*/
     cmd = "x11();"
             "plot(time, refVoltageOut, type='l', col='red', ylab='Voltage [V]',"
-            "     xlab='Time [s]', lwd=2, ylim=c(-2.5, 2.5));"
+            "     xlab='Time [s]', lwd=2, ylim=c(-6, 6));"
             "lines(time, voltageOut, col='green', lwd=2);"
             "lines(time, voltageIn, col='blue', lwd=2);"
             "grid();"
@@ -209,44 +225,69 @@ bool Chromosome::operator<(Chromosome & chromosome){
     return this->objectiveFunction() < chromosome.objectiveFunction();
 }
 
-/*todo: implement rounding of the values*/
 std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
     os << "objective function: " << chromosome.objectiveFunction() << std::endl;
 
     for (int i = 0; i < COMPONENTS; i++) {
         switch (chromosome.genotype.components[i].name) {
             case R1:
-                os << "R1: " << chromosome.genotype.components[i].value << "R"
-                   << " sigma: " << chromosome.genotype.strategyParameters[i]
-                   << std::endl;
+                os << "R1: ";
                 break;
             case R2:
-                os << "R2: " << chromosome.genotype.components[i].value << "R"
-                   << " sigma: " << chromosome.genotype.strategyParameters[i]
-                   << std::endl;
+                os << "R2: ";
                 break;
             case Re:
-                os << "Re: " << chromosome.genotype.components[i].value << "R"
-                   << " sigma: " << chromosome.genotype.strategyParameters[i]
-                   << std::endl;
+                os << "Re: ";
                 break;
             case Rg:
-                os << "Rg: " << chromosome.genotype.components[i].value << "R"
-                   << " sigma: " << chromosome.genotype.strategyParameters[i]
-                   << std::endl;
+                os << "Rg: ";
                 break;
             case Cin:
-                os << "Cin: " << chromosome.genotype.components[i].value << "nF"
-                   << " sigma: " << chromosome.genotype.strategyParameters[i]
-                   << std::endl;
+                os << "Cin: ";
                 break;
             case Ce:
-                os << "Ce: " << chromosome.genotype.components[i].value << "nF"
-                   << " sigma: " << chromosome.genotype.strategyParameters[i]
-                   << std::endl;
+                os << "Ce: ";
                 break;
         }
+
+        double value = (double) chromosome.genotype.components[i].value;
+        std::ios::fmtflags flags(os.flags());
+        std::streamsize ss = os.precision();
+        os << std::fixed;
+
+        /*round the printed value*/
+        if (value < 999)
+            os << std::setprecision(0) << value;
+        else if (value > 999 && value < 9999) {
+            os << std::setprecision(2) << value / 1000;
+        } else if (value > 9999 && value < 99999) {
+            os << std::setprecision(1) << value / 1000;
+        } else if (value > 99999) {
+            os << std::setprecision(0) << value / 1000;
+        }
+
+        os << std::setprecision(ss);
+        os.flags(flags);
+
+        switch (chromosome.genotype.components[i].type) {
+            case resistor:
+                if (value > 999)
+                    os << " K";
+                else
+                    os << " R";
+                break;
+            case capacitor:
+                if (value > 999)
+                    os << " uF";
+                else
+                    os << " nF";
+                break;
+        }
+
+        os << ", sigma: " << chromosome.genotype.strategyParameters[i]
+           << std::endl;
     }
+
     return os;
 }
 
