@@ -19,12 +19,14 @@ Population::Population(std::string EStype) {
 }
 
 void Population::evolve() {
-    std::random_device rd;
-    std::mt19937 generator(rd());
-    unsigned int generationCount = 0;
-    double prevGeneration = DBL_MAX;
+    std::mt19937 generator(std::random_device().operator()());
+    unsigned generationCount = 0;
+    double prevStopGen = DBL_MAX;
+    double prevPrintGen = DBL_MAX;
     clock_t lastTime = 0;
     clock_t now;
+
+    /*todo: add the preamble*/
 
     while (++generationCount < MAX_GEN_COUNT) {
         for (int i = MU; i < LAMBDA + MU; i++)
@@ -46,8 +48,9 @@ void Population::evolve() {
         }
 
 
-        /*todo: add the 'fitness changed' condition*/
-        if (!(generationCount % PRINT_EPOCH)) {
+        if (!(generationCount % PRINT_GEN) &&
+                prevPrintGen > population[0].objectiveFunction()) {
+            prevPrintGen = population[0].objectiveFunction() * PRINT_CHANGE;
             now = clock();
             std::cout << "Generation: " << generationCount << std::endl
                       << population[0]
@@ -59,11 +62,12 @@ void Population::evolve() {
         }
 
         /*stop the evolution if the objective function doesn't change anymore*/
-        if (!(generationCount % STOP_EPOCH)) {
-            if ((prevGeneration - population[0].objectiveFunction()) <
-                OBJ_FUN_EPS)
+        if (!(generationCount % STOP_GEN)) {
+            if (!(prevStopGen > population[0].objectiveFunction())) {
                 break;
-            prevGeneration = population[0].objectiveFunction();
+            }
+            prevStopGen = population[0].objectiveFunction() * 
+                               STOP_CHANGE;
         }
     }
 

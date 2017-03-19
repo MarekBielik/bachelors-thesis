@@ -38,7 +38,7 @@ void Chromosome::init(std::string paramObjFunType /*= ""*/) {
 }
 
 Chromosome::Chromosome() {
-    objectiveFunctionValue = std::nan("");
+    objFunVal = std::nan("");
     genotype.components.resize(COMPONENTS);
     genotype.strategyParameters.resize(COMPONENTS);
     Component tmpComp;
@@ -84,7 +84,7 @@ Chromosome::Chromosome() {
 }
 
 Chromosome::Chromosome(const Genotype & genotype) {
-    objectiveFunctionValue = std::nan("");
+    objFunVal = std::nan("");
     this->genotype = mutate(genotype);
 }
 
@@ -146,64 +146,46 @@ double Chromosome::objectiveFunction()
 {
     /*if the objectiveFunction() has already been called,
      * return the previous value*/
-    if(! std::isnan(objectiveFunctionValue))
-        return objectiveFunctionValue;
+    if(! std::isnan(objFunVal))
+        return objFunVal;
 
     runSimulation();
 
+    double inf;
+    double sup;
+
     switch (objFunType) {
         case bestFit:
-            bestFitObjFun();
+            /*compare the voltage waveforms*/
+            /*using the least squares method*/
+            objFunVal = 0.0;
+
+            /*the comparison skips the initial 'unstable area', hence the 30
+             * at the start*/
+            /*todo: statistics needed to figure out if the starting point has
+             *any influence on the overall evolution*/
+            for (int i = 30; i < voltage.size(); i++) {
+                objFunVal += pow(referenceOutVoltage[i] - voltage[i], 2);
+            }
             break;
         case min:
-            minObjFun();
+            inf = *std::min_element(std::begin(voltage), std::end(voltage));
+            objFunVal = 1 / -inf;
             break;
         case max:
-            maxObjFun();
+            sup = *std::max_element(std::begin(voltage), std::end(voltage));
+            objFunVal = 1 / sup;
             break;
         case symAmp:
-            symAmpObjFun();
-            break;
-        default:
-            bestFitObjFun();
+            inf = *std::min_element(std::begin(voltage), std::end(voltage));
+            sup = *std::max_element(std::begin(voltage), std::end(voltage));
+
+            objFunVal = fabs(sup + inf) + 1 / pow((sup - inf) + 1, 2);
+            /*objFunVal = fabs(sup + inf) + 1 / exp(sup - inf + 1);*/
             break;
     }
 
-    return objectiveFunctionValue;
-}
-
-void Chromosome::minObjFun() {
-    double min = *std::min_element(std::begin(voltage), std::end(voltage));
-
-    objectiveFunctionValue = 1 / -min;
-}
-
-void Chromosome::maxObjFun() {
-    double max = *std::max_element(std::begin(voltage), std::end(voltage));
-
-    objectiveFunctionValue = 1 / max;
-}
-
-void Chromosome::symAmpObjFun() {
-    double min = *std::min_element(std::begin(voltage), std::end(voltage));
-    double max = *std::max_element(std::begin(voltage), std::end(voltage));
-
-    /*todo: test the expression*/
-    objectiveFunctionValue = fabs(max + min) + 1 / pow((max - min) + 1, 2);
-}
-
-void Chromosome::bestFitObjFun() {
-    /*compare the voltage waveforms*/
-    /*using the least squares method*/
-    objectiveFunctionValue = 0.0;
-
-    /*the comparison skips the initial 'unstable area', hence the 30
-     * at the start*/
-    /*todo: statistics needed to figure out if the starting point has any
-     *influence on the overall evolution*/
-    for (int i = 30; i < voltage.size(); i++) {
-        objectiveFunctionValue += pow(referenceOutVoltage[i] - voltage[i], 2);
-    }
+    return objFunVal;
 }
 
 Chromosome Chromosome::reproduce() {

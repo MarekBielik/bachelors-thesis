@@ -17,10 +17,11 @@
 #define MU 8
 #define LAMBDA 16
 
-#define OBJ_FUN_EPS 0.0001
 #define MAX_GEN_COUNT 3000
-#define STOP_EPOCH 500
-#define PRINT_EPOCH 50
+#define STOP_GEN 500
+#define PRINT_GEN 10
+#define PRINT_CHANGE 0.9
+#define STOP_CHANGE 0.99
 
 enum ESType {
     plus,

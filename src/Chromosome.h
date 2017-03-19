@@ -49,16 +49,12 @@ class Chromosome {
 
     std::vector<double> voltage;
     std::vector<double> time;
-    double objectiveFunctionValue;
+    double objFunVal;
     Genotype genotype;
 
     static Genotype mutate(Genotype genotype);
 
     void runSimulation(bool full = false);
-    void bestFitObjFun();
-    void minObjFun();
-    void maxObjFun();
-    void symAmpObjFun();
     Chromosome(const Genotype & genotype);
 
 public:
