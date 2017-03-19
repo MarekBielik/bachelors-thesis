@@ -4,26 +4,37 @@
 
 #include "Chromosome.h"
 
-std::random_device Chromosome::rd;
-std::mt19937 Chromosome::generator(rd());
+std::mt19937 Chromosome::generator(std::random_device().operator()());
 std::normal_distribution<double> Chromosome::N(0, 1);
 Simulator Chromosome::simulator;
 Amplifier Chromosome::amplifier;
+Plotter Chromosome::plotter;
+ObjFunType Chromosome::objFunType;
 std::vector<double> Chromosome::referenceOutVoltage;
 std::vector<double> Chromosome::referenceInVoltage;
 std::vector<double> Chromosome::referenceTime;
-RInside Chromosome::R(0, NULL);
 /*tau = 1 / sqrt(2 * sqrt(n)) */
 double Chromosome::TAU = 1 / sqrt(2 * sqrt(COMPONENTS));
 /*tau' = 1 / sqrt(n) */
 double Chromosome::TAU_PRIME = 1 / sqrt(COMPONENTS);
 double Chromosome::MUTATION_MAX = (MAX_RESISTANCE + MAX_CAPACITY) / 2 / 4;
 
-void Chromosome::init() {
+void Chromosome::init(std::string paramObjFunType /*= ""*/) {
     /*set the reference vectors*/
-    simulator.simulate(amplifier.getNetlist(), &referenceOutVoltage,
-                       &referenceInVoltage, &referenceTime);
+    simulator.simulate(amplifier.getNetlist(), referenceOutVoltage,
+                       referenceTime, referenceInVoltage);
     amplifier.freeNetlist();
+
+    if (paramObjFunType == "bestFit")
+        objFunType = bestFit;
+    else if (paramObjFunType == "min")
+        objFunType = min;
+    else if (paramObjFunType == "max")
+        objFunType = max;
+    else if (paramObjFunType == "symAmp")
+        objFunType = symAmp;
+    else
+        objFunType = bestFit;
 }
 
 Chromosome::Chromosome() {
@@ -124,9 +135,9 @@ void Chromosome::runSimulation(bool full /*= false*/) {
     }
 
     if (full)
-        simulator.simulate(amplifier.getNetlist(), &voltage, NULL, &time);
+        simulator.simulate(amplifier.getNetlist(), voltage, time);
     else
-        simulator.simulate(amplifier.getNetlist(), &voltage);
+        simulator.simulate(amplifier.getNetlist(), voltage);
 
     amplifier.freeNetlist();
 }
@@ -140,85 +151,83 @@ double Chromosome::objectiveFunction()
 
     runSimulation();
 
-    double min = 0.0;
-    double max = 0.0;
-
-    for (int i = 30; i < voltage.size(); i++) {
-        if (voltage[i] > max)
-            max = voltage[i];
-
-        if (voltage[i] < min)
-            min = voltage[i];
+    switch (objFunType) {
+        case bestFit:
+            bestFitObjFun();
+            break;
+        case min:
+            minObjFun();
+            break;
+        case max:
+            maxObjFun();
+            break;
+        case symAmp:
+            symAmpObjFun();
+            break;
+        default:
+            bestFitObjFun();
+            break;
     }
 
+    return objectiveFunctionValue;
+}
 
-    //return objectiveFunctionValue = /*fabs(max + min) +*/ 1 / pow((max - min) + 1, 2);
+void Chromosome::minObjFun() {
+    double min = *std::min_element(std::begin(voltage), std::end(voltage));
 
+    objectiveFunctionValue = 1 / -min;
+}
+
+void Chromosome::maxObjFun() {
+    double max = *std::max_element(std::begin(voltage), std::end(voltage));
+
+    objectiveFunctionValue = 1 / max;
+}
+
+void Chromosome::symAmpObjFun() {
+    double min = *std::min_element(std::begin(voltage), std::end(voltage));
+    double max = *std::max_element(std::begin(voltage), std::end(voltage));
+
+    /*todo: test the expression*/
+    objectiveFunctionValue = fabs(max + min) + 1 / pow((max - min) + 1, 2);
+}
+
+void Chromosome::bestFitObjFun() {
     /*compare the voltage waveforms*/
     /*using the least squares method*/
-    double difference = 0.0;
+    objectiveFunctionValue = 0.0;
 
     /*the comparison skips the initial 'unstable area', hence the 30
      * at the start*/
-    /*the simulator doesn't always return a vector of a constant length,
-     * hence the '- 2' at the end*/
     /*todo: statistics needed to figure out if the starting point has any
-     *todo: influence on the overall evolution*/
+     *influence on the overall evolution*/
     for (int i = 30; i < voltage.size(); i++) {
-        difference += pow(referenceOutVoltage[i] - voltage[i], 2);
+        objectiveFunctionValue += pow(referenceOutVoltage[i] - voltage[i], 2);
     }
-
-    return objectiveFunctionValue = difference;
 }
 
 Chromosome Chromosome::reproduce() {
     return Chromosome(genotype);
 }
 
-/*todo: move the code to the plotter class*/
 void Chromosome::plot()
 {
     runSimulation(true);
 
-    /*plot a graph of the simulation*/
-    R["voltageOut"] = voltage;
-    R["voltageIn"] = referenceInVoltage;
-    R["refVoltageOut"] = referenceOutVoltage;
-    R["time"] = referenceTime;
-    std::string cmd;
-
-    /*into a file*/
-    cmd = "tmpf = tempfile('plotOut');"
-            "png('plotOut.png');"
-            "plot(time, refVoltageOut, type='l', col='red', ylab='Voltage [V]',"
-            "     xlab='Time [s]', lwd=2, ylim=c(-2.5, 2.5));"
-            "lines(time, voltageOut, col='green', lwd=2);"
-            "lines(time, voltageIn, col='blue', lwd=2);"
-            "grid();"
-            "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
-            "       legend=c('Analytical solution output',"
-            "                'Evolved solution output',"
-            "                'input'),"
-            "lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green', 'blue'));"
-            "dev.off();"
-            "tmpf";
-    std::string tmpfile = R.parseEval(cmd);
-    unlink(tmpfile.c_str());
-
-    /*to the screen*/
-    cmd = "x11();"
-            "plot(time, refVoltageOut, type='l', col='red', ylab='Voltage [V]',"
-            "     xlab='Time [s]', lwd=2, ylim=c(-6, 6));"
-            "lines(time, voltageOut, col='green', lwd=2);"
-            "lines(time, voltageIn, col='blue', lwd=2);"
-            "grid();"
-            "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
-            "       legend=c('Analytical solution output',"
-            "                'Evolved solution output',"
-            "                'input'),"
-            "lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green', 'blue'));"
-            "Sys.sleep(0);";
-    R.parseEvalQ(cmd);
+    switch (objFunType) {
+        case bestFit:
+            plotter.plot(referenceTime, referenceOutVoltage, referenceInVoltage,
+                         voltage);
+            break;
+        case min:
+        case max:
+            plotter.plot(time, referenceInVoltage, voltage);
+            break;
+        case symAmp:
+            plotter.plot(time, referenceOutVoltage, referenceInVoltage,
+                         voltage);
+            break;
+    }
 }
 
 bool Chromosome::operator<(Chromosome & chromosome){
@@ -289,8 +298,4 @@ std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
     }
 
     return os;
-}
-
-const Genotype& Chromosome::getGenotype() const {
-    return genotype;
 }

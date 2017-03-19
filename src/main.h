@@ -11,5 +11,8 @@
 #include <time.h>
 
 #include "Population.h"
+#include "ArgParser.h"
+
+void sigIntHandler(int s);
 
 #endif //BT_MAIN_H

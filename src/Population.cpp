@@ -4,17 +4,18 @@
 
 #include "Population.h"
 
-Population::Population() {
+Population::Population(std::string EStype) {
     population.resize(MU + LAMBDA);
-    Chromosome::init();
+    Chromosome::init("symAmp");
 
     for (int i = 0; i < MU; i++) {
         population[i] = Chromosome();
     }
-}
 
-const Chromosome Population::getResult() const {
-    return population[0];
+    if (EStype == "comma")
+        this->EStype = comma;
+    else
+        this->EStype = plus;
 }
 
 void Population::evolve() {
@@ -29,13 +30,23 @@ void Population::evolve() {
         for (int i = MU; i < LAMBDA + MU; i++)
             population[i] = population[generator() % MU].reproduce();
 
-        sort(population.begin(), population.end());
+        switch (EStype) {
+            case plus:
+                sort(population.begin(), population.end());
+                break;
+            case comma:
+                sort(population.begin() + MU, population.end());
+                for (int i = 0; i < MU; i++) {
+                    population[i] = population[i+MU];
+                }
+                break;
+            default:
+                sort(population.begin(), population.end());
+                break;
+        }
 
-//        for (int i = 0; i < MU; i++) {
-//            population[i] = population[i+MU];
-//        }
 
-        /*todo: overload the << operator for cout*/
+        /*todo: add the 'fitness changed' condition*/
         if (!(generationCount % PRINT_EPOCH)) {
             now = clock();
             std::cout << "Generation: " << generationCount << std::endl

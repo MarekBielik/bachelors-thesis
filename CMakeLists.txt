@@ -15,7 +15,7 @@ link_directories(
         /usr/lib64/R/lib
         /usr/local/lib)
 
-set(SOURCE_FILES src/main.cpp src/main.h src/Simulator.cpp src/Simulator.h src/Plotter.cpp src/Plotter.h src/Amplifier.cpp src/Amplifier.h src/Chromosome.cpp src/Chromosome.h src/Population.cpp src/Population.h)
+set(SOURCE_FILES src/main.cpp src/main.h src/Simulator.cpp src/Simulator.h src/Plotter.cpp src/Plotter.h src/Amplifier.cpp src/Amplifier.h src/Chromosome.cpp src/Chromosome.h src/Population.cpp src/Population.h src/ArgParser.cpp src/ArgParser.h)
 
 add_executable(bt ${SOURCE_FILES})
 

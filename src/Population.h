@@ -22,13 +22,18 @@
 #define STOP_EPOCH 500
 #define PRINT_EPOCH 50
 
+enum ESType {
+    plus,
+    comma
+};
+
 class Population {
     std::vector<Chromosome>population;
+    ESType EStype;
 
 public:
-    Population();
+    Population(std::string EStype);
     void evolve();
-    const Chromosome getResult() const;
 };
 
 #endif //BT_POPULATION_H

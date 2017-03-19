@@ -10,16 +10,23 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
-#include <RInside.h>
 #include <random>
 
 #include "Amplifier.h"
 #include "Simulator.h"
+#include "Plotter.h"
 
 #define MAX_RESISTANCE 500000
 #define MAX_CAPACITY 500000
 #define COMPONENTS 6
 #define SIGMA_INIT 10
+
+enum ObjFunType {
+    bestFit,
+    min,
+    max,
+    symAmp
+};
 
 struct Genotype {
     std::vector<Component> components;
@@ -27,7 +34,6 @@ struct Genotype {
 };
 
 class Chromosome {
-    static std::random_device rd;
     static std::mt19937 generator;
     static std::normal_distribution<double> N;
     static std::vector<double> referenceOutVoltage;
@@ -35,10 +41,11 @@ class Chromosome {
     static std::vector<double> referenceTime;
     static Simulator simulator;
     static Amplifier amplifier;
-    static RInside R;
+    static Plotter plotter;
     static double TAU;
     static double TAU_PRIME;
     static double MUTATION_MAX;
+    static ObjFunType objFunType;
 
     std::vector<double> voltage;
     std::vector<double> time;
@@ -48,16 +55,19 @@ class Chromosome {
     static Genotype mutate(Genotype genotype);
 
     void runSimulation(bool full = false);
+    void bestFitObjFun();
+    void minObjFun();
+    void maxObjFun();
+    void symAmpObjFun();
     Chromosome(const Genotype & genotype);
 
 public:
-    static void init();
+    static void init(std::string paramObjFunType = "");
     void plot();
     Chromosome();
     double objectiveFunction();
     Chromosome reproduce();
     bool operator<(Chromosome & chromosome);
-    const Genotype& getGenotype () const;
     friend std::ostream & operator<<(std::ostream & os,
                                      Chromosome & chromosome);
 };
