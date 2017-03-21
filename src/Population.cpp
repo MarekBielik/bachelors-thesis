@@ -4,18 +4,27 @@
 
 #include "Population.h"
 
-Population::Population(std::string EStype) {
-    population.resize(MU + LAMBDA);
-    Chromosome::init("symAmp");
+Population::Population(Params params, std::ostream & out) : out(out) {
+    /*init parameters*/
+    if (params.ES_type == "comma")
+        this->ES_type = comma;
+    else
+        this->ES_type = plus;
 
-    for (int i = 0; i < MU; i++) {
+    mu = params.mu;
+    lambda = params.lamda;
+    maxGen = params.max_gen;
+    stopGen = params.stop_gen;
+    printGen = params.print_gen;
+    printChange = params.print_change;
+    stopChange = params.stop_change;
+
+    /*init the population*/
+    population.resize(mu + lambda);
+
+    for (int i = 0; i < mu; i++) {
         population[i] = Chromosome();
     }
-
-    if (EStype == "comma")
-        this->EStype = comma;
-    else
-        this->EStype = plus;
 }
 
 void Population::evolve() {
@@ -23,23 +32,21 @@ void Population::evolve() {
     unsigned generationCount = 0;
     double prevStopGen = DBL_MAX;
     double prevPrintGen = DBL_MAX;
-    clock_t lastTime = 0;
-    clock_t now;
 
     /*todo: add the preamble*/
 
-    while (++generationCount < MAX_GEN_COUNT) {
-        for (int i = MU; i < LAMBDA + MU; i++)
-            population[i] = population[generator() % MU].reproduce();
+    while (++generationCount < maxGen) {
+        for (int i = mu; i < lambda + mu; i++)
+            population[i] = population[generator() % mu].reproduce();
 
-        switch (EStype) {
+        switch (ES_type) {
             case plus:
                 sort(population.begin(), population.end());
                 break;
             case comma:
-                sort(population.begin() + MU, population.end());
-                for (int i = 0; i < MU; i++) {
-                    population[i] = population[i+MU];
+                sort(population.begin() + mu, population.end());
+                for (int i = 0; i < mu; i++) {
+                    population[i] = population[i+mu];
                 }
                 break;
             default:
@@ -47,28 +54,22 @@ void Population::evolve() {
                 break;
         }
 
-
-        if (!(generationCount % PRINT_GEN) &&
+        if (!(generationCount % printGen) &&
                 prevPrintGen > population[0].objectiveFunction()) {
-            prevPrintGen = population[0].objectiveFunction() * PRINT_CHANGE;
-            now = clock();
-            std::cout << "Generation: " << generationCount << std::endl
-                      << population[0]
-                      << " time: " << double(now - lastTime) / CLOCKS_PER_SEC
-                      << std::endl;
-            lastTime = now;
+            prevPrintGen = population[0].objectiveFunction() * printChange;
+            out << "Generation: " << generationCount << std::endl <<
+                population[0] << std::endl;
 
             population[0].plot();
         }
 
         /*stop the evolution if the objective function doesn't change anymore*/
-        if (!(generationCount % STOP_GEN)) {
+        if (!(generationCount % stopGen)) {
             if (!(prevStopGen > population[0].objectiveFunction())) {
                 break;
             }
-            prevStopGen = population[0].objectiveFunction() * 
-                               STOP_CHANGE;
+            prevStopGen = population[0].objectiveFunction() * stopChange;
         }
-    }
 
+    }
 }

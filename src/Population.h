@@ -8,8 +8,14 @@
 #include <vector>
 #include <algorithm>
 #include <ctime>
+#include <fstream>
 
 #include "Chromosome.h"
+#include "ArgParser.h"
+
+/*forward declaration*/
+struct Params;
+class Chromosome;
 
 /* mu - cardinality of population of ancestors
  * lambda - cardinality of population of descendants
@@ -17,23 +23,31 @@
 #define MU 8
 #define LAMBDA 16
 
-#define MAX_GEN_COUNT 3000
+#define MAX_GEN 3000
 #define STOP_GEN 500
 #define PRINT_GEN 10
 #define PRINT_CHANGE 0.9
 #define STOP_CHANGE 0.99
 
-enum ESType {
+enum ES_Type {
     plus,
     comma
 };
 
 class Population {
     std::vector<Chromosome>population;
-    ESType EStype;
+    ES_Type ES_type;
+    unsigned mu;
+    unsigned lambda;
+    unsigned maxGen;
+    unsigned stopGen;
+    unsigned printGen;
+    double printChange;
+    double stopChange;
+    std::ostream & out;
 
 public:
-    Population(std::string EStype);
+    Population(Params params, std::ostream & out);
     void evolve();
 };
 

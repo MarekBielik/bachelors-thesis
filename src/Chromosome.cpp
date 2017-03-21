@@ -17,24 +17,32 @@ std::vector<double> Chromosome::referenceTime;
 double Chromosome::TAU = 1 / sqrt(2 * sqrt(COMPONENTS));
 /*tau' = 1 / sqrt(n) */
 double Chromosome::TAU_PRIME = 1 / sqrt(COMPONENTS);
-double Chromosome::MUTATION_MAX = (MAX_RESISTANCE + MAX_CAPACITY) / 2 / 4;
+int32_t Chromosome::maxRes;
+int32_t Chromosome::maxCap;
+unsigned Chromosome::sigmaInit;
+double Chromosome::mutationMax;
 
-void Chromosome::init(std::string paramObjFunType /*= ""*/) {
+void Chromosome::init(Params params) {
     /*set the reference vectors*/
     simulator.simulate(amplifier.getNetlist(), referenceOutVoltage,
                        referenceTime, referenceInVoltage);
     amplifier.freeNetlist();
 
-    if (paramObjFunType == "bestFit")
+    if (params.objFunType == "bestFit")
         objFunType = bestFit;
-    else if (paramObjFunType == "min")
+    else if (params.objFunType == "min")
         objFunType = min;
-    else if (paramObjFunType == "max")
+    else if (params.objFunType == "max")
         objFunType = max;
-    else if (paramObjFunType == "symAmp")
+    else if (params.objFunType == "symAmp")
         objFunType = symAmp;
     else
         objFunType = bestFit;
+
+    sigmaInit = params.sigma_init;
+    maxRes = params.max_res;
+    maxCap = params.max_cap;
+    mutationMax = (maxRes + maxCap) / 2 / 4;
 }
 
 Chromosome::Chromosome() {
@@ -44,38 +52,38 @@ Chromosome::Chromosome() {
     Component tmpComp;
 
     for (int i = 0; i < COMPONENTS; i++) {
-        genotype.strategyParameters[i] = SIGMA_INIT;
+        genotype.strategyParameters[i] = sigmaInit;
 
         switch (i) {
             case 0:
                 tmpComp.name = R1;
                 tmpComp.type = resistor;
-                tmpComp.value = generator() % MAX_RESISTANCE;
+                tmpComp.value = generator() % maxRes;
                 break;
             case 1:
                 tmpComp.name = R2;
                 tmpComp.type = resistor;
-                tmpComp.value = generator() % MAX_RESISTANCE;
+                tmpComp.value = generator() % maxRes;
                 break;
             case 2:
                 tmpComp.name = Re;
                 tmpComp.type = resistor;
-                tmpComp.value = generator() % MAX_RESISTANCE;
+                tmpComp.value = generator() % maxRes;
                 break;
             case 3:
                 tmpComp.name = Rg;
                 tmpComp.type = resistor;
-                tmpComp.value = generator() % MAX_RESISTANCE;
+                tmpComp.value = generator() % maxRes;
                 break;
             case 4:
                 tmpComp.name = Ce;
                 tmpComp.type = capacitor;
-                tmpComp.value = generator() % MAX_CAPACITY;
+                tmpComp.value = generator() % maxCap;
                 break;
             case 5:
                 tmpComp.name = Cin;
                 tmpComp.type = capacitor;
-                tmpComp.value = generator() % MAX_CAPACITY;
+                tmpComp.value = generator() % maxCap;
                 break;
         }
 
@@ -100,21 +108,21 @@ Genotype Chromosome::mutate(Genotype genotype) {
                     exp(TAU_PRIME * N(generator) + TAU * N(generator));
             mutation = genotype.strategyParameters[i] * N(generator);
             /*keep the mutation and strategy parameter in the valid interval*/
-        } while (mutation > MUTATION_MAX ||
-                 mutation < -MUTATION_MAX ||
-                 genotype.strategyParameters[i] > MUTATION_MAX ||
-                 genotype.strategyParameters[i] < -MUTATION_MAX);
+        } while (mutation > mutationMax ||
+                 mutation < -mutationMax ||
+                 genotype.strategyParameters[i] > mutationMax ||
+                 genotype.strategyParameters[i] < -mutationMax);
 
         /*choose the appropriate supremum*/
         switch (genotype.components[i].type) {
             case resistor:
-                supremum = MAX_RESISTANCE;
+                supremum = maxRes;
                 break;
             case capacitor:
-                supremum = MAX_CAPACITY;
+                supremum = maxRes;
                 break;
             default:
-                supremum = MAX_RESISTANCE;
+                supremum = maxRes;
                 break;
         }
 
@@ -144,6 +152,7 @@ void Chromosome::runSimulation(bool full /*= false*/) {
 
 double Chromosome::objectiveFunction()
 {
+
     /*if the objectiveFunction() has already been called,
      * return the previous value*/
     if(! std::isnan(objFunVal))
@@ -180,7 +189,7 @@ double Chromosome::objectiveFunction()
             inf = *std::min_element(std::begin(voltage), std::end(voltage));
             sup = *std::max_element(std::begin(voltage), std::end(voltage));
 
-            objFunVal = fabs(sup + inf) + 1 / pow((sup - inf) + 1, 2);
+            objFunVal = fabs(sup + inf) + 10 / pow((sup - inf) + 1, 2);
             /*objFunVal = fabs(sup + inf) + 1 / exp(sup - inf + 1);*/
             break;
     }

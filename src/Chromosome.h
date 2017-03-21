@@ -15,6 +15,10 @@
 #include "Amplifier.h"
 #include "Simulator.h"
 #include "Plotter.h"
+#include "ArgParser.h"
+
+/*forward declaration*/
+struct Params;
 
 #define MAX_RESISTANCE 500000
 #define MAX_CAPACITY 500000
@@ -44,8 +48,11 @@ class Chromosome {
     static Plotter plotter;
     static double TAU;
     static double TAU_PRIME;
-    static double MUTATION_MAX;
     static ObjFunType objFunType;
+    static int32_t maxRes;
+    static int32_t maxCap;
+    static unsigned sigmaInit;
+    static double mutationMax;
 
     std::vector<double> voltage;
     std::vector<double> time;
@@ -58,7 +65,7 @@ class Chromosome {
     Chromosome(const Genotype & genotype);
 
 public:
-    static void init(std::string paramObjFunType = "");
+    static void init(Params params);
     void plot();
     Chromosome();
     double objectiveFunction();

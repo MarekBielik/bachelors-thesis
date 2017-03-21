@@ -23,26 +23,6 @@ void Simulator::simulate(char **circuit, std::vector<double> &voltageOut,
     voltageIn.assign(vector.v_realdata, vector.v_realdata + COPY_LENGTH);
 
     unload();
-
-//    vector_info voltageOutVector;
-//    vector_info voltageInVector;
-//    vector_info timeVector;
-//
-//
-//    if (time) {
-//        timeVector = *ngGet_Vec_Info(vectors[9]);
-//        time->assign(timeVector.v_realdata, timeVector.v_realdata + 70);
-//    }
-//
-//    if (voltageIn) {
-//        voltageInVector = *ngGet_Vec_Info(vectors[8]);
-//        voltageIn->assign(voltageInVector.v_realdata,
-//                          voltageInVector.v_realdata + 70);
-//    }
-//
-//    voltageOutVector = *ngGet_Vec_Info(vectors[4]);
-//    voltageOut->assign(voltageOutVector.v_realdata,
-//                   voltageOutVector.v_realdata + 70);
 }
 
 void Simulator::simulate(char **circuit, std::vector<double> &voltageOut,
