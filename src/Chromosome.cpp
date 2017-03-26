@@ -21,6 +21,7 @@ int32_t Chromosome::maxRes;
 int32_t Chromosome::maxCap;
 unsigned Chromosome::sigmaInit;
 double Chromosome::mutationMax;
+double Chromosome::amplitude;
 
 void Chromosome::init(Params params) {
     /*set the reference vectors*/
@@ -30,10 +31,8 @@ void Chromosome::init(Params params) {
 
     if (params.objFunType == "bestFit")
         objFunType = bestFit;
-    else if (params.objFunType == "min")
-        objFunType = min;
-    else if (params.objFunType == "max")
-        objFunType = max;
+    else if (params.objFunType == "idealSin")
+        objFunType = idealSin;
     else if (params.objFunType == "symAmp")
         objFunType = symAmp;
     else
@@ -42,6 +41,8 @@ void Chromosome::init(Params params) {
     sigmaInit = params.sigma_init;
     maxRes = params.max_res;
     maxCap = params.max_cap;
+    amplitude = params.amplitude;
+    /*todo: fix the expression*/
     mutationMax = (maxRes + maxCap) / 2 / 4;
 }
 
@@ -160,8 +161,14 @@ double Chromosome::objectiveFunction()
 
     runSimulation();
 
-    double inf;
-    double sup;
+    double low = *std::min_element(std::begin(voltage), std::end(voltage));
+    double high = *std::max_element(std::begin(voltage), std::end(voltage));
+
+    int refSineSize;
+    double refSine;
+    int start = 5;
+    int end = 68;
+    const double twoPi = std::acos(-1) * 2;
 
     switch (objFunType) {
         case bestFit:
@@ -176,21 +183,27 @@ double Chromosome::objectiveFunction()
             for (int i = 30; i < voltage.size(); i++) {
                 objFunVal += pow(referenceOutVoltage[i] - voltage[i], 2);
             }
+            /*todo: add the symmetry condition*/
             break;
-        case min:
-            inf = *std::min_element(std::begin(voltage), std::end(voltage));
-            objFunVal = 1 / -inf;
-            break;
-        case max:
-            sup = *std::max_element(std::begin(voltage), std::end(voltage));
-            objFunVal = 1 / sup;
+        case idealSin:
+            objFunVal = 0;
+            while (voltage[start] < 0) start++;
+            while (voltage[start] > 0) start++;
+            while (voltage[end] < 0) end--;
+
+            refSineSize = end - start;
+
+            for (int i = 0; i < refSineSize; i++) {
+                refSine = -amplitude * sin((twoPi * i) / (refSineSize -1));
+                objFunVal += pow(refSine - voltage[start+i], 2);
+            }
+
+            objFunVal = (fabs(high + low) + 1) * objFunVal;
+
             break;
         case symAmp:
-            inf = *std::min_element(std::begin(voltage), std::end(voltage));
-            sup = *std::max_element(std::begin(voltage), std::end(voltage));
-
-            objFunVal = fabs(sup + inf) + 10 / pow((sup - inf) + 1, 2);
-            /*objFunVal = fabs(sup + inf) + 1 / exp(sup - inf + 1);*/
+            objFunVal = (fabs(high + low) + 1) / (high - low + 1);
+            /*objFunVal = fabs(high + low) + 1 / exp(high - low + 1);*/
             break;
     }
 
@@ -210,13 +223,9 @@ void Chromosome::plot()
             plotter.plot(referenceTime, referenceOutVoltage, referenceInVoltage,
                          voltage);
             break;
-        case min:
-        case max:
-            plotter.plot(time, referenceInVoltage, voltage);
-            break;
+        case idealSin:
         case symAmp:
-            plotter.plot(time, referenceOutVoltage, referenceInVoltage,
-                         voltage);
+            plotter.plot(time, referenceInVoltage, voltage);
             break;
     }
 }

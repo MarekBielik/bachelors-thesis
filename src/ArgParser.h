@@ -21,7 +21,8 @@ enum Options {
     max_res,
     max_cap,
     sigma_init,
-    obj_fun_type
+    obj_fun_type,
+    amp
 };
 
 struct Params {
@@ -38,10 +39,11 @@ struct Params {
     unsigned sigma_init;
     std::string objFunType;
     std::string path;
+    double amplitude;
 };
 
 class ArgParser {
-    const struct option long_options[12] = {
+    const struct option long_options[14] = {
         {"mu", required_argument, 0, mu},
         {"lambda", required_argument, 0, lambda},
         {"max_gen", required_argument, 0, max_gen},
@@ -53,8 +55,10 @@ class ArgParser {
         {"max_res", required_argument, 0, max_res},
         {"max_cap", required_argument, 0, max_cap},
         {"sigma_init", required_argument, 0, sigma_init},
-        {"obj_fun_type", required_argument, 0, obj_fun_type}
-};
+        {"obj_fun_type", required_argument, 0, obj_fun_type},
+        {"amp", required_argument, 0, amp},
+        {0,              0,                 0, 0}
+    };
 
     const char * short_options = "o:";
 

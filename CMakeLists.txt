@@ -4,7 +4,7 @@ project(bt)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories(
-        /usr/share/ngspice/include/ngspice/
+        /usr/local/include/ngspice/
         /usr/lib64/R/include
         /usr/lib64/R/library/RInside/include
         /usr/lib64/R/library/Rcpp/include)

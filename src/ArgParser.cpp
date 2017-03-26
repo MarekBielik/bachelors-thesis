@@ -22,6 +22,7 @@ void ArgParser::parse(int argc, char **argv) {
     params.sigma_init = SIGMA_INIT;
     params.objFunType = "bestFit";
     params.path = "";
+    params.amplitude = DEFAULT_AMPLITUDE;
 
     int c;
     int option_index = 0;
@@ -68,16 +69,20 @@ void ArgParser::parse(int argc, char **argv) {
                 case 'o':
                     params.path = std::string(optarg);
                     break;
+                case amp:
+                    params.amplitude = std::stod(optarg);
+                    break;
                 case '?':
                 default:
                     throw std::invalid_argument("Invalid arguments syntax");
             }
     }
 
-    /*a simple validity check*/
+    /*a simple parameters validity check*/
     if (params.mu > params.lamda ||
             params.print_change > 1.0 ||
             params.stop_change > 1.0 ||
+            params.amplitude < 0 ||
             (params.path.length() && access(params.path.c_str(), W_OK) != 0) ||
             optind != argc){
         throw std::invalid_argument("Invalid arguments.");

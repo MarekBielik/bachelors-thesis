@@ -1,0 +1,8 @@
+\chapter{Implementation}
+
+\section{Fitness function}
+A fitness function provides us means by which we can determine how good the evolved solution is, so that we can distinguish the more appropriate candidates from the less appropriate ones. It is important to mention that the quality of this function is essential for every evolutionary algorithm, because the ability of the algorithm to find the most suitable solution is highly dependent on the ability of the fitness function to distinguish between the individuals. The value of the function is a positive real number in our case and the exact value is not very important, because the algorithm uses this value only for comparing the individuals between each other and we consider those individuals with the lower value as the better ones. There are three fitness functions implemented in this thesis.
+
+\subsection{Best match with the reference solution}
+This fitness function was used as the first solution in order to find out if the evolution has the ability to find the desired solution. It is based on the method of least squares which is used in regression analysis.
+In terms of fitness function, every individual is represented by a vector

@@ -24,11 +24,11 @@ struct Params;
 #define MAX_CAPACITY 500000
 #define COMPONENTS 6
 #define SIGMA_INIT 10
+#define DEFAULT_AMPLITUDE 1
 
 enum ObjFunType {
     bestFit,
-    min,
-    max,
+    idealSin,
     symAmp
 };
 
@@ -53,6 +53,7 @@ class Chromosome {
     static int32_t maxCap;
     static unsigned sigmaInit;
     static double mutationMax;
+    static double amplitude;
 
     std::vector<double> voltage;
     std::vector<double> time;

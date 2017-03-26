@@ -12,6 +12,7 @@
 
 #define NETLIST_SIZE 16
 
+/*todo: add Rc*/
 enum ComponentName {
     R1,
     R2,

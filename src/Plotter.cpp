@@ -14,6 +14,7 @@ void Plotter::init(std::string paramPath /*= ""*/) {
     path = paramPath;
 }
 
+/*todo: fix the voltage axis orientation*/
 void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
                    std::vector<double> voltage) {
     R["time"] = time;
