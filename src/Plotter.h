@@ -21,7 +21,7 @@ public:
     static void init(std::string paramPath = "");
 
     Plotter();
-    //void plot(std::vector<double> time, std::vector<double> voltage);
+    void plot(std::vector<double> time, std::vector<double> voltage);
     void plot(std::vector<double> time, std::vector<double> refInVoltage,
               std::vector<double> voltage);
     void plot(std::vector<double> time, std::vector<double> refVoltage,

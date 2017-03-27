@@ -14,6 +14,38 @@ void Plotter::init(std::string paramPath /*= ""*/) {
     path = paramPath;
 }
 
+void Plotter::plot(std::vector<double> time, std::vector<double> voltage) {
+    R["time"] = time;
+    R["voltageOut"] = voltage;
+    plotCount++;
+
+    if (path.length()) {
+        cmd = "png('" + path + "/" + std::to_string(plotCount) + ".png'); "
+                "plot(time, voltageOut, type='l', col='green',"
+                "     ylab='Voltage [V]', xlab='Time [s]', lwd=2);"
+                "grid();"
+                "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
+                "       legend=c('Evolved solution output'),"
+                "       lty=c(1), lwd=c(2), col=c('green'));"
+                "dev.off();";
+    }
+    else {
+        if (plotCount > SCREEN_PLOT_MAX)
+            return;
+
+        /*to the screen*/
+        cmd = "x11();"
+                "plot(time, voltageOut, type='l', col='green',"
+                "     ylab='Voltage [V]', xlab='Time [s]', lwd=2);"
+                "grid();"
+                "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
+                "       legend=c('Evolved solution output'),"
+                "       lty=c(1), lwd=c(2), col=c('green'));";
+    }
+
+    R.parseEvalQ(cmd);
+}
+
 void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
                    std::vector<double> voltage) {
     R["time"] = time;
@@ -27,7 +59,7 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
                 "     ylab='Voltage [V]', xlab='Time [s]', lwd=2);"
                 "lines(time, refVoltageIn, col='blue', lwd=2);"
                 "grid();"
-                "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
+                "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
                 "       legend=c('Evolved solution output', 'input'),"
                 "       lty=c(1,1), lwd=c(2,2), col=c('green', 'blue'));"
                 "dev.off();";
@@ -42,13 +74,12 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
                 "     ylab='Voltage [V]', xlab='Time [s]', lwd=2);"
                 "lines(time, refVoltageIn, col='blue', lwd=2);"
                 "grid();"
-                "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
+                "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
                 "       legend=c('Evolved solution output', 'input'),"
                 "       lty=c(1,1), lwd=c(2,2), col=c('green', 'blue'));";
     }
 
     R.parseEvalQ(cmd);
-
 }
 
 void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
@@ -85,7 +116,7 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
                 "lines(time, voltageOut, col='green', lwd=2);"
                 "lines(time, voltageIn, col='blue', lwd=2);"
                 "grid();"
-                "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
+                "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
                 "       legend=c('Analytical solution output',"
                 "                'Evolved solution output',"
                 "                'input'),"
@@ -112,7 +143,7 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
               "lines(time, voltageOut, col='green', lwd=2);"
               "lines(time, voltageIn, col='blue', lwd=2);"
               "grid();"
-              "legend('topleft', inset=c(0.25,-0.17), xpd=TRUE,"
+              "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
               "       legend=c('Analytical solution output',"
               "                'Evolved solution output',"
               "                'input'),"

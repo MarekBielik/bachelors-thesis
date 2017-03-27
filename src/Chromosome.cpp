@@ -207,7 +207,7 @@ void Chromosome::plot()
             break;
         case idealSin:
         case symAmp:
-            plotter.plot(time, referenceInVoltage, voltage);
+            plotter.plot(time, voltage);
             break;
     }
 }
