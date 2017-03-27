@@ -44,13 +44,22 @@ void Amplifier::setComponentValue(const Component component) {
         case Rg:
             netlistVector[10] = "Rg 5 2 " + std::to_string(component.value);
             break;
+        case Rc:
+            netlistVector[7] = "Rc 1 4 " + std::to_string(component.value);
+            break;
         case Cin:
             netlistVector[6] = "Cin in 3 " + std::to_string(component.value) +
                                              "n";
+            break;
         case Ce:
             netlistVector[4] = "Ce 0 5 " + std::to_string(component.value) +
                                            "n";
+            break;
     }
+}
+
+void Amplifier::setRload(const unsigned value) {
+    netlistVector[8] = "Rload 0 out " + std::to_string(value);
 }
 
 char ** Amplifier::getNetlist() {

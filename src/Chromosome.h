@@ -22,8 +22,8 @@ struct Params;
 
 #define MAX_RESISTANCE 500000
 #define MAX_CAPACITY 500000
-#define COMPONENTS 6
-#define SIGMA_INIT 10
+#define COMPONENTS 7
+#define SIGMA_INIT 100
 #define DEFAULT_AMPLITUDE 1
 
 enum ObjFunType {
@@ -52,7 +52,6 @@ class Chromosome {
     static int32_t maxRes;
     static int32_t maxCap;
     static unsigned sigmaInit;
-    static double mutationMax;
     static double amplitude;
 
     std::vector<double> voltage;

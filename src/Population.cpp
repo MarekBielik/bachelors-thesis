@@ -33,8 +33,6 @@ void Population::evolve() {
     double prevStopGen = DBL_MAX;
     double prevPrintGen = DBL_MAX;
 
-    /*todo: add the preamble*/
-
     while (++generationCount < maxGen) {
         for (int i = mu; i < lambda + mu; i++)
             population[i] = population[generator() % mu].reproduce();

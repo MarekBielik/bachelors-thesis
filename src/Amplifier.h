@@ -11,15 +11,16 @@
 #include <vector>
 
 #define NETLIST_SIZE 16
+#define R_LOAD 22000
 
-/*todo: add Rc*/
 enum ComponentName {
     R1,
     R2,
     Re,
     Rg,
     Cin,
-    Ce
+    Ce,
+    Rc
 };
 
 enum ComponentType {
@@ -42,6 +43,7 @@ public:
     char ** getNetlist();
     void freeNetlist();
     void setComponentValue(const Component component);
+    void setRload(const unsigned value);
 };
 
 

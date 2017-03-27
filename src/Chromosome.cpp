@@ -20,10 +20,11 @@ double Chromosome::TAU_PRIME = 1 / sqrt(COMPONENTS);
 int32_t Chromosome::maxRes;
 int32_t Chromosome::maxCap;
 unsigned Chromosome::sigmaInit;
-double Chromosome::mutationMax;
 double Chromosome::amplitude;
 
 void Chromosome::init(Params params) {
+    amplifier.setRload(params.Rload);
+
     /*set the reference vectors*/
     simulator.simulate(amplifier.getNetlist(), referenceOutVoltage,
                        referenceTime, referenceInVoltage);
@@ -31,7 +32,7 @@ void Chromosome::init(Params params) {
 
     if (params.objFunType == "bestFit")
         objFunType = bestFit;
-    else if (params.objFunType == "idealSin")
+    else if (params.objFunType == "idealSine")
         objFunType = idealSin;
     else if (params.objFunType == "symAmp")
         objFunType = symAmp;
@@ -42,53 +43,30 @@ void Chromosome::init(Params params) {
     maxRes = params.max_res;
     maxCap = params.max_cap;
     amplitude = params.amplitude;
-    /*todo: fix the expression*/
-    mutationMax = (maxRes + maxCap) / 2 / 4;
 }
 
 Chromosome::Chromosome() {
     objFunVal = std::nan("");
     genotype.components.resize(COMPONENTS);
     genotype.strategyParameters.resize(COMPONENTS);
-    Component tmpComp;
+
+    genotype.components[0].name = R1; genotype.components[0].type = resistor;
+    genotype.components[0].value = generator() % maxRes;
+    genotype.components[1].name = R2; genotype.components[1].type = resistor;
+    genotype.components[1].value = generator() % maxRes;
+    genotype.components[2].name = Re; genotype.components[2].type = resistor;
+    genotype.components[2].value = generator() % maxRes;
+    genotype.components[3].name = Rg; genotype.components[3].type = resistor;
+    genotype.components[3].value = generator() % maxRes;
+    genotype.components[4].name = Rc; genotype.components[4].type = resistor;
+    genotype.components[4].value = generator() % maxRes;
+    genotype.components[5].name = Ce; genotype.components[5].type = capacitor;
+    genotype.components[5].value = generator() % maxCap;
+    genotype.components[6].name = Cin; genotype.components[6].type = capacitor;
+    genotype.components[6].value = generator() % maxCap;
 
     for (int i = 0; i < COMPONENTS; i++) {
         genotype.strategyParameters[i] = sigmaInit;
-
-        switch (i) {
-            case 0:
-                tmpComp.name = R1;
-                tmpComp.type = resistor;
-                tmpComp.value = generator() % maxRes;
-                break;
-            case 1:
-                tmpComp.name = R2;
-                tmpComp.type = resistor;
-                tmpComp.value = generator() % maxRes;
-                break;
-            case 2:
-                tmpComp.name = Re;
-                tmpComp.type = resistor;
-                tmpComp.value = generator() % maxRes;
-                break;
-            case 3:
-                tmpComp.name = Rg;
-                tmpComp.type = resistor;
-                tmpComp.value = generator() % maxRes;
-                break;
-            case 4:
-                tmpComp.name = Ce;
-                tmpComp.type = capacitor;
-                tmpComp.value = generator() % maxCap;
-                break;
-            case 5:
-                tmpComp.name = Cin;
-                tmpComp.type = capacitor;
-                tmpComp.value = generator() % maxCap;
-                break;
-        }
-
-        genotype.components[i] = tmpComp;
     }
 }
 
@@ -98,9 +76,26 @@ Chromosome::Chromosome(const Genotype & genotype) {
 }
 
 Genotype Chromosome::mutate(Genotype genotype) {
-    int32_t mutation, supremum;
+    int32_t mutation,
+            supremum;
+    double mutationMax;
 
     for (int i = 0; i < COMPONENTS; i++) {
+        /*choose the appropriate supremum and max mutation step*/
+        switch (genotype.components[i].type) {
+            case resistor:
+                mutationMax = maxRes / 2;
+                supremum = maxRes;
+                break;
+            case capacitor:
+                supremum = maxCap;
+                mutationMax = maxCap / 2;
+                break;
+            default:
+                mutationMax = supremum = 0;
+                break;
+        }
+
         double prevSigma = genotype.strategyParameters[i];
         /* get the mutation*/
         /* sigma(t+1) = sigma(t) * e^(TAU' * N(0,1) + TAU * N(0,1)) */
@@ -113,19 +108,6 @@ Genotype Chromosome::mutate(Genotype genotype) {
                  mutation < -mutationMax ||
                  genotype.strategyParameters[i] > mutationMax ||
                  genotype.strategyParameters[i] < -mutationMax);
-
-        /*choose the appropriate supremum*/
-        switch (genotype.components[i].type) {
-            case resistor:
-                supremum = maxRes;
-                break;
-            case capacitor:
-                supremum = maxRes;
-                break;
-            default:
-                supremum = maxRes;
-                break;
-        }
 
         /*mutate the component's value and keep it in the valid interval*/
         if ((genotype.components[i].value + mutation) <= 1 ||
@@ -151,9 +133,7 @@ void Chromosome::runSimulation(bool full /*= false*/) {
     amplifier.freeNetlist();
 }
 
-double Chromosome::objectiveFunction()
-{
-
+double Chromosome::objectiveFunction() {
     /*if the objectiveFunction() has already been called,
      * return the previous value*/
     if(! std::isnan(objFunVal))
@@ -166,6 +146,8 @@ double Chromosome::objectiveFunction()
 
     int refSineSize;
     double refSine;
+    /*the values of the start and the end depend on the length of the voltage
+     * vector obtained from the simulator*/
     int start = 5;
     int end = 68;
     const double twoPi = std::acos(-1) * 2;
@@ -183,7 +165,8 @@ double Chromosome::objectiveFunction()
             for (int i = 30; i < voltage.size(); i++) {
                 objFunVal += pow(referenceOutVoltage[i] - voltage[i], 2);
             }
-            /*todo: add the symmetry condition*/
+
+            objFunVal = (fabs(high + low) + 1) * objFunVal;
             break;
         case idealSin:
             objFunVal = 0;
@@ -199,7 +182,6 @@ double Chromosome::objectiveFunction()
             }
 
             objFunVal = (fabs(high + low) + 1) * objFunVal;
-
             break;
         case symAmp:
             objFunVal = (fabs(high + low) + 1) / (high - low + 1);
@@ -250,6 +232,9 @@ std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
                 break;
             case Rg:
                 os << "Rg: ";
+                break;
+            case Rc:
+                os << "Rc: ";
                 break;
             case Cin:
                 os << "Cin: ";

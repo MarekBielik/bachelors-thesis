@@ -23,6 +23,7 @@ void ArgParser::parse(int argc, char **argv) {
     params.objFunType = "bestFit";
     params.path = "";
     params.amplitude = DEFAULT_AMPLITUDE;
+    params.Rload = R_LOAD;
 
     int c;
     int option_index = 0;
@@ -72,6 +73,9 @@ void ArgParser::parse(int argc, char **argv) {
                 case amp:
                     params.amplitude = std::stod(optarg);
                     break;
+                case Rload:
+                    params.Rload = std::stoul(optarg);
+                    break;
                 case '?':
                 default:
                     throw std::invalid_argument("Invalid arguments syntax");
@@ -83,6 +87,10 @@ void ArgParser::parse(int argc, char **argv) {
             params.print_change > 1.0 ||
             params.stop_change > 1.0 ||
             params.amplitude < 0 ||
+            (params.ES_type != "plus" && params.ES_type != "comma") ||
+            (params.objFunType != "bestFit" &&
+                     params.objFunType != "idealSine" &&
+                     params.objFunType != "symAmp") ||
             (params.path.length() && access(params.path.c_str(), W_OK) != 0) ||
             optind != argc){
         throw std::invalid_argument("Invalid arguments.");

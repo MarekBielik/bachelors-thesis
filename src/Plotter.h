@@ -8,7 +8,7 @@
 #include <vector>
 #include <RInside.h>
 
-#define SCREEN_PLOT_MAX 60
+#define SCREEN_PLOT_MAX 62
 
 class Plotter {
     static std::string path;

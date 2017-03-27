@@ -14,7 +14,6 @@ void Plotter::init(std::string paramPath /*= ""*/) {
     path = paramPath;
 }
 
-/*todo: fix the voltage axis orientation*/
 void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
                    std::vector<double> voltage) {
     R["time"] = time;
@@ -81,8 +80,8 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
         cmd = "png('" + path + "/" + std::to_string(plotCount) + ".png'); "
                 "plot(time, refVoltageOut, type='l', col='red',"
                 "     ylab='Voltage [V]', xlab='Time [s]', lwd=2,"
-                "     ylim=c(" + std::to_string(plotSupremum) + ", " +
-                              std::to_string(plotInfimum) + "));"
+                "     ylim=c(" + std::to_string(plotInfimum) + ", " +
+                              std::to_string(plotSupremum) + "));"
                 "lines(time, voltageOut, col='green', lwd=2);"
                 "lines(time, voltageIn, col='blue', lwd=2);"
                 "grid();"
@@ -108,8 +107,8 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
         cmd = "x11();"
               "plot(time, refVoltageOut, type='l', col='red',"
               "     ylab='Voltage [V]', xlab='Time [s]', lwd=2,"
-              "     ylim=c(" + std::to_string(plotSupremum) + ", " +
-                            std::to_string(plotInfimum) + "));"
+              "     ylim=c(" + std::to_string(plotInfimum) + ", " +
+                            std::to_string(plotSupremum) + "));"
               "lines(time, voltageOut, col='green', lwd=2);"
               "lines(time, voltageIn, col='blue', lwd=2);"
               "grid();"

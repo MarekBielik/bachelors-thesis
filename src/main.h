@@ -14,5 +14,6 @@
 #include "ArgParser.h"
 
 void sigIntHandler(int s);
+void printEvolutionProperties(Params params, std::ostream & out);
 
 #endif //BT_MAIN_H

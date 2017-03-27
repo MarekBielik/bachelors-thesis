@@ -8,6 +8,7 @@
 #include <getopt.h>
 
 #include "Population.h"
+#include "Amplifier.h"
 
 enum Options {
     mu,
@@ -22,7 +23,8 @@ enum Options {
     max_cap,
     sigma_init,
     obj_fun_type,
-    amp
+    amp,
+    Rload
 };
 
 struct Params {
@@ -40,10 +42,11 @@ struct Params {
     std::string objFunType;
     std::string path;
     double amplitude;
+    unsigned Rload;
 };
 
 class ArgParser {
-    const struct option long_options[14] = {
+    const struct option long_options[15] = {
         {"mu", required_argument, 0, mu},
         {"lambda", required_argument, 0, lambda},
         {"max_gen", required_argument, 0, max_gen},
@@ -51,12 +54,13 @@ class ArgParser {
         {"print_gen", required_argument, 0, print_gen},
         {"print_change", required_argument, 0, print_change},
         {"stop_change", required_argument, 0, stop_change},
-        {"ES_type", required_argument, 0, ES_type},
+        {"ES", required_argument, 0, ES_type},
         {"max_res", required_argument, 0, max_res},
         {"max_cap", required_argument, 0, max_cap},
         {"sigma_init", required_argument, 0, sigma_init},
-        {"obj_fun_type", required_argument, 0, obj_fun_type},
+        {"fitness", required_argument, 0, obj_fun_type},
         {"amp", required_argument, 0, amp},
+        {"Rload", required_argument, 0, Rload},
         {0,              0,                 0, 0}
     };
 
