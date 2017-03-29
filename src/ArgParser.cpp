@@ -9,6 +9,8 @@ ArgParser::ArgParser() {
 }
 
 void ArgParser::parse(int argc, char **argv) {
+    double maxDiff = DEFAULT_DIFF;
+
     params.mu = MU;
     params.lamda = LAMBDA;
     params.max_gen = MAX_GEN;
@@ -76,6 +78,9 @@ void ArgParser::parse(int argc, char **argv) {
                 case Rload:
                     params.Rload = std::stoul(optarg);
                     break;
+                case max_diff:
+                    maxDiff = std::stoi(optarg);
+                    break;
                 case '?':
                 default:
                     throw std::invalid_argument("Invalid arguments syntax");
@@ -87,14 +92,20 @@ void ArgParser::parse(int argc, char **argv) {
             params.print_change > 1.0 ||
             params.stop_change > 1.0 ||
             params.amplitude < 0 ||
+            maxDiff < 0 ||
+            maxDiff > 100 ||
             (params.ES_type != "plus" && params.ES_type != "comma") ||
             (params.objFunType != "bestFit" &&
                      params.objFunType != "idealSine" &&
-                     params.objFunType != "symAmp") ||
+                     params.objFunType != "maxAmp") ||
             (params.path.length() && access(params.path.c_str(), W_OK) != 0) ||
             optind != argc){
         throw std::invalid_argument("Invalid arguments.");
     }
+
+    /*transform the difference from percentage to an inverted interval
+     * <0, 1>*/
+    params.max_diff = 1 - (maxDiff / 100);
 }
 
 const Params & ArgParser::getParams() const {

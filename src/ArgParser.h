@@ -10,6 +10,8 @@
 #include "Population.h"
 #include "Amplifier.h"
 
+#define DEFAULT_DIFF 100;
+
 enum Options {
     mu,
     lambda,
@@ -24,7 +26,8 @@ enum Options {
     sigma_init,
     obj_fun_type,
     amp,
-    Rload
+    Rload,
+    max_diff
 };
 
 struct Params {
@@ -43,10 +46,11 @@ struct Params {
     std::string path;
     double amplitude;
     unsigned Rload;
+    double max_diff;
 };
 
 class ArgParser {
-    const struct option long_options[15] = {
+    const struct option long_options[16] = {
         {"mu", required_argument, 0, mu},
         {"lambda", required_argument, 0, lambda},
         {"max_gen", required_argument, 0, max_gen},
@@ -61,7 +65,8 @@ class ArgParser {
         {"fitness", required_argument, 0, obj_fun_type},
         {"amp", required_argument, 0, amp},
         {"Rload", required_argument, 0, Rload},
-        {0,              0,                 0, 0}
+        {"max_diff", required_argument, 0, max_diff},
+        {         0,                 0, 0, 0}
     };
 
     const char * short_options = "o:";

@@ -21,6 +21,7 @@ int32_t Chromosome::maxRes;
 int32_t Chromosome::maxCap;
 unsigned Chromosome::sigmaInit;
 double Chromosome::amplitude;
+double Chromosome::maxDiff;
 
 void Chromosome::init(Params params) {
     amplifier.setRload(params.Rload);
@@ -34,7 +35,7 @@ void Chromosome::init(Params params) {
         objFunType = bestFit;
     else if (params.objFunType == "idealSine")
         objFunType = idealSin;
-    else if (params.objFunType == "symAmp")
+    else if (params.objFunType == "maxAmp")
         objFunType = symAmp;
     else
         objFunType = bestFit;
@@ -43,6 +44,7 @@ void Chromosome::init(Params params) {
     maxRes = params.max_res;
     maxCap = params.max_cap;
     amplitude = params.amplitude;
+    maxDiff = params.max_diff;
 }
 
 Chromosome::Chromosome() {
@@ -141,32 +143,38 @@ double Chromosome::objectiveFunction() {
 
     runSimulation();
 
-    double low = *std::min_element(std::begin(voltage), std::end(voltage));
-    double high = *std::max_element(std::begin(voltage), std::end(voltage));
-
     int refSineSize;
-    double refSine;
+    double refSine,
+            peak,
+            trough,
+            min,
+            max;
     /*the values of the start and the end depend on the length of the voltage
      * vector obtained from the simulator*/
     int start = 5;
     int end = 68;
     const double twoPi = std::acos(-1) * 2;
+    
+    trough = *std::min_element(std::begin(voltage) + 25,
+                               std::end(voltage) - 25);
+    peak = *std::max_element(std::begin(voltage) + 45,
+                             std::end(voltage) -15);
+
+    min = std::min(fabs(trough), peak);
+    max = std::max(fabs(trough), peak);
+
+    if ((min / max) < maxDiff)
+        return objFunVal = DBL_MAX;
 
     switch (objFunType) {
         case bestFit:
-            /*compare the voltage waveforms*/
-            /*using the least squares method*/
             objFunVal = 0.0;
 
-            /*the comparison skips the initial 'unstable area', hence the 30
+            /*the comparison skips the initial 'unstable area', hence the 35
              * at the start*/
-            /*todo: statistics needed to figure out if the starting point has
-             *any influence on the overall evolution*/
-            for (int i = 30; i < voltage.size(); i++) {
+            for (int i = 35; i < voltage.size(); i++) {
                 objFunVal += pow(referenceOutVoltage[i] - voltage[i], 2);
             }
-
-            objFunVal = (fabs(high + low) + 1) * objFunVal;
             break;
         case idealSin:
             objFunVal = 0;
@@ -180,12 +188,11 @@ double Chromosome::objectiveFunction() {
                 refSine = -amplitude * sin((twoPi * i) / (refSineSize -1));
                 objFunVal += pow(refSine - voltage[start+i], 2);
             }
-
-            objFunVal = (fabs(high + low) + 1) * objFunVal;
             break;
         case symAmp:
-            objFunVal = (fabs(high + low) + 1) / (high - low + 1);
-            /*objFunVal = fabs(high + low) + 1 / exp(high - low + 1);*/
+            //objFunVal = (fabs(peak + trough) + 1)  / (peak - trough);
+            //objFunVal = fabs(peak + trough) + 1 / exp(peak - trough + 1);
+            objFunVal = 1 / (peak - trough);
             break;
     }
 

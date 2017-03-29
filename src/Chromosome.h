@@ -53,6 +53,7 @@ class Chromosome {
     static int32_t maxCap;
     static unsigned sigmaInit;
     static double amplitude;
+    static double maxDiff;
 
     std::vector<double> voltage;
     std::vector<double> time;
