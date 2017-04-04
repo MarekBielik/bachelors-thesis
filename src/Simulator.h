@@ -10,7 +10,7 @@
 #include <vector>
 #include <ctime>
 
-#define COPY_LENGTH 70
+#define COPY_LENGTH 69
 
 class Simulator {
     /*vectors returned by ngSPICE*/

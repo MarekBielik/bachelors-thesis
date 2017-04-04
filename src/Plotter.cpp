@@ -20,7 +20,7 @@ void Plotter::plot(std::vector<double> time, std::vector<double> voltage) {
     plotCount++;
 
     if (path.length()) {
-        cmd = "png('" + path + "/" + std::to_string(plotCount) + ".png'); "
+        cmd = "pdf('" + path + "/" + std::to_string(plotCount) + ".pdf'); "
                 "plot(time, voltageOut, type='l', col='green',"
                 "     ylab='Voltage [V]', xlab='Time [s]', lwd=2);"
                 "grid();"
@@ -54,7 +54,7 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
     plotCount++;
 
     if (path.length()) {
-        cmd = "png('" + path + "/" + std::to_string(plotCount) + ".png'); "
+        cmd = "pdf('" + path + "/" + std::to_string(plotCount) + ".pdf'); "
                 "plot(time, voltageOut, type='l', col='green',"
                 "     ylab='Voltage [V]', xlab='Time [s]', lwd=2);"
                 "lines(time, refVoltageIn, col='blue', lwd=2);"
@@ -108,7 +108,7 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
     plotInfimum = tmpOut < tmpRef ? tmpOut : tmpRef;
 
     if (path.length()) {
-        cmd = "png('" + path + "/" + std::to_string(plotCount) + ".png'); "
+        cmd = "pdf('" + path + "/" + std::to_string(plotCount) + ".pdf'); "
                 "plot(time, refVoltageOut, type='l', col='red',"
                 "     ylab='Voltage [V]', xlab='Time [s]', lwd=2,"
                 "     ylim=c(" + std::to_string(plotInfimum) + ", " +

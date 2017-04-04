@@ -80,5 +80,4 @@ public:
     const Params & getParams() const;
 };
 
-
 #endif //BT_ARGPARSER_H

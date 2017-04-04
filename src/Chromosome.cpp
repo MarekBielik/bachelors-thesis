@@ -154,11 +154,15 @@ double Chromosome::objectiveFunction() {
     int start = 5;
     int end = 68;
     const double twoPi = std::acos(-1) * 2;
-    
-    trough = *std::min_element(std::begin(voltage) + 25,
-                               std::end(voltage) - 25);
-    peak = *std::max_element(std::begin(voltage) + 45,
-                             std::end(voltage) -15);
+
+    while (voltage[start] < 0) start++;
+    while (voltage[start] > 0) start++;
+    while (voltage[end] < 0) end--;
+
+    trough = *std::min_element(std::begin(voltage) + start,
+                               std::begin(voltage) + start + 12);
+    peak = *std::max_element(std::begin(voltage) + start + 12,
+                             std::begin(voltage) + end);
 
     min = std::min(fabs(trough), peak);
     max = std::max(fabs(trough), peak);
@@ -169,19 +173,12 @@ double Chromosome::objectiveFunction() {
     switch (objFunType) {
         case bestFit:
             objFunVal = 0.0;
-
-            /*the comparison skips the initial 'unstable area', hence the 35
-             * at the start*/
-            for (int i = 35; i < voltage.size(); i++) {
+            for (int i = start; i < end; i++) {
                 objFunVal += pow(referenceOutVoltage[i] - voltage[i], 2);
             }
             break;
         case idealSin:
-            objFunVal = 0;
-            while (voltage[start] < 0) start++;
-            while (voltage[start] > 0) start++;
-            while (voltage[end] < 0) end--;
-
+            objFunVal = 0.0;
             refSineSize = end - start;
 
             for (int i = 0; i < refSineSize; i++) {

@@ -26,7 +26,7 @@ Amplifier::Amplifier() {
     netlistVector[11] = "R2 0 3 33000";
     netlistVector[12] = "R1 3 4 47000";
     netlistVector[13] = "Q1 1 3 2 bc547c";
-    netlistVector[14] = ".TRAN 20u 1.24m";
+    netlistVector[14] = ".TRAN 20u 1.22m";
     netlistVector[15] = ".end";
 }
 

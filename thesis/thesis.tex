@@ -83,9 +83,23 @@
 % This solves the problems with links which leads after the picture
 \usepackage[all]{hypcap}
 
+%Packages
+%---------------------------------------------------------------------------
 % Algorithms
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
+% Figures
+%\usepackage{graphicx}
+\graphicspath{ {figures/} }
+
+%SI units
+\usepackage{siunitx}
+
+%Commands
+%---------------------------------------------------------------------------
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
 
 % Informace o práci/projektu / Information about the thesis
 %---------------------------------------------------------------------------
@@ -138,7 +152,7 @@
 
 %Klicova slova (cesky, slovensky ci anglicky) / Keywords (in czech, slovak or english)
 \keywords[cs]{Sem budou zapsána jednotlivá klíčová slova v českém (slovenském) jazyce, oddělená čárkami.}
-\keywords[en]{artificial intelligence, evolutionary computation, evolution strategy, SPICE, ngSPICE, analogue amplifier,}
+\keywords[en]{artificial intelligence, evolutionary computation, evolution strategies, ngSPICE, analog amplifiers, fitness function}
 
 %Prohlaseni (u anglicky psane prace anglicky, u slovensky psane prace slovensky)
 %Declaration (for thesis in english should be in english)
@@ -152,7 +166,7 @@ All the relevant information sources, which were used during preparation of this
 %Podekovani (nepovinne, nejlepe v jazyce prace) / Acknowledgement (optional, ideally in the language of the thesis)
 %\acknowledgment{V této sekci je možno uvést poděkování vedoucímu práce a těm, kteří poskytli odbornou pomoc
 %(externí zadavatel, konzultant, apod.).}
-\acknowledgment{Thank you all, my family, supervisor and Georgina.}
+\acknowledgment{I want to thank my supervisor for providing precious knowledge, my family for support and you Georgina for giving it all sense.}
 
 % řeší první/poslední řádek odstavce na předchozí/následující stránce
 % solves first/last row of the paragraph on the previous/next page
