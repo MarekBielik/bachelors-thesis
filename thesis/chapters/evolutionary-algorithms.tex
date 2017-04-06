@@ -76,7 +76,7 @@ In the first scheme, denoted by $(\mu + \lambda)$-ES, both parents from the prev
 In the second type of selection, denoted $(\mu,\lambda)$-ES, the parents are selected only from the set of children $\lambda$, so every chromosome lives only in one generation. Even a chromosome with a very good fitness function is discarted and replaced by a child with potencially worse fitness, so the convergence is not as strict as in the previous scheme, but it is easier to move away from a local optimum for this method.\\
 Both schemes are implemented in this thesis with various values of $\mu$ and $\lambda$ parameters $(\mu \ll \lambda)$. Schemes such as $(1 + 1)$-ES and $(1, \lambda)$-ES are also possible ($(1 + 1)$-ES was mainly studied when evolution strategies was invented), but they show a slower convergency properties.
 
-\section{Mutation}
+\section{Mutation} \label{mutation-section}
 Chromosomes in evolution strategies are represented as vectors of real values, formula \ref{simple-chromosome-vector}.
 
 \begin{equation} \label{simple-chromosome-vector}

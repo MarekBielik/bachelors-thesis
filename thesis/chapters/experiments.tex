@@ -2,7 +2,7 @@
 The evolutionary algorithms described in section \ref{evolution-strategies} were implemented in C++. This language was chosen due to it's flexibility, performance and the possibility to make use of the ngSPICE simulator. The implementation also utilises the RInside library which integrates R into C++. The R language is used to plot graphs dynamically during the evolution either to the screen or to a file so the user can see and record how the solution evolves.\\
 The program is written as a console application and the user can specify the properties of the evolution via command-line arguments.
 
-\section{Chromosomes evaluation}
+\section{Chromosomes evaluation} \label{chromosomes-evaluation}
 A fitness function provides us means by which we can determine how good the evolved solution is, so that we can distinguish the more appropriate candidates from the less appropriate ones. It is important to mention that the quality of this function is essential, because the ability of the algorithm to find the most suitable solution is highly dependent on the ability of the fitness function to distinguish between the individuals. The value of the function is a positive real number in our case and the algorithm uses it only for comparing the individuals between each other. We consider those individuals with the lower value as the better ones.\\
 The implementation required some methods of trial and error and in the end, there are three fitness functions implemented in this thesis. All of them use the ngSPICE simulator in order to obtain the output of the amplifier and assess it afterwards. The simulation is done for every candidate solution and it takes most of the computation time of the overall evolutionary algorithm.
 
@@ -141,4 +141,8 @@ The ability of the evolution to find the desired solution was also decreased bec
 Condition on line 4 in algorithm \ref{symmetry-rating} is used to separate the symmetrical and asymmetrical chromosomes. The values of the variables $trough$ and $peak$ are obtained in the same way as in algorithm \ref{maxAmp}. The value of $maxDifference$ is in the interval $\left[0, 100\right]$ and it is set by the user. It represents the maximal percentage difference between the peak and trough in the second period of the signal. The algorithm calculates the ratio between the peak and trough and if the result is less than the threshold value, the chromosome is evaluated with the maximal fitness and the function is terminated. Othervise the evaluation continues. This allows the user to control the results of the evolution with respect to the symmetry of the output signal.
 
 \section{Results}
-Results.
+
+\subsection{Evolution setup}
+
+\subsection{Initial stage}
+
