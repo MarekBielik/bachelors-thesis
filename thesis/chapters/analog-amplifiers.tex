@@ -1,19 +1,38 @@
 \chapter{Analog amplifiers}
-One of the goals of the thesis is to automate the design of analog amplifiers which are electronic circuits that are used to amplify the input signal.
+One of the goals of the thesis is to automate the design of analog amplifiers which are electronic circuits that are used to increase the input signal with the minimum amount of distortion to the output signal. There are two types of amplifiers used in this thesis which are discussed below.
 
-\section{Common Emitter Amplifier} \label{ce-amp}
+\section{Single stage common emitter amplifier} \label{ce-amp}
+The single stage common emitter amplifier was chosen because it belongs to the most commonly used examples of analog amplifiers in class A. We can see the circuit diagram in figure \ref{ce-amplifier}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.45]{ce-amplifier}\label{ce-amplifier}
+    \includegraphics[scale=0.4]{ce-amplifier}\label{ce-amplifier}
     \caption{Circuit diagram for the common emitter amplifier}
 \end{figure}
 
-The subject of the optimization are elements $R1$, $R2$, $Rc$, $Rg$, $Rc$, $Cin$, $Ce$. These elements represent the solution variables in the evolutionl and make up the vector $\vec{x}$ which is thoroughly discussed in section \ref{mutation-section}.
+Resistors $R1$ and $R2$ are used to bias the transistor $Q1$ in order to set the quiescent point of the transistor to the middle of its DC load line, so that the collector of $Q1$ is put at $1/2$ of the voltage $V1$. This allows the maximum symmetrical swings of the output signal without clipping (flattening of the top or the bottom of the waveform). The collector voltage depends on the collector current (quiescent current), equation \ref{collector-voltage}. This current depends on the applied base bias and the values of $Rc$ and $Re$.
+
+\begin{equation} \label{collector-voltage}
+    V_c = V1 - I_c \cdot Rc
+\end{equation}
+
+Instead of using a voltage divider for biasing, it is possible to use only resistor $R1$, but this approach would make the quiescent point highly dependent on the current gain $\beta$ of the transistor. This parameter varies considerably in every transistor and the manufacturer usually speciefies only a certain range of $\beta$. For this reason, we use a voltage divider constituted by $R1$ and $R2$ which impedance should be small compared with the impedance looking into the transistor base, formula \ref{divider-impedance}. This will give us a divider which is stiff enough so that the quiescent point is insensitive to variations in transistor $\beta$. However, the current flowing in the divider should not be unnecessarily large as it affects the overall consumption of the amplifier.
+
+\begin{equation} \label{divider-impedance}
+    R1 \| R2 \ll \beta Re
+\end{equation}
+
+Capacitors $Cin$ and $Cout$ form high pass filters and they are used as coupling capacitors to separate the AC signals from the DC voltage used to set up the amplifier. Their values are chosen so that the capacitors have low impedance for the desired input and output signal frequencies. This ensures that the signal's average is zero, as the capacitors pass only AC signals and block any DC component.\\
+The input voltage $Vin$ causes a wiggle in the base voltage. The emitter voltage follows the base voltage which causes a wiggle in the emitter and also collector current. The output voltage which is the collector voltage depends on the current flowing through $Rc$, equation \ref{collector-voltage}. When this current rises, the collector voltage drops and vice versa. That means that the amplifier also inverts the input signal, figure \ref{ce-amplifier-sim}. The output AC signal is then superimposed on the collector DC voltage and the DC component is subsequently filtered out by the capacitor $Cout$ (high pass filter).\\
+Capacitor $Ce$ is used to reach the amplifier's maximum gain. The values of $Re$ and $Rg$ set the emitter voltage which affects the amplifier's gain and we usually want these values to be as low as possible since this gives us the highest gain. However, if the emitter voltage is too low, it will vary significantly as the base-emitter drop varies with temperature. The solution is to bypass the $Re$ resistor so that the impedance for the emitter will vary according to the signal's frequency. The bypass capacitor $Ce$ is an open circuit component for DC bias and the emitter voltage depends on both $Re$ and $Rg$ which allows stable biasing. For higher frequency signals, the bypass capacitor short circuits $Re$ and the emitter voltage now depends mostly on $Re$ which value sets the maximum gain.\\
+The analytical calculation for this circuit is beyond the scope of this thesis and it is left up to the evolutionary algorithms. The subject of the optimization are elements $R1$, $R2$, $Rc$, $Rg$, $Rc$, $Cin$, $Ce$. These elements represent the solution variables in the evolutionl and make up the vector $\vec{x}$ which is thoroughly discussed in section \ref{mutation-section}.
+
+\section{Two stage amplifier}
+Two stage amplifier.
 
 \section{ngSPICE}
 ngSPICE is an open-source circuit simulator based on SPICE (\textit{Simulation Program with Integrated Circuit Emphasis}). It uses a language which syntax has been inherited from SPICE for describing circuits.\\
-An example of such description of the circuit from section \ref{ce-amp} is shown in listing \ref{ce-amp-lst}. The first line contains the name of the circuit and on the next four lines, there is a description of the transistor used in the circuit. On the next lines, there is a list of the circuit's elements. The name of the element is on the first position followed by the numbers or names of the nodes which the element is connected to. The last position contains the properties of the element. The second last line contains the description of the simulation. In this case, we do a transient analysis of the circuit for \SI{1.22}{\milli\second} with the sampling period \SI{20}{\micro\second}. This netlist can be generated by using the gEDA toolkit which is also an open-source project.
+An example of such description of the circuit from section \ref{ce-amp} is shown in listing \ref{ce-amp-lst}. The first line contains the name of the circuit and on the next four lines, there is a description of the transistor used in the circuit. On the next lines, there is a list of the circuit's elements. The name of the element is on the first position followed by the numbers or names of the nodes which the element is connected to. The last position contains the properties of the element. The second last line contains the description of the simulation. In this case, we do a transient analysis of the circuit for \SI{1.22}{\milli\second} with the sampling period \SI{20}{\micro\second}. This netlist can be generated by using the gEDA (\textit{Electronic Design Automation}) toolkit which is also an open-source project oriented towards electronic design.
 
 \begin{lstlisting}[caption={description of an amplifier using the SPICE syntax},
                    label={ce-amp-lst},
@@ -46,6 +65,6 @@ The simulator is launched several thousand times during a typical evolution and 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=.7]{ce-amplifier-sim}\label{ce-amplifier-sim}
+    \includegraphics[scale=.6]{ce-amplifier-sim}\label{ce-amplifier-sim}
     \caption{Simulation of the common emitter amplifier}
 \end{figure}

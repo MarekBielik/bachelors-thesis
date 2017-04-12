@@ -62,7 +62,7 @@ We can see the result of the evolution using this fitness function in figure \re
 \end{figure}
 
 \subsection{Ideal sine wave}
-This method is similar to the previous one but instead of using pre-simulated output as a reference, it uses an analytically calculated sine wave. The function also uses the method of least squares explained in the previous section and it iterates over the second period of the signal which is represented by the $candidateVector$.\\
+This method is similar to the previous one but instead of using pre-simulated output as a reference, it uses an analytically calculated sine wave. An analytical sine wave is used in order to force the evolution towards such solution that won't produce a distorted output signal since the input is in the form of a sine wave as well. The function also uses the method of least squares explained in the previous section and it iterates over the second period of the signal which is represented by the $candidateVector$.\\
 We can see the technique in algorithm \ref{idealSine}. In every iteration, it calculates the value of the sine wave and compares it with the simulated signal. The sum of the comparisons is then returned as the fitness value and the lower the result is, the closer the candidate solution is to the reference. The amplitude of the sine wave is set by the user, so this method allows users to design amplifiers with an arbitrary amplification which doesn't exceed the circuit's capabilities.
 
 \begin{algorithm}
@@ -142,7 +142,7 @@ Condition on line 4 in algorithm \ref{symmetry-rating} is used to separate the s
 
 \section{Results}
 
-\subsection{Evolution setup}
-
-\subsection{Initial stage}
-
+\subsection{Initial stages}
+The first experiments were performed only in order to optimize the value of resistor $R1$ in the single stage amplifier. We used the 'best match' evaluation method and mutations with one step size. The evolution always found a value close to \SI{50}{\kilo\ohm} which was the desired solution. These experiments were always successful as this was a very simple task for the evolution.\\
+In the next stage, the task was to optimize the voltage divider constituted by $R1$ and $R2$. We again used the 'best match' method and mutations with one step size and it emerged, that the evolution was able to find the solution even faster than in the previous case. This was because we were looking only for the right ratio between the resistors and not for specific values so the set of the desired solutions was larger in this case.\\
+The next task for the evolution was to find the right values for
