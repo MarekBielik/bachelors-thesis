@@ -45,7 +45,6 @@ class Chromosome {
     static std::vector<double> referenceTime;
     static Simulator simulator;
     static Amplifier amplifier;
-    static Plotter plotter;
     static double TAU;
     static double TAU_PRIME;
     static ObjFunType objFunType;

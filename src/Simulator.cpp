@@ -77,7 +77,7 @@ void Simulator::run(char **circuit) {
 }
 
 void Simulator::unload() {
-    ngSpice_free_resources();
+    ngSpice_FreeResources();
     ngSpice_Command((char*) "destroy tran1");
     ngSpice_Command((char*) "remcirc");
 }

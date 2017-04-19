@@ -1,6 +1,6 @@
 \chapter{Experiments}
 The evolutionary algorithms described in section \ref{evolution-strategies} were implemented in C++. This language was chosen due to it's flexibility, performance and the possibility to make use of the ngSPICE simulator. The implementation also utilises the RInside library which integrates R into C++. The R language is used to plot graphs dynamically during the evolution either to the screen or to a file so the user can see and record how the solution evolves.\\
-The program is written as a console application and the user can specify the properties of the evolution via command-line arguments.
+The program is written as a console application and the user can specify the properties of the evolution via command-line arguments. This approach also allows the user to easily run the application multiple times and collect the results of the evolution.
 
 \section{Chromosomes evaluation} \label{chromosomes-evaluation}
 A fitness function provides us means by which we can determine how good the evolved solution is, so that we can distinguish the more appropriate candidates from the less appropriate ones. It is important to mention that the quality of this function is essential, because the ability of the algorithm to find the most suitable solution is highly dependent on the ability of the fitness function to distinguish between the individuals. The value of the function is a positive real number in our case and the algorithm uses it only for comparing the individuals between each other. We consider those individuals with the lower value as the better ones.\\
@@ -57,7 +57,7 @@ This fitness function has been implemented as the first one in order to find out
 We can see the result of the evolution using this fitness function in figure \ref{best-match}.
 
 \begin{figure}[H]
-    \centerline{\includegraphics[scale=0.7]{best-match}\label{best-match}}
+    \centerline{\includegraphics[scale=0.6]{best-match}\label{best-match}}
     \caption{The result of evolution towards the analytical solution}
 \end{figure}
 
@@ -104,7 +104,7 @@ This fitness function is designed to rate the candidate solutions only according
 All of the fitness functions discussed above have difficulties in finding symmetrical waveforms. An example is shown in figure \ref{asymmetrical-ideal-sine}.
 
 \begin{figure}[H]
-    \centerline{\includegraphics[scale=0.7]{asymmetrical-ideal-sine}\label{asymmetrical-ideal-sine}}
+    \centerline{\includegraphics[scale=0.6]{asymmetrical-ideal-sine}\label{asymmetrical-ideal-sine}}
     \caption{An asymmetrical result of the evolution using the 'ideal sine wave' evaluation}
 \end{figure}
 
@@ -117,7 +117,7 @@ result = (|peak + trough| + 1) \cdot fitness
 The $peak$ and $trough$ values are obtained in the same way as in algorithm \ref{maxAmp}. If the signal is symmetrical, the absolute value of the sum of these values is close to zero and therefore the $result$ will also be lower. We add 1 to the sum because we need to distinguish between perfectly symmetrical signals with different fitness. However, it emerged that this approach is too restrictive as it promotes only signals which are perfectly symmetrical, but often distorted. The result is shown in figure \ref{symmetrical-ideal-sine}.
 
 \begin{figure}[H]
-    \centerline{\includegraphics[scale=0.7]{symmetrical-ideal-sine}\label{symmetrical-ideal-sine}}
+    \centerline{\includegraphics[scale=0.6]{symmetrical-ideal-sine}\label{symmetrical-ideal-sine}}
     \caption{A distorted result using the 'ideal sine wave' evaluation}
 \end{figure}
 
@@ -145,4 +145,22 @@ Condition on line 4 in algorithm \ref{symmetry-rating} is used to separate the s
 \subsection{Initial stages}
 The first experiments were performed only in order to optimize the value of resistor $R1$ in the single stage amplifier. We used the 'best match' evaluation method and mutations with one step size. The evolution always found a value close to \SI{50}{\kilo\ohm} which was the desired solution. These experiments were always successful as this was a very simple task for the evolution.\\
 In the next stage, the task was to optimize the voltage divider constituted by $R1$ and $R2$. We again used the 'best match' method and mutations with one step size and it emerged, that the evolution was able to find the solution even faster than in the previous case. This was because we were looking only for the right ratio between the resistors and not for specific values so the set of the desired solutions was larger in this case.\\
-The next task for the evolution was to find the right values for
+The next task for the evolution was to find the right values for resistors $R1$, $R2$ and $Rg$. The evolution parameters were set in the same way as in the previous experiments. This task showed the weak spot of mutations with one step size as the evolution was able to find an acceptable solution very rarely. The reason was that the desired value of $Rg$ is ver close to the lower bound of the search space (the analytical value is only \SI{40}{\ohm}). Since mutations with one step size use the same mutation value in every dimension, it was not possible to mutate $Rg$ only by a few ohms (not to move away from the lower bound of this dimension) and at the same time look for the right values in other dimensions which required steps in kiloohms. The value of $Rg$ heavily influences the overall fitness of the chromosome because high values significantly decrease the gain of the amplifier. The usual course of the evolution was that the value of $Rg$ converged quickly to the lower boundary and since this parameter has a great influence on the fitness, the evolution preferred chromosomes with this property. This led to a quick decrease of the mutation step size $\sigma$ (the fitness function also indirectly evaluates the value of $\sigma$) and the algorithm got stuck in a local optimum since other dimensions (values of other resistors) in the search space could not be searched properly. The solution to this problem was to implement mutations with $n$ step sizes discussed in section \ref{n-step}. This approach allows us to treat every dimension separately and therefore search the search space more effectively. After the implementation, the evolution was able to find a satisfactory solution in most of its runs.\\
+The previous experiments proved that the evolutionary algorithms are able to provide acceptable solutions in the domain of analog amplifiers. The next section describes the process of determining the ideal parameters for the evolution.
+
+\subsection{Evolution paramters}
+In order to make the evolution strategies work efficently, we need to find and set the correct parameters for the evolution.\\
+The size of the search space is defined by the number of dimensions and by the size of every dimension. The number of dimensions depends on the number of electronic components that we want to optimize and the sizes of the dimensions depends on the range the of values that every component can have. These ranges were set to $0 - 200000$ \si{\ohm} for resistors and $0 - 500000$ \si{\nano\farad} for capacitors. The upper bounds are based on the values of real electronic components so for example we do not expect to have higher resistance than \SI{200}{\kilo\ohm} in the circuit. The values of some particular components could have a smaller range, for example resistor $Rg$ which value does not need to be higher than a few kiloohms, but the assumption is that we have no knowledge about the circuit at all.\\
+The initial mutation step size $\sigma$ is set to 100. This value is not very important because this parameter is adapted during the evolution. Experiments showed that there is no difference between setting the initial $\sigma$ to 10 or 500 for example. However, if we set the initial value too high, it is more likely that the evolution will get stuck in a local optimum.\\
+The experiments also showed that the values of the learning parameters $\tau$ and $\tau'$ have a significant impact on the speed at which the evolution converges to the optimum. The higher the values were, the faster the evolution converged, nevertheless this also means that the probability of finding only a local optimum was rapidly increased. For this reason, the values were set according to formulas \ref{set-tau} and \ref{set-tau-prime} to their lowest possible values. The parameter $n$ is the number of dimensions of the search space.
+
+\begin{equation} \label{set-tau}
+    \tau = \frac{1}{\sqrt{n}}
+\end{equation}
+
+\begin{equation} \label{set-tau-prime}
+    \tau' = \frac{1}{\sqrt{2\sqrt{n}}}
+\end{equation}
+
+The maximum difference between the peak and trough of the amplifier's output waveform was empirically set to 25. This means that the values of the peak and trough of the waveform can differ at most by 25 \%.
+

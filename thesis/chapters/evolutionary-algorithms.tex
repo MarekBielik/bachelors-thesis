@@ -122,7 +122,7 @@ In this version of mutation, we change the the vector $x$, formula \ref{one-step
 
 This approach allows the mutation step size to coevolve with the chromosomes, since the fitness function indirectly evaluates the suitability of the mutation. It is important to vary the step size during the evolution run as we want the algorithm to prefer longer steps when it is far away from the optima and small steps when it is close to the optima.
 
-\subsection{Mutation with n-Step Size}
+\subsection{Mutation with $n$ step sizes} \label{n-step}
 The fitness function surface can have different inclination in every dimension, so while one dimension requires large mutation steps another one might require only subtle ones. We can solve this problem by adding a strategy parameter $\sigma$ to every element of the chromosome's solution vector, formula \ref{n-step-size-chromosome-vector}.
 
  \begin{equation} \label{n-step-size-chromosome-vector}

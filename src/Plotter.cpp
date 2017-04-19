@@ -14,7 +14,12 @@ void Plotter::init(std::string paramPath /*= ""*/) {
     path = paramPath;
 }
 
-void Plotter::plot(std::vector<double> time, std::vector<double> voltage) {
+Plotter & Plotter::getInstance() {
+    static Plotter plotter;
+    return plotter;
+}
+
+void Plotter::plot(std::vector<double> &time, std::vector<double> &voltage) {
     R["time"] = time;
     R["voltageOut"] = voltage;
     plotCount++;
@@ -46,8 +51,8 @@ void Plotter::plot(std::vector<double> time, std::vector<double> voltage) {
     R.parseEvalQ(cmd);
 }
 
-void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
-                   std::vector<double> voltage) {
+void Plotter::plot(std::vector<double> &time, std::vector<double> &refInVoltage,
+                   std::vector<double> &voltage) {
     R["time"] = time;
     R["refVoltageIn"] = refInVoltage;
     R["voltageOut"] = voltage;
@@ -82,9 +87,9 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refInVoltage,
     R.parseEvalQ(cmd);
 }
 
-void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
-                   std::vector<double> inVoltage,
-                   std::vector<double> outVoltage) {
+void Plotter::plot(std::vector<double> &time, std::vector<double> &refVoltage,
+                   std::vector<double> &inVoltage,
+                   std::vector<double> &outVoltage) {
 
     /*plot a graph of the simulation*/
     R["voltageOut"] = outVoltage;
@@ -120,7 +125,8 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
                 "       legend=c('Analytical solution output',"
                 "                'Evolved solution output',"
                 "                'input'),"
-                "lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green', 'blue'));"
+                "       lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green', "
+                "                                         'blue'));"
                 "dev.off();";
         /*if we wanted to remove the created file, the command has to
          * have the file name at the end*/
@@ -147,7 +153,51 @@ void Plotter::plot(std::vector<double> time, std::vector<double> refVoltage,
               "       legend=c('Analytical solution output',"
               "                'Evolved solution output',"
               "                'input'),"
-              "lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green', 'blue'));";
+              "       lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green',"
+              "                                         'blue'));";
+    }
+
+    R.parseEvalQ(cmd);
+}
+
+void Plotter::plotEvolutionCourse(std::vector<double> & bestChromosomes,
+                                  std::vector<double> & averageChromosomes,
+                                  std::vector<double> & worstChromosomes,
+                                  std::vector<unsigned> & generations) {
+    R["bestChromosomes"] = bestChromosomes;
+    R["averageChromosomes"] = averageChromosomes;
+    R["worstChromosomes"] = worstChromosomes;
+    R["generations"] = generations;
+
+    if (path.length()) {
+        cmd = "pdf('" + path + "/" + "EvolutionCourse.pdf');"
+                "plot(generations, worstChromosomes, type='l', col='red', "
+                "     ylab='Fitness value', xlab='Number of generations', "
+                "     lwd=2);"
+                "lines(generations, averageChromosomes, col='blue', lwd=2);"
+                "lines(generations, bestChromosomes, col='green', lwd=2);"
+                "grid();"
+                "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
+                "       legend=c('worst fitness',"
+                "                'best fitness',"
+                "                'average fitness'),"
+                "       lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green',"
+                "                                      'blue'));"
+                "dev.off();";
+    } else {
+        cmd = "x11();"
+                "plot(generations, worstChromosomes, type='l', col='red', "
+                "     ylab='Fitness value', xlab='Number of generations', "
+                "     lwd=2);"
+                "lines(generations, averageChromosomes, col='blue', lwd=2);"
+                "lines(generations, bestChromosomes, col='green', lwd=2);"
+                "grid();"
+                "legend('topleft', inset=c(0.25,-0.155), xpd=TRUE,"
+                "       legend=c('worst fitness',"
+                "                'best fitness',"
+                "                'average fitness'),"
+                "       lty=c(1,1,1), lwd=c(2,2,2), col=c('red', 'green',"
+                "                                      'blue'));";
     }
 
     R.parseEvalQ(cmd);

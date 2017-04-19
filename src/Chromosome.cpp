@@ -8,7 +8,6 @@ std::mt19937 Chromosome::generator(std::random_device().operator()());
 std::normal_distribution<double> Chromosome::N(0, 1);
 Simulator Chromosome::simulator;
 Amplifier Chromosome::amplifier;
-Plotter Chromosome::plotter;
 ObjFunType Chromosome::objFunType;
 std::vector<double> Chromosome::referenceOutVoltage;
 std::vector<double> Chromosome::referenceInVoltage;
@@ -206,12 +205,12 @@ void Chromosome::plot()
 
     switch (objFunType) {
         case bestFit:
-            plotter.plot(referenceTime, referenceOutVoltage, referenceInVoltage,
+            Plotter::getInstance().plot(referenceTime, referenceOutVoltage, referenceInVoltage,
                          voltage);
             break;
         case idealSin:
         case symAmp:
-            plotter.plot(time, voltage);
+            Plotter::getInstance().plot(time, voltage);
             break;
     }
 }

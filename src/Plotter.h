@@ -8,7 +8,7 @@
 #include <vector>
 #include <RInside.h>
 
-#define SCREEN_PLOT_MAX 62
+#define SCREEN_PLOT_MAX 61
 
 class Plotter {
     static std::string path;
@@ -17,15 +17,23 @@ class Plotter {
     std::string cmd;
     unsigned plotCount;
 
+    Plotter();
+    Plotter(const Plotter&);
+    Plotter& operator=(const Plotter&);
+
 public:
     static void init(std::string paramPath = "");
+    static Plotter& getInstance();
 
-    Plotter();
-    void plot(std::vector<double> time, std::vector<double> voltage);
-    void plot(std::vector<double> time, std::vector<double> refInVoltage,
-              std::vector<double> voltage);
-    void plot(std::vector<double> time, std::vector<double> refVoltage,
-              std::vector<double> inVoltage, std::vector<double> outVoltage);
+    void plot(std::vector<double> &time, std::vector<double> &voltage);
+    void plot(std::vector<double> &time, std::vector<double> &refInVoltage,
+              std::vector<double> &voltage);
+    void plot(std::vector<double> &time, std::vector<double> &refVoltage,
+              std::vector<double> &inVoltage, std::vector<double> &outVoltage);
+    void plotEvolutionCourse(std::vector<double> & bestChromosomes,
+              std::vector<double> & averageChromosomes,
+              std::vector<double> & worstChromosomes,
+              std::vector<unsigned> & generations);
 };
 
 #endif //BT_PLOTTER_H
