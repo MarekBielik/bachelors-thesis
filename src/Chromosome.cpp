@@ -7,28 +7,27 @@
 std::mt19937 Chromosome::generator(std::random_device().operator()());
 std::normal_distribution<double> Chromosome::N(0, 1);
 Simulator Chromosome::simulator;
-Amplifier Chromosome::amplifier;
 ObjFunType Chromosome::objFunType;
 std::vector<double> Chromosome::referenceOutVoltage;
 std::vector<double> Chromosome::referenceInVoltage;
 std::vector<double> Chromosome::referenceTime;
-/*tau = 1 / sqrt(2 * sqrt(n)) */
-double Chromosome::TAU = 1 / sqrt(2 * sqrt(COMPONENTS));
-/*tau' = 1 / sqrt(n) */
-double Chromosome::TAU_PRIME = 1 / sqrt(COMPONENTS);
+double Chromosome::TAU;
+double Chromosome::TAU_PRIME;
 int32_t Chromosome::maxRes;
 int32_t Chromosome::maxCap;
 unsigned Chromosome::sigmaInit;
 double Chromosome::amplitude;
 double Chromosome::maxDiff;
+bool Chromosome::twoStageAmp;
+unsigned Chromosome::componentsNumber;
 
 void Chromosome::init(Params params) {
-    amplifier.setRload(params.Rload);
+    Amplifier::getInstance().setRload(params.Rload);
 
     /*set the reference vectors*/
-    simulator.simulate(amplifier.getNetlist(), referenceOutVoltage,
-                       referenceTime, referenceInVoltage);
-    amplifier.freeNetlist();
+    simulator.simulate(Amplifier::getInstance().getNetlist(),
+                       referenceOutVoltage, referenceTime, referenceInVoltage);
+    Amplifier::getInstance().freeNetlist();
 
     if (params.objFunType == "bestFit")
         objFunType = bestFit;
@@ -44,29 +43,59 @@ void Chromosome::init(Params params) {
     maxCap = params.max_cap;
     amplitude = params.amplitude;
     maxDiff = params.max_diff;
+    twoStageAmp = params.two_stage_amp;
+
+    if(twoStageAmp)
+        componentsNumber = TWO_STAGE_AMP_COMPONENTS;
+    else
+        componentsNumber = SINGLE_STAGE_AMP_COMPONENTS;
+
+    /*tau = 1 / sqrt(2 * sqrt(n)) */
+    TAU = 1 / sqrt(2 * sqrt(componentsNumber));
+    /*tau' = 1 / sqrt(n) */
+    TAU_PRIME = 1 / sqrt(componentsNumber);
 }
 
 Chromosome::Chromosome() {
     objFunVal = std::nan("");
-    genotype.components.resize(COMPONENTS);
-    genotype.strategyParameters.resize(COMPONENTS);
+    genotype.components.resize(componentsNumber);
+    genotype.strategyParameters.resize(componentsNumber);
 
-    genotype.components[0].name = R1; genotype.components[0].type = resistor;
-    genotype.components[0].value = generator() % maxRes;
-    genotype.components[1].name = R2; genotype.components[1].type = resistor;
-    genotype.components[1].value = generator() % maxRes;
-    genotype.components[2].name = Re; genotype.components[2].type = resistor;
-    genotype.components[2].value = generator() % maxRes;
-    genotype.components[3].name = Rg; genotype.components[3].type = resistor;
-    genotype.components[3].value = generator() % maxRes;
-    genotype.components[4].name = Rc; genotype.components[4].type = resistor;
-    genotype.components[4].value = generator() % maxRes;
-    genotype.components[5].name = Ce; genotype.components[5].type = capacitor;
-    genotype.components[5].value = generator() % maxCap;
-    genotype.components[6].name = Cin; genotype.components[6].type = capacitor;
-    genotype.components[6].value = generator() % maxCap;
+    if (!twoStageAmp) {
+        genotype.components[0].name = R1;
+        genotype.components[1].name = R2;
+        genotype.components[2].name = Re;
+        genotype.components[3].name = Rg;
+        genotype.components[4].name = Rc;
+        genotype.components[5].name = Ce;
+        genotype.components[6].name = Cin;
+        genotype.components[7].name = Cout;
+    } else {
+        genotype.components[0].name = R1;
+        genotype.components[1].name = R2;
+        genotype.components[2].name = Re;
+        genotype.components[3].name = Rc;
+        genotype.components[4].name = Ce;
+        genotype.components[5].name = Cin;
+        genotype.components[6].name = Cout;
+        genotype.components[7].name = Rgb;
+        genotype.components[8].name = Reb;
+        genotype.components[9].name = Rcb;
+        genotype.components[10].name = R2b;
+        genotype.components[11].name = R1b;
+        genotype.components[12].name = Cm;
+        genotype.components[13].name = Ce2;
+    }
 
-    for (int i = 0; i < COMPONENTS; i++) {
+    for (int i = 0; i < componentsNumber; i++) {
+        if (genotype.components[i].name <= R1b) {
+            genotype.components[i].type = resistor;
+            genotype.components[i].value = generator() % maxRes;
+        } else {
+            genotype.components[i].type = capacitor;
+            genotype.components[i].value = generator() % maxCap;
+        }
+
         genotype.strategyParameters[i] = sigmaInit;
     }
 }
@@ -81,7 +110,7 @@ Genotype Chromosome::mutate(Genotype genotype) {
             supremum;
     double mutationMax;
 
-    for (int i = 0; i < COMPONENTS; i++) {
+    for (int i = 0; i < componentsNumber; i++) {
         /*choose the appropriate supremum and max mutation step*/
         switch (genotype.components[i].type) {
             case resistor:
@@ -123,15 +152,15 @@ Genotype Chromosome::mutate(Genotype genotype) {
 
 void Chromosome::runSimulation(bool full /*= false*/) {
     for(auto & component: genotype.components) {
-        amplifier.setComponentValue(component);
+        Amplifier::getInstance().setComponentValue(component);
     }
 
     if (full)
-        simulator.simulate(amplifier.getNetlist(), voltage, time);
+        simulator.simulate(Amplifier::getInstance().getNetlist(), voltage, time);
     else
-        simulator.simulate(amplifier.getNetlist(), voltage);
+        simulator.simulate(Amplifier::getInstance().getNetlist(), voltage);
 
-    amplifier.freeNetlist();
+    Amplifier::getInstance().freeNetlist();
 }
 
 double Chromosome::objectiveFunction() {
@@ -157,6 +186,10 @@ double Chromosome::objectiveFunction() {
     while (voltage[start] < 0) start++;
     while (voltage[start] > 0) start++;
     while (voltage[end] < 0) end--;
+
+    /* in case the signal is too noisy*/
+    if (start > 50 || end < 20 || start + 12 >= end)
+        return objFunVal = DBL_MAX;
 
     trough = *std::min_element(std::begin(voltage) + start,
                                std::begin(voltage) + start + 12);
@@ -222,7 +255,7 @@ bool Chromosome::operator<(Chromosome & chromosome){
 std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
     os << "objective function: " << chromosome.objectiveFunction() << std::endl;
 
-    for (int i = 0; i < COMPONENTS; i++) {
+    for (int i = 0; i < Chromosome::componentsNumber; i++) {
         switch (chromosome.genotype.components[i].name) {
             case R1:
                 os << "R1: ";
@@ -242,8 +275,32 @@ std::ostream & operator<<(std::ostream & os, Chromosome & chromosome) {
             case Cin:
                 os << "Cin: ";
                 break;
+            case Cout:
+                os << "Cout: ";
+                break;
             case Ce:
                 os << "Ce: ";
+                break;
+            case Cm:
+                os << "Cm: ";
+                break;
+            case Ce2:
+                os << "Ce2: ";
+                break;
+            case Rgb:
+                os << "Rgb: ";
+                break;
+            case Reb:
+                os << "Reb: ";
+                break;
+            case Rcb:
+                os << "Rcb: ";
+                break;
+            case R2b:
+                os << "R2b: ";
+                break;
+            case R1b:
+                os << "R1b: ";
                 break;
         }
 

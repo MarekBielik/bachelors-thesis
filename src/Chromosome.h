@@ -17,12 +17,15 @@
 #include "Plotter.h"
 #include "ArgParser.h"
 
-/*forward declaration*/
+/*forward declarations*/
 struct Params;
+struct Component;
+class Amplifier;
 
 #define MAX_RESISTANCE 500000
 #define MAX_CAPACITY 500000
-#define COMPONENTS 7
+#define SINGLE_STAGE_AMP_COMPONENTS 8
+#define TWO_STAGE_AMP_COMPONENTS 14
 #define SIGMA_INIT 100
 #define DEFAULT_AMPLITUDE 1
 
@@ -44,7 +47,6 @@ class Chromosome {
     static std::vector<double> referenceInVoltage;
     static std::vector<double> referenceTime;
     static Simulator simulator;
-    static Amplifier amplifier;
     static double TAU;
     static double TAU_PRIME;
     static ObjFunType objFunType;
@@ -53,6 +55,8 @@ class Chromosome {
     static unsigned sigmaInit;
     static double amplitude;
     static double maxDiff;
+    static bool twoStageAmp;
+    static unsigned componentsNumber;
 
     std::vector<double> voltage;
     std::vector<double> time;

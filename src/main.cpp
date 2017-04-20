@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     std::ostream out(buf);
 
     Plotter::init(argParser.getParams().path);
+    Amplifier::init(argParser.getParams());
     Chromosome::init(argParser.getParams());
 
     printEvolutionProperties(argParser.getParams(), out);

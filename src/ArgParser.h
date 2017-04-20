@@ -27,7 +27,8 @@ enum Options {
     obj_fun_type,
     amp,
     Rload,
-    max_diff
+    max_diff,
+    two_stage_amp
 };
 
 struct Params {
@@ -47,10 +48,11 @@ struct Params {
     double amplitude;
     unsigned Rload;
     double max_diff;
+    bool two_stage_amp;
 };
 
 class ArgParser {
-    const struct option long_options[16] = {
+    const struct option long_options[17] = {
         {"mu", required_argument, 0, mu},
         {"lambda", required_argument, 0, lambda},
         {"max_gen", required_argument, 0, max_gen},
@@ -63,10 +65,11 @@ class ArgParser {
         {"max_cap", required_argument, 0, max_cap},
         {"sigma_init", required_argument, 0, sigma_init},
         {"fitness", required_argument, 0, obj_fun_type},
-        {"amp", required_argument, 0, amp},
+        {"amplitude", required_argument, 0, amp},
         {"Rload", required_argument, 0, Rload},
         {"max_diff", required_argument, 0, max_diff},
-        {         0,                 0, 0, 0}
+        {"two_stage_amp", no_argument, 0, two_stage_amp},
+        {          0,           0, 0, 0}
     };
 
     const char * short_options = "o:";

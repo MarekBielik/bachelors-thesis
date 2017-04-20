@@ -26,6 +26,7 @@ void ArgParser::parse(int argc, char **argv) {
     params.path = "";
     params.amplitude = DEFAULT_AMPLITUDE;
     params.Rload = R_LOAD;
+    params.two_stage_amp = false;
 
     int c;
     int option_index = 0;
@@ -80,6 +81,9 @@ void ArgParser::parse(int argc, char **argv) {
                     break;
                 case max_diff:
                     maxDiff = std::stoi(optarg);
+                    break;
+                case two_stage_amp:
+                    params.two_stage_amp = true;
                     break;
                 case '?':
                 default:
