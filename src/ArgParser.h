@@ -69,7 +69,7 @@ class ArgParser {
         {"Rload", required_argument, 0, Rload},
         {"max_diff", required_argument, 0, max_diff},
         {"two_stage_amp", no_argument, 0, two_stage_amp},
-        {          0,           0, 0, 0}
+        {              0,           0, 0, 0}
     };
 
     const char * short_options = "o:";
