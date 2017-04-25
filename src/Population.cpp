@@ -36,6 +36,7 @@ void Population::evolve() {
     std::vector<double> worstChromosomes;
     std::vector<double> averageChromosomes;
     std::vector<unsigned> generations;
+    bool printCourse = true;
 
     while (++generationCount < maxGen) {
         for (int i = mu; i < lambda + mu; i++)
@@ -56,6 +57,7 @@ void Population::evolve() {
                 break;
         }
 
+        /*print the current evolution state*/
         if (!(generationCount % printGen) &&
                 prevPrintGen > population[0].objectiveFunction()) {
             prevPrintGen = population[0].objectiveFunction() * printChange;
@@ -64,31 +66,56 @@ void Population::evolve() {
             out << "Generation: " << generationCount << std::endl
                 << population[0] << std::endl;
             population[0].plot();
-
-            /*track the evolution course*/
-            bestChromosomes.push_back(population.front().objectiveFunction());
-            worstChromosomes.push_back(population.back().objectiveFunction());
-            generations.push_back(generationCount);
-            double averageObjectiveFunction = 0;
-
-            for (auto & chromosome: population)
-                averageObjectiveFunction += chromosome.objectiveFunction();
-
-            averageChromosomes.push_back(averageObjectiveFunction / (mu + lambda));
         }
 
         /*stop the evolution if the objective function doesn't change anymore*/
         if (!(generationCount % stopGen)) {
+
             if (!(prevStopGen > population[0].objectiveFunction())) {
-                break;
+                /*if we encounter DBL_MAX in the objective function,
+                 * don't end the evolution now, but try to end it
+                 * in the very next generation*/
+                if (population[0].objectiveFunction() > 5000) {
+                    continue;
+                }
+                else
+                    break;
             }
             prevStopGen = population[0].objectiveFunction() * stopChange;
         }
 
+        /*track the evolution course*/
+        bestChromosomes.push_back(population[0].objectiveFunction());
+        worstChromosomes.push_back(population[mu].objectiveFunction());
+        generations.push_back(generationCount);
+        double averageObjectiveFunction = 0;
+        unsigned valid_chromosomes = 0;
+
+        for (auto & chromosome: population) {
+            if(chromosome.objectiveFunction() < 5000) {
+                valid_chromosomes++;
+                averageObjectiveFunction += chromosome.objectiveFunction();
+            }
+        }
+
+        if (population[0].objectiveFunction() > 5000 ||
+            population[mu].objectiveFunction() > 5000) {
+            printCourse = false;
+        }
+
+        averageChromosomes.push_back(averageObjectiveFunction /
+                                             valid_chromosomes);
+
     }
 
-    Plotter::getInstance().plotEvolutionCourse(bestChromosomes,
-                                               averageChromosomes,
-                                               worstChromosomes,
-                                               generations);
+    if (printCourse && !averageChromosomes.empty()) {
+        Plotter::getInstance().plotEvolutionCourse(bestChromosomes,
+                                                   averageChromosomes,
+                                                   worstChromosomes,
+                                                   generations);
+    }
+}
+
+double Population::getResult() {
+    return population[0].objectiveFunction();
 }

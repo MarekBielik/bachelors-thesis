@@ -1,0 +1,86 @@
+Evolution strategies type: (μ + λ)-ES
+Parameter μ: 10
+Parameter λ: 100
+Fitness function type: idealSine
+Amplitude: 3.5
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 134.708
+R1: 147 K, sigma: 109.696
+R2: 64.9 K, sigma: 199.558
+Re: 160 K, sigma: 151.051
+Rg: 24.3 K, sigma: 334.242
+Rc: 186 K, sigma: 62.2977
+Ce: 446 uF, sigma: 134.3
+Cin: 260 uF, sigma: 68.2186
+Cout: 383 uF, sigma: 109.461
+
+Generation: 5
+objective function: 124.6
+R1: 147 K, sigma: 439.963
+R2: 66.0 K, sigma: 198.014
+Re: 161 K, sigma: 131.848
+Rg: 8.15 K, sigma: 2270.23
+Rc: 186 K, sigma: 363.374
+Ce: 445 uF, sigma: 588.414
+Cin: 260 uF, sigma: 59.0988
+Cout: 383 uF, sigma: 56.6275
+
+Generation: 7
+objective function: 114.848
+R1: 147 K, sigma: 49.7781
+R2: 66.4 K, sigma: 603.218
+Re: 161 K, sigma: 95.7329
+Rg: 4.35 K, sigma: 3315.29
+Rc: 186 K, sigma: 375.821
+Ce: 444 uF, sigma: 1083.57
+Cin: 260 uF, sigma: 31.6882
+Cout: 383 uF, sigma: 150.863
+
+Generation: 16
+objective function: 107.465
+R1: 148 K, sigma: 43.288
+R2: 118 K, sigma: 19017.3
+Re: 161 K, sigma: 148.123
+Rg: 3.50 K, sigma: 193.246
+Rc: 183 K, sigma: 3829.43
+Ce: 444 uF, sigma: 45.1994
+Cin: 260 uF, sigma: 77.7308
+Cout: 383 uF, sigma: 76.1589
+
+Generation: 19
+objective function: 99.3304
+R1: 147 K, sigma: 71.5876
+R2: 126 K, sigma: 17071.2
+Re: 159 K, sigma: 444.231
+Rg: 2.59 K, sigma: 119.015
+Rc: 196 K, sigma: 2366.05
+Ce: 444 uF, sigma: 26.6109
+Cin: 263 uF, sigma: 709.292
+Cout: 383 uF, sigma: 733.373
+
+Generation: 22
+objective function: 88.348
+R1: 148 K, sigma: 18.7745
+R2: 133 K, sigma: 12414
+Re: 161 K, sigma: 62.5593
+Rg: 487 R, sigma: 1241.46
+Rc: 189 K, sigma: 560.88
+Ce: 444 uF, sigma: 140.715
+Cin: 260 uF, sigma: 25.6788
+Cout: 383 uF, sigma: 28.367
+
+Generation: 25
+objective function: 83.0706
+R1: 147 K, sigma: 121.469
+R2: 142 K, sigma: 3220.26
+Re: 160 K, sigma: 50.1523
+Rg: 77 R, sigma: 708.753
+Rc: 173 K, sigma: 1625.64
+Ce: 444 uF, sigma: 10.6051
+Cin: 261 uF, sigma: 123.736
+Cout: 386 uF, sigma: 458.507
+

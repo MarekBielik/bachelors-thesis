@@ -1,0 +1,30 @@
+Evolution strategies type: (μ + λ)-ES
+Parameter μ: 5
+Parameter λ: 75
+Fitness function type: maxAmp
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 5.45035
+R1: 19.7 K, sigma: 29.2965
+R2: 150 K, sigma: 130.729
+Re: 104 K, sigma: 114.487
+Rg: 154 K, sigma: 105.864
+Rc: 171 K, sigma: 396.109
+Ce: 219 uF, sigma: 106.289
+Cin: 145 uF, sigma: 154
+Cout: 14.5 uF, sigma: 59.6894
+
+Generation: 22
+objective function: 5.1767
+R1: 4 R, sigma: 143.927
+R2: 149 K, sigma: 0.322309
+Re: 104 K, sigma: 61.1048
+Rg: 81.6 K, sigma: 64749.3
+Rc: 171 K, sigma: 49.4756
+Ce: 207 uF, sigma: 2702.33
+Cin: 143 uF, sigma: 1104.09
+Cout: 14.2 uF, sigma: 3.00996
+

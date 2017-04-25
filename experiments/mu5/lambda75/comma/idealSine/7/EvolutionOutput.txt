@@ -1,0 +1,86 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 5
+Parameter λ: 75
+Fitness function type: idealSine
+Amplitude: 3.5
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 138.639
+R1: 28.0 K, sigma: 97.2026
+R2: 99.2 K, sigma: 110.985
+Re: 174 K, sigma: 140.675
+Rg: 60.6 K, sigma: 341.182
+Rc: 71.0 K, sigma: 69.6238
+Ce: 253 uF, sigma: 164.412
+Cin: 326 uF, sigma: 69.436
+Cout: 303 uF, sigma: 132.784
+
+Generation: 15
+objective function: 131.416
+R1: 27.9 K, sigma: 0.397042
+R2: 94.5 K, sigma: 909.972
+Re: 193 K, sigma: 421.329
+Rg: 12.7 K, sigma: 4463.72
+Rc: 71.2 K, sigma: 36.2446
+Ce: 250 uF, sigma: 124.134
+Cin: 326 uF, sigma: 307.639
+Cout: 318 uF, sigma: 11681
+
+Generation: 17
+objective function: 118.814
+R1: 27.9 K, sigma: 0.218103
+R2: 84.5 K, sigma: 8973.2
+Re: 194 K, sigma: 142.211
+Rg: 5.30 K, sigma: 6144.5
+Rc: 71.9 K, sigma: 359.143
+Ce: 250 uF, sigma: 119.771
+Cin: 328 uF, sigma: 223.996
+Cout: 299 uF, sigma: 24195.8
+
+Generation: 18
+objective function: 101.502
+R1: 27.9 K, sigma: 0.197906
+R2: 75.6 K, sigma: 8155.52
+Re: 194 K, sigma: 103.243
+Rg: 2.52 K, sigma: 3263.53
+Rc: 71.1 K, sigma: 626.841
+Ce: 250 uF, sigma: 118.898
+Cin: 327 uF, sigma: 164.07
+Cout: 258 uF, sigma: 44111.2
+
+Generation: 19
+objective function: 83.9727
+R1: 27.9 K, sigma: 0.841655
+R2: 74.2 K, sigma: 8117.01
+Re: 194 K, sigma: 164.854
+Rg: 193 R, sigma: 5858.27
+Rc: 71.2 K, sigma: 687.857
+Ce: 250 uF, sigma: 100.82
+Cin: 327 uF, sigma: 277.999
+Cout: 90.5 uF, sigma: 146825
+
+Generation: 23
+objective function: 79.05
+R1: 27.9 K, sigma: 0.485046
+R2: 70.9 K, sigma: 1302.27
+Re: 193 K, sigma: 135.879
+Rg: 91 R, sigma: 1395.15
+Rc: 71.7 K, sigma: 528.559
+Ce: 245 uF, sigma: 1484.78
+Cin: 327 uF, sigma: 110.277
+Cout: 167 uF, sigma: 37461.5
+
+Generation: 83
+objective function: 74.9948
+R1: 27.9 K, sigma: 4.50975
+R2: 70.6 K, sigma: 22.4681
+Re: 193 K, sigma: 50.8706
+Rg: 129 R, sigma: 17.3401
+Rc: 71.1 K, sigma: 0.453511
+Ce: 388 uF, sigma: 4837
+Cin: 2.29 uF, sigma: 345.343
+Cout: 121 uF, sigma: 11774.7
+

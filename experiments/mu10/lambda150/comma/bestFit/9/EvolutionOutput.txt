@@ -1,0 +1,85 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 10
+Parameter λ: 150
+Fitness function type: bestFit
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 36.4382
+R1: 133 K, sigma: 56.1405
+R2: 78.9 K, sigma: 113.753
+Re: 115 K, sigma: 47.9034
+Rg: 21.7 K, sigma: 90.3836
+Rc: 162 K, sigma: 234.95
+Ce: 422 uF, sigma: 209.488
+Cin: 156 uF, sigma: 212.865
+Cout: 304 uF, sigma: 157.303
+
+Generation: 5
+objective function: 34.329
+R1: 133 K, sigma: 480.711
+R2: 79.4 K, sigma: 171.061
+Re: 115 K, sigma: 125.135
+Rg: 13.0 K, sigma: 2179.92
+Rc: 162 K, sigma: 34.118
+Ce: 422 uF, sigma: 205.894
+Cin: 156 uF, sigma: 61.703
+Cout: 304 uF, sigma: 14.6516
+
+Generation: 6
+objective function: 21.0136
+R1: 133 K, sigma: 14.7073
+R2: 78.6 K, sigma: 113.362
+Re: 114 K, sigma: 453.724
+Rg: 2.70 K, sigma: 9233.02
+Rc: 162 K, sigma: 138.48
+Ce: 422 uF, sigma: 5.55735
+Cin: 157 uF, sigma: 180.909
+Cout: 304 uF, sigma: 26.2387
+
+Generation: 7
+objective function: 19.4297
+R1: 133 K, sigma: 10.5944
+R2: 78.5 K, sigma: 56.5047
+Re: 114 K, sigma: 313.381
+Rg: 2.33 K, sigma: 12519.8
+Rc: 161 K, sigma: 216.839
+Ce: 422 uF, sigma: 4.47581
+Cin: 157 uF, sigma: 170.272
+Cout: 304 uF, sigma: 20.7097
+
+Generation: 12
+objective function: 17.4205
+R1: 133 K, sigma: 491.582
+R2: 78.2 K, sigma: 118.789
+Re: 94.1 K, sigma: 10235.6
+Rg: 2.12 K, sigma: 862.438
+Rc: 161 K, sigma: 26.2922
+Ce: 422 uF, sigma: 4.46971
+Cin: 157 uF, sigma: 63.998
+Cout: 304 uF, sigma: 39.3011
+
+Generation: 13
+objective function: 15.4181
+R1: 133 K, sigma: 97.9445
+R2: 78.4 K, sigma: 99.1366
+Re: 86.6 K, sigma: 4245.53
+Rg: 1.81 K, sigma: 1408.59
+Rc: 161 K, sigma: 128.643
+Ce: 422 uF, sigma: 4.86487
+Cin: 157 uF, sigma: 113.358
+Cout: 304 uF, sigma: 59.3976
+
+Generation: 14
+objective function: 14.296
+R1: 133 K, sigma: 109.421
+R2: 77.9 K, sigma: 172.439
+Re: 87.0 K, sigma: 14159.8
+Rg: 1.61 K, sigma: 1541.98
+Rc: 161 K, sigma: 11.3022
+Ce: 422 uF, sigma: 2.74122
+Cin: 157 uF, sigma: 875.273
+Cout: 304 uF, sigma: 19.78
+

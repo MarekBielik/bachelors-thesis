@@ -48,6 +48,7 @@ class Population {
 
 public:
     Population(Params params, std::ostream & out);
+    double getResult();
     void evolve();
 };
 

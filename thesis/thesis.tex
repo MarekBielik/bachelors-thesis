@@ -93,8 +93,15 @@
 %\usepackage{graphicx}
 \graphicspath{ {figures/} }
 
-%SI units
+% SI units
 \usepackage{siunitx}
+%\sisetup{range-phrase = --}
+\sisetup{range-units=single}
+
+% Tables
+\usepackage{booktabs}
+\usepackage{etoolbox}
+\preto\tabular{\shorthandoff{-}}
 
 %Commands
 %---------------------------------------------------------------------------

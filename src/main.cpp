@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
     if (argParser.screenOutput()) {
         out << "Evolved." << std::endl;
         pause();
+    } else {
+        std::cout.precision(5);
+        std::cout << std::fixed << population.getResult();
     }
 
     return EXIT_SUCCESS;

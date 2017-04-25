@@ -1,0 +1,240 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 10
+Parameter λ: 100
+Fitness function type: idealSine
+Amplitude: 3.5
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 130.336
+R1: 24.2 K, sigma: 36.4133
+R2: 27.7 K, sigma: 171.509
+Re: 65.8 K, sigma: 132.756
+Rg: 11.5 K, sigma: 117.001
+Rc: 52.9 K, sigma: 74.7385
+Ce: 413 uF, sigma: 203.336
+Cin: 84.1 uF, sigma: 179.262
+Cout: 173 uF, sigma: 73.5055
+
+Generation: 6
+objective function: 119.469
+R1: 24.1 K, sigma: 242.398
+R2: 27.8 K, sigma: 288.952
+Re: 65.3 K, sigma: 53.5462
+Rg: 5.39 K, sigma: 1730.73
+Rc: 53.0 K, sigma: 32.591
+Ce: 413 uF, sigma: 153.717
+Cin: 84.3 uF, sigma: 36.2161
+Cout: 172 uF, sigma: 1292.01
+
+Generation: 7
+objective function: 91.866
+R1: 24.0 K, sigma: 423.796
+R2: 27.7 K, sigma: 464.539
+Re: 65.4 K, sigma: 57.0692
+Rg: 2.01 K, sigma: 5405.53
+Rc: 53.0 K, sigma: 21.6479
+Ce: 413 uF, sigma: 111.077
+Cin: 84.3 uF, sigma: 45.5342
+Cout: 173 uF, sigma: 1043.33
+
+Generation: 8
+objective function: 46.2091
+R1: 24.1 K, sigma: 404.954
+R2: 27.7 K, sigma: 312.234
+Re: 65.5 K, sigma: 68.7505
+Rg: 137 R, sigma: 3813.64
+Rc: 53.0 K, sigma: 12.0463
+Ce: 413 uF, sigma: 87.3077
+Cin: 84.3 uF, sigma: 38.1972
+Cout: 183 uF, sigma: 2938.24
+
+Generation: 10
+objective function: 43.8855
+R1: 24.4 K, sigma: 154.613
+R2: 27.5 K, sigma: 211.648
+Re: 65.6 K, sigma: 32.1996
+Rg: 130 R, sigma: 1345.43
+Rc: 53.0 K, sigma: 26.7737
+Ce: 413 uF, sigma: 36.9304
+Cin: 84.3 uF, sigma: 77.37
+Cout: 182 uF, sigma: 3327.6
+
+Generation: 13
+objective function: 41.2042
+R1: 24.4 K, sigma: 38.6977
+R2: 28.1 K, sigma: 91.5809
+Re: 65.6 K, sigma: 340.15
+Rg: 100 R, sigma: 98.35
+Rc: 50.1 K, sigma: 804.763
+Ce: 412 uF, sigma: 568.519
+Cin: 84.2 uF, sigma: 137.076
+Cout: 172 uF, sigma: 11.596
+
+Generation: 17
+objective function: 38.9148
+R1: 24.8 K, sigma: 224.329
+R2: 28.3 K, sigma: 51.9934
+Re: 64.2 K, sigma: 519.265
+Rg: 117 R, sigma: 35.9641
+Rc: 47.9 K, sigma: 897.55
+Ce: 413 uF, sigma: 157.276
+Cin: 84.5 uF, sigma: 302.359
+Cout: 172 uF, sigma: 1.54867
+
+Generation: 21
+objective function: 36.9087
+R1: 24.6 K, sigma: 234.998
+R2: 28.2 K, sigma: 87.1546
+Re: 61.0 K, sigma: 1202.2
+Rg: 47 R, sigma: 41.2499
+Rc: 45.1 K, sigma: 3908.84
+Ce: 412 uF, sigma: 34.3905
+Cin: 84.7 uF, sigma: 48.976
+Cout: 172 uF, sigma: 4.02988
+
+Generation: 23
+objective function: 34.9825
+R1: 25.1 K, sigma: 466.177
+R2: 27.9 K, sigma: 117.02
+Re: 57.6 K, sigma: 2445.48
+Rg: 43 R, sigma: 67.0998
+Rc: 43.6 K, sigma: 1505.07
+Ce: 412 uF, sigma: 50.6445
+Cin: 84.7 uF, sigma: 23.2228
+Cout: 172 uF, sigma: 3.35535
+
+Generation: 25
+objective function: 33.2048
+R1: 28.0 K, sigma: 912.228
+R2: 27.1 K, sigma: 434.288
+Re: 51.6 K, sigma: 1882.4
+Rg: 65 R, sigma: 36.5881
+Rc: 45.8 K, sigma: 1464.28
+Ce: 412 uF, sigma: 64.4222
+Cin: 84.7 uF, sigma: 26.8761
+Cout: 172 uF, sigma: 3.30613
+
+Generation: 30
+objective function: 31.1505
+R1: 26.2 K, sigma: 869.247
+R2: 22.9 K, sigma: 1041.11
+Re: 48.5 K, sigma: 2048.83
+Rg: 38 R, sigma: 9.69414
+Rc: 47.3 K, sigma: 1342.04
+Ce: 412 uF, sigma: 229.61
+Cin: 84.6 uF, sigma: 12.1904
+Cout: 172 uF, sigma: 6.50292
+
+Generation: 31
+objective function: 29.3761
+R1: 27.6 K, sigma: 379.492
+R2: 24.5 K, sigma: 566.303
+Re: 45.3 K, sigma: 2644.33
+Rg: 59 R, sigma: 3.46238
+Rc: 43.1 K, sigma: 2522.13
+Ce: 413 uF, sigma: 480.901
+Cin: 84.6 uF, sigma: 29.4623
+Cout: 172 uF, sigma: 3.36772
+
+Generation: 37
+objective function: 27.3028
+R1: 28.3 K, sigma: 321.409
+R2: 21.4 K, sigma: 1095.88
+Re: 38.8 K, sigma: 1707.15
+Rg: 42 R, sigma: 1.7443
+Rc: 44.8 K, sigma: 124.991
+Ce: 411 uF, sigma: 407.399
+Cin: 84.6 uF, sigma: 10.3967
+Cout: 172 uF, sigma: 0.282507
+
+Generation: 39
+objective function: 25.0832
+R1: 28.1 K, sigma: 623.277
+R2: 19.5 K, sigma: 1261.67
+Re: 35.9 K, sigma: 2759.37
+Rg: 52 R, sigma: 2.21817
+Rc: 44.5 K, sigma: 125.785
+Ce: 411 uF, sigma: 160.264
+Cin: 84.6 uF, sigma: 9.96354
+Cout: 172 uF, sigma: 2.04297
+
+Generation: 44
+objective function: 22.2123
+R1: 28.6 K, sigma: 142.525
+R2: 21.2 K, sigma: 262.949
+Re: 32.4 K, sigma: 3230.9
+Rg: 53 R, sigma: 4.84401
+Rc: 35.9 K, sigma: 1672.3
+Ce: 411 uF, sigma: 27.2838
+Cin: 84.6 uF, sigma: 12.6021
+Cout: 172 uF, sigma: 0.950214
+
+Generation: 45
+objective function: 20.8272
+R1: 29.5 K, sigma: 342.342
+R2: 21.4 K, sigma: 181.906
+Re: 29.0 K, sigma: 3008.49
+Rg: 53 R, sigma: 10.6236
+Rc: 33.1 K, sigma: 2658.65
+Ce: 411 uF, sigma: 261.38
+Cin: 84.6 uF, sigma: 4.36491
+Cout: 172 uF, sigma: 0.391763
+
+Generation: 47
+objective function: 19.3317
+R1: 28.6 K, sigma: 70.1658
+R2: 21.0 K, sigma: 84.6912
+Re: 26.2 K, sigma: 2157.75
+Rg: 52 R, sigma: 20.3993
+Rc: 29.3 K, sigma: 2320.68
+Ce: 411 uF, sigma: 55.5062
+Cin: 84.6 uF, sigma: 2.70513
+Cout: 172 uF, sigma: 1.22647
+
+Generation: 50
+objective function: 18.2792
+R1: 29.4 K, sigma: 77.9785
+R2: 20.9 K, sigma: 55.908
+Re: 23.1 K, sigma: 1685.24
+Rg: 44 R, sigma: 0.119442
+Rc: 25.9 K, sigma: 3525.09
+Ce: 411 uF, sigma: 245.912
+Cin: 84.6 uF, sigma: 21.8003
+Cout: 172 uF, sigma: 0.227071
+
+Generation: 53
+objective function: 17.3534
+R1: 29.7 K, sigma: 418.596
+R2: 21.2 K, sigma: 121.845
+Re: 20.7 K, sigma: 977.637
+Rg: 46 R, sigma: 0.957657
+Rc: 23.3 K, sigma: 2322.23
+Ce: 411 uF, sigma: 205.664
+Cin: 84.6 uF, sigma: 12.2267
+Cout: 172 uF, sigma: 0.459914
+
+Generation: 57
+objective function: 15.8688
+R1: 29.0 K, sigma: 216.701
+R2: 23.8 K, sigma: 1176.62
+Re: 20.8 K, sigma: 411.36
+Rg: 49 R, sigma: 1.64251
+Rc: 20.7 K, sigma: 728.431
+Ce: 410 uF, sigma: 788.67
+Cin: 84.6 uF, sigma: 3.35039
+Cout: 172 uF, sigma: 0.202759
+
+Generation: 63
+objective function: 14.4546
+R1: 29.2 K, sigma: 83.6048
+R2: 20.2 K, sigma: 227.704
+Re: 19.2 K, sigma: 311.468
+Rg: 90 R, sigma: 11.0434
+Rc: 23.4 K, sigma: 1462.43
+Ce: 413 uF, sigma: 27.0296
+Cin: 84.6 uF, sigma: 6.15028
+Cout: 172 uF, sigma: 1.49456
+

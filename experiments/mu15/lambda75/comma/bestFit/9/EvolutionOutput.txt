@@ -1,0 +1,173 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 15
+Parameter λ: 75
+Fitness function type: bestFit
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 37.752
+R1: 148 K, sigma: 266.858
+R2: 37.3 K, sigma: 144.154
+Re: 189 K, sigma: 111.469
+Rg: 32.6 K, sigma: 173.114
+Rc: 131 K, sigma: 213.282
+Ce: 484 uF, sigma: 68.8102
+Cin: 42.4 uF, sigma: 102.186
+Cout: 268 uF, sigma: 154.947
+
+Generation: 8
+objective function: 33.8563
+R1: 148 K, sigma: 84.917
+R2: 37.1 K, sigma: 51.0084
+Re: 189 K, sigma: 62.8889
+Rg: 9.32 K, sigma: 36263.8
+Rc: 130 K, sigma: 40.4241
+Ce: 484 uF, sigma: 55.6367
+Cin: 42.7 uF, sigma: 468.302
+Cout: 268 uF, sigma: 102.834
+
+Generation: 15
+objective function: 31.6678
+R1: 148 K, sigma: 163.414
+R2: 51.5 K, sigma: 4249.34
+Re: 189 K, sigma: 88.2139
+Rg: 6.69 K, sigma: 1380.8
+Rc: 129 K, sigma: 245.771
+Ce: 484 uF, sigma: 6.61852
+Cin: 41.1 uF, sigma: 754.617
+Cout: 269 uF, sigma: 65.1034
+
+Generation: 18
+objective function: 30.0602
+R1: 148 K, sigma: 223.498
+R2: 60.1 K, sigma: 2870.41
+Re: 189 K, sigma: 32.0454
+Rg: 5.39 K, sigma: 380.619
+Rc: 130 K, sigma: 48.7926
+Ce: 484 uF, sigma: 12.3565
+Cin: 40.8 uF, sigma: 394.388
+Cout: 269 uF, sigma: 17.3432
+
+Generation: 19
+objective function: 27.9614
+R1: 148 K, sigma: 89.9392
+R2: 80.3 K, sigma: 14894.5
+Re: 189 K, sigma: 16.3195
+Rg: 4.38 K, sigma: 763.309
+Rc: 129 K, sigma: 267.194
+Ce: 484 uF, sigma: 27.6973
+Cin: 37.9 uF, sigma: 896.543
+Cout: 268 uF, sigma: 95.9929
+
+Generation: 21
+objective function: 26.4337
+R1: 149 K, sigma: 110.403
+R2: 124 K, sigma: 25015.7
+Re: 189 K, sigma: 53.8798
+Rg: 4.06 K, sigma: 832.398
+Rc: 130 K, sigma: 608.608
+Ce: 484 uF, sigma: 26.2407
+Cin: 38.3 uF, sigma: 645.887
+Cout: 268 uF, sigma: 59.0655
+
+Generation: 22
+objective function: 24.6095
+R1: 148 K, sigma: 17.8388
+R2: 161 K, sigma: 37829.3
+Re: 189 K, sigma: 73.2749
+Rg: 3.52 K, sigma: 1656.47
+Rc: 131 K, sigma: 600.376
+Ce: 484 uF, sigma: 39.1553
+Cin: 40.0 uF, sigma: 102.509
+Cout: 268 uF, sigma: 235.059
+
+Generation: 25
+objective function: 20.8914
+R1: 149 K, sigma: 26.82
+R2: 184 K, sigma: 35112.7
+Re: 189 K, sigma: 27.5816
+Rg: 2.49 K, sigma: 953.086
+Rc: 127 K, sigma: 697.483
+Ce: 484 uF, sigma: 13.1566
+Cin: 38.2 uF, sigma: 1024.97
+Cout: 268 uF, sigma: 17.3007
+
+Generation: 44
+objective function: 19.7456
+R1: 149 K, sigma: 19.6975
+R2: 195 K, sigma: 78.7266
+Re: 189 K, sigma: 2.31149
+Rg: 2.31 K, sigma: 22.1577
+Rc: 150 K, sigma: 129.262
+Ce: 484 uF, sigma: 0.955047
+Cin: 30.7 uF, sigma: 1391.44
+Cout: 263 uF, sigma: 2012.06
+
+Generation: 48
+objective function: 18.7059
+R1: 149 K, sigma: 21.0075
+R2: 195 K, sigma: 68.7943
+Re: 189 K, sigma: 0.703509
+Rg: 2.05 K, sigma: 154.33
+Rc: 150 K, sigma: 830.611
+Ce: 484 uF, sigma: 0.233821
+Cin: 33.0 uF, sigma: 188.281
+Cout: 268 uF, sigma: 848.038
+
+Generation: 79
+objective function: 17.7482
+R1: 149 K, sigma: 1.08811
+R2: 195 K, sigma: 0.562007
+Re: 189 K, sigma: 0.0236331
+Rg: 1.98 K, sigma: 0.429063
+Rc: 150 K, sigma: 2.19654
+Ce: 484 uF, sigma: 8.8999
+Cin: 5 nF, sigma: 235.859
+Cout: 263 uF, sigma: 163.941
+
+Generation: 91
+objective function: 16.641
+R1: 149 K, sigma: 0.252485
+R2: 195 K, sigma: 23.4117
+Re: 189 K, sigma: 0.00911197
+Rg: 1.66 K, sigma: 79.0644
+Rc: 150 K, sigma: 1.65369
+Ce: 484 uF, sigma: 0.664764
+Cin: 12 nF, sigma: 7.05819
+Cout: 263 uF, sigma: 28.4702
+
+Generation: 93
+objective function: 15.4432
+R1: 149 K, sigma: 0.354703
+R2: 195 K, sigma: 39.9707
+Re: 189 K, sigma: 0.0154869
+Rg: 1.40 K, sigma: 133.256
+Rc: 150 K, sigma: 1.17091
+Ce: 484 uF, sigma: 1.46585
+Cin: 6 nF, sigma: 3.69846
+Cout: 263 uF, sigma: 32.4014
+
+Generation: 96
+objective function: 14.4079
+R1: 149 K, sigma: 0.256933
+R2: 195 K, sigma: 41.6445
+Re: 189 K, sigma: 0.0267303
+Rg: 683 R, sigma: 485.242
+Rc: 150 K, sigma: 1.23231
+Ce: 484 uF, sigma: 0.749254
+Cin: 7 nF, sigma: 4.64184
+Cout: 263 uF, sigma: 35.0411
+
+Generation: 108
+objective function: 13.6253
+R1: 149 K, sigma: 35.1061
+R2: 192 K, sigma: 1895.23
+Re: 189 K, sigma: 4.47658e-05
+Rg: 605 R, sigma: 31.9677
+Rc: 150 K, sigma: 0.0609321
+Ce: 484 uF, sigma: 1.79922
+Cin: 8 nF, sigma: 2.31864
+Cout: 263 uF, sigma: 2.03498
+
