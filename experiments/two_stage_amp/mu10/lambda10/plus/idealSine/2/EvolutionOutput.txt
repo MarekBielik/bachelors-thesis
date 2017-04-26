@@ -1,0 +1,94 @@
+Evolution strategies type: (μ + λ)-ES
+Parameter μ: 10
+Parameter λ: 10
+Fitness function type: idealSine
+Amplitude: 3.5
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 268.813
+R1: 157 K, sigma: 126.952
+R2: 121 K, sigma: 129.14
+Re: 74.2 K, sigma: 101.122
+Rc: 56.6 K, sigma: 58.9246
+Ce: 99.7 uF, sigma: 60.4075
+Cin: 17.3 uF, sigma: 103.531
+Cout: 172 uF, sigma: 116.963
+Rgb: 155 K, sigma: 123.583
+Reb: 148 K, sigma: 148.235
+Rcb: 136 K, sigma: 72.9486
+R2b: 87.5 K, sigma: 109.86
+R1b: 146 K, sigma: 123.854
+Cm: 295 uF, sigma: 86.0753
+Ce2: 41.0 uF, sigma: 124.473
+
+Generation: 13
+objective function: 117.271
+R1: 157 K, sigma: 25.3246
+R2: 121 K, sigma: 869.655
+Re: 74.7 K, sigma: 119.31
+Rc: 56.6 K, sigma: 85.6459
+Ce: 99.5 uF, sigma: 145.155
+Cin: 16.9 uF, sigma: 52.4917
+Cout: 172 uF, sigma: 124.606
+Rgb: 155 K, sigma: 203.582
+Reb: 147 K, sigma: 112.716
+Rcb: 136 K, sigma: 222.303
+R2b: 87.7 K, sigma: 447.506
+R1b: 147 K, sigma: 113.685
+Cm: 295 uF, sigma: 33.2805
+Ce2: 41.0 uF, sigma: 62.841
+
+Generation: 41
+objective function: 109.436
+R1: 157 K, sigma: 26.9918
+R2: 122 K, sigma: 2266.85
+Re: 74.9 K, sigma: 310.909
+Rc: 56.8 K, sigma: 77.2576
+Ce: 99.6 uF, sigma: 166.334
+Cin: 16.9 uF, sigma: 23.3944
+Cout: 172 uF, sigma: 85.6212
+Rgb: 155 K, sigma: 172.748
+Reb: 147 K, sigma: 76.2742
+Rcb: 136 K, sigma: 177.467
+R2b: 89.0 K, sigma: 340.854
+R1b: 147 K, sigma: 105.57
+Cm: 295 uF, sigma: 7.56291
+Ce2: 41.2 uF, sigma: 119.324
+
+Generation: 70
+objective function: 102.945
+R1: 157 K, sigma: 6.40054
+R2: 130 K, sigma: 4833.03
+Re: 71.9 K, sigma: 2353.06
+Rc: 56.8 K, sigma: 62.8649
+Ce: 99.6 uF, sigma: 62.01
+Cin: 17.1 uF, sigma: 72.8946
+Cout: 172 uF, sigma: 27.3735
+Rgb: 155 K, sigma: 19.6239
+Reb: 147 K, sigma: 169.195
+Rcb: 136 K, sigma: 1489.3
+R2b: 88.4 K, sigma: 447.382
+R1b: 147 K, sigma: 34.0818
+Cm: 295 uF, sigma: 53.0782
+Ce2: 40.9 uF, sigma: 42.2097
+
+Generation: 210
+objective function: 97.5348
+R1: 157 K, sigma: 2.10535
+R2: 130 K, sigma: 373.126
+Re: 70.1 K, sigma: 278.089
+Rc: 57.4 K, sigma: 63.7658
+Ce: 99.7 uF, sigma: 13.3622
+Cin: 16.7 uF, sigma: 9.32697
+Cout: 172 uF, sigma: 23.7599
+Rgb: 152 K, sigma: 2112.51
+Reb: 147 K, sigma: 9.11175
+Rcb: 161 K, sigma: 5811.38
+R2b: 106 K, sigma: 2054.45
+R1b: 147 K, sigma: 118.87
+Cm: 293 uF, sigma: 98.3055
+Ce2: 41.0 uF, sigma: 8.82883
+

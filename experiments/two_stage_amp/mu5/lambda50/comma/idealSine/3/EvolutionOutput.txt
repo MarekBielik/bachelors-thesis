@@ -1,0 +1,179 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 5
+Parameter λ: 50
+Fitness function type: idealSine
+Amplitude: 3.5
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 284.355
+R1: 126 K, sigma: 94.2355
+R2: 102 K, sigma: 253.08
+Re: 147 K, sigma: 192.822
+Rc: 163 K, sigma: 211.301
+Ce: 116 uF, sigma: 35.3477
+Cin: 23.7 uF, sigma: 97.9448
+Cout: 47.9 uF, sigma: 159.507
+Rgb: 49.0 K, sigma: 98.4115
+Reb: 59.6 K, sigma: 47.2177
+Rcb: 123 K, sigma: 100.353
+R2b: 32.7 K, sigma: 91.7095
+R1b: 171 K, sigma: 59.0965
+Cm: 120 uF, sigma: 107.524
+Ce2: 212 uF, sigma: 161.159
+
+Generation: 6
+objective function: 242.684
+R1: 126 K, sigma: 151.621
+R2: 116 K, sigma: 5647.07
+Re: 147 K, sigma: 237.291
+Rc: 164 K, sigma: 1731.78
+Ce: 116 uF, sigma: 32.0008
+Cin: 23.6 uF, sigma: 161.993
+Cout: 48.3 uF, sigma: 54.6482
+Rgb: 48.7 K, sigma: 80.3061
+Reb: 59.7 K, sigma: 48.8271
+Rcb: 123 K, sigma: 174.198
+R2b: 32.6 K, sigma: 138.033
+R1b: 171 K, sigma: 69.811
+Cm: 120 uF, sigma: 26.653
+Ce2: 212 uF, sigma: 56.1097
+
+Generation: 7
+objective function: 101.665
+R1: 126 K, sigma: 55.6171
+R2: 120 K, sigma: 5562.82
+Re: 147 K, sigma: 217.238
+Rc: 163 K, sigma: 607.183
+Ce: 116 uF, sigma: 53.4675
+Cin: 23.5 uF, sigma: 153.823
+Cout: 48.1 uF, sigma: 118.905
+Rgb: 48.8 K, sigma: 66.1709
+Reb: 59.7 K, sigma: 66.5987
+Rcb: 123 K, sigma: 272.923
+R2b: 32.6 K, sigma: 119.522
+R1b: 171 K, sigma: 66.8616
+Cm: 120 uF, sigma: 22.8165
+Ce2: 212 uF, sigma: 18.1025
+
+Generation: 16
+objective function: 96.3866
+R1: 126 K, sigma: 104.9
+R2: 119 K, sigma: 785.31
+Re: 148 K, sigma: 79.516
+Rc: 163 K, sigma: 305.286
+Ce: 116 uF, sigma: 260.403
+Cin: 23.2 uF, sigma: 487.791
+Cout: 49.2 uF, sigma: 845.023
+Rgb: 48.6 K, sigma: 62.2514
+Reb: 59.8 K, sigma: 92.6044
+Rcb: 123 K, sigma: 233.444
+R2b: 34.7 K, sigma: 589.754
+R1b: 171 K, sigma: 9.12812
+Cm: 120 uF, sigma: 36.2251
+Ce2: 212 uF, sigma: 7.13164
+
+Generation: 22
+objective function: 91.4357
+R1: 126 K, sigma: 56.7244
+R2: 118 K, sigma: 916.636
+Re: 148 K, sigma: 4.76096
+Rc: 163 K, sigma: 683.299
+Ce: 116 uF, sigma: 66.1867
+Cin: 21.4 uF, sigma: 270.767
+Cout: 50.7 uF, sigma: 794.691
+Rgb: 48.6 K, sigma: 60.4077
+Reb: 59.8 K, sigma: 58.7449
+Rcb: 123 K, sigma: 427.653
+R2b: 43.4 K, sigma: 2767.57
+R1b: 171 K, sigma: 3.05261
+Cm: 120 uF, sigma: 69.1733
+Ce2: 212 uF, sigma: 17.2604
+
+Generation: 25
+objective function: 86.5387
+R1: 125 K, sigma: 126.887
+R2: 116 K, sigma: 1897.91
+Re: 148 K, sigma: 8.59533
+Rc: 162 K, sigma: 184.934
+Ce: 116 uF, sigma: 9.37138
+Cin: 21.5 uF, sigma: 444.394
+Cout: 50.6 uF, sigma: 633.625
+Rgb: 48.6 K, sigma: 53.7636
+Reb: 59.6 K, sigma: 69.1797
+Rcb: 124 K, sigma: 230.469
+R2b: 49.1 K, sigma: 1835.48
+R1b: 171 K, sigma: 2.13527
+Cm: 120 uF, sigma: 136.508
+Ce2: 212 uF, sigma: 10.2052
+
+Generation: 28
+objective function: 81.7077
+R1: 125 K, sigma: 50.9295
+R2: 109 K, sigma: 6118.47
+Re: 148 K, sigma: 7.81015
+Rc: 163 K, sigma: 348.895
+Ce: 116 uF, sigma: 41.4826
+Cin: 22.4 uF, sigma: 412.813
+Cout: 45.3 uF, sigma: 143.113
+Rgb: 48.6 K, sigma: 10.6342
+Reb: 59.9 K, sigma: 24.6751
+Rcb: 123 K, sigma: 332.95
+R2b: 57.2 K, sigma: 4008.96
+R1b: 171 K, sigma: 2.45842
+Cm: 120 uF, sigma: 8.98137
+Ce2: 212 uF, sigma: 3.18125
+
+Generation: 29
+objective function: 77.4848
+R1: 125 K, sigma: 40.1083
+R2: 109 K, sigma: 4826.35
+Re: 148 K, sigma: 4.96452
+Rc: 163 K, sigma: 313.428
+Ce: 116 uF, sigma: 25.6247
+Cin: 22.1 uF, sigma: 228.295
+Cout: 45.5 uF, sigma: 161.303
+Rgb: 48.6 K, sigma: 3.69653
+Reb: 59.9 K, sigma: 42.9237
+Rcb: 123 K, sigma: 205.348
+R2b: 59.9 K, sigma: 2189.9
+R1b: 171 K, sigma: 1.47945
+Cm: 120 uF, sigma: 10.6607
+Ce2: 212 uF, sigma: 3.1144
+
+Generation: 50
+objective function: 73.22
+R1: 125 K, sigma: 148.021
+R2: 110 K, sigma: 245.702
+Re: 148 K, sigma: 5.53643
+Rc: 161 K, sigma: 114.814
+Ce: 117 uF, sigma: 29.1533
+Cin: 29.8 uF, sigma: 1091.97
+Cout: 29.5 uF, sigma: 2254.8
+Rgb: 48.6 K, sigma: 0.260562
+Reb: 59.9 K, sigma: 24.344
+Rcb: 123 K, sigma: 40.5252
+R2b: 69.5 K, sigma: 497.799
+R1b: 171 K, sigma: 2.14717
+Cm: 120 uF, sigma: 176.871
+Ce2: 212 uF, sigma: 13.1959
+
+Generation: 72
+objective function: 68.1578
+R1: 126 K, sigma: 258.943
+R2: 110 K, sigma: 12.0106
+Re: 148 K, sigma: 2.60528
+Rc: 161 K, sigma: 10.1368
+Ce: 116 uF, sigma: 18.3805
+Cin: 25.6 uF, sigma: 823.061
+Cout: 44.7 uF, sigma: 314.433
+Rgb: 48.6 K, sigma: 0.000439719
+Reb: 58.2 K, sigma: 241.618
+Rcb: 122 K, sigma: 27.7808
+R2b: 71.4 K, sigma: 104.277
+R1b: 171 K, sigma: 7.84096
+Cm: 129 uF, sigma: 4378.35
+Ce2: 210 uF, sigma: 1072.57
+

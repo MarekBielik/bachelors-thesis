@@ -1,0 +1,77 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 5
+Parameter λ: 5
+Fitness function type: idealSine
+Amplitude: 3.5
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 61
+objective function: 306.371
+R1: 73.5 K, sigma: 0.526446
+R2: 34.0 K, sigma: 13.6865
+Re: 156 K, sigma: 7592.44
+Rc: 181 K, sigma: 37.5494
+Ce: 153 uF, sigma: 118.041
+Cin: 9.85 uF, sigma: 0.0244808
+Cout: 434 uF, sigma: 833.221
+Rgb: 172 K, sigma: 4620.76
+Reb: 63.1 K, sigma: 2593.37
+Rcb: 60.4 K, sigma: 8146.18
+R2b: 57.4 K, sigma: 17.3633
+R1b: 15.4 K, sigma: 16821.7
+Cm: 98.3 uF, sigma: 24.0113
+Ce2: 324 uF, sigma: 2.58423
+
+Generation: 90
+objective function: 261.414
+R1: 73.5 K, sigma: 0.150342
+R2: 34.0 K, sigma: 36.0183
+Re: 195 K, sigma: 512.51
+Rc: 182 K, sigma: 2.96676
+Ce: 153 uF, sigma: 47.6102
+Cin: 9.85 uF, sigma: 0.00347198
+Cout: 428 uF, sigma: 131.239
+Rgb: 191 K, sigma: 17985.1
+Reb: 77.8 K, sigma: 67898.4
+Rcb: 162 K, sigma: 22038.2
+R2b: 57.3 K, sigma: 4.49058
+R1b: 25.5 K, sigma: 14917.9
+Cm: 98.3 uF, sigma: 24.4823
+Ce2: 324 uF, sigma: 48.8693
+
+Generation: 2747
+objective function: 105.354
+R1: 73.5 K, sigma: 6.54596e-18
+R2: 134 K, sigma: 1.35508e-19
+Re: 97.8 K, sigma: 439.456
+Rc: 42.8 K, sigma: 40651.7
+Ce: 60.5 uF, sigma: 1.82555e-05
+Cin: 9.85 uF, sigma: 2.75453e-18
+Cout: 18.0 uF, sigma: 0.000538715
+Rgb: 87.4 K, sigma: 1417.06
+Reb: 82.5 K, sigma: 1.47518e-05
+Rcb: 82.6 K, sigma: 0.000416695
+R2b: 49.1 K, sigma: 0.0904914
+R1b: 180 K, sigma: 9.19139e-15
+Cm: 336 uF, sigma: 2.17314e-09
+Ce2: 156 uF, sigma: 4.79953e-06
+
+Generation: 18993
+objective function: 97.0264
+R1: 73.4 K, sigma: 2.83963e-14
+R2: 134 K, sigma: 4.22767e-41
+Re: 83.0 K, sigma: 3.50965e-33
+Rc: 12.3 K, sigma: 359.79
+Ce: 60.5 uF, sigma: 1.48343e-35
+Cin: 9.85 uF, sigma: 2.32197e-38
+Cout: 123 uF, sigma: 1.28447e-25
+Rgb: 14.4 K, sigma: 17223.4
+Reb: 200 K, sigma: 16989.6
+Rcb: 115 K, sigma: 1.00057e-09
+R2b: 176 K, sigma: 9.16903e-38
+R1b: 118 K, sigma: 0.0373803
+Cm: 336 uF, sigma: 1.70433e-44
+Ce2: 139 uF, sigma: 3.85242e-34
+

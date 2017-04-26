@@ -1,0 +1,43 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 15
+Parameter λ: 150
+Fitness function type: idealSine
+Amplitude: 3.5
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 2
+objective function: 288.06
+R1: 77.7 K, sigma: 96.4108
+R2: 52.1 K, sigma: 248.841
+Re: 182 K, sigma: 104.331
+Rc: 23.6 K, sigma: 102.332
+Ce: 271 uF, sigma: 90.9171
+Cin: 69.4 uF, sigma: 76.8489
+Cout: 169 uF, sigma: 113.41
+Rgb: 70.9 K, sigma: 99.8928
+Reb: 143 K, sigma: 92.0204
+Rcb: 139 K, sigma: 52.8061
+R2b: 199 K, sigma: 235.891
+R1b: 18.0 K, sigma: 163.423
+Cm: 455 uF, sigma: 108.169
+Ce2: 28.0 uF, sigma: 106.378
+
+Generation: 4
+objective function: 270.179
+R1: 77.8 K, sigma: 285.12
+R2: 52.0 K, sigma: 393.636
+Re: 181 K, sigma: 30.93
+Rc: 23.2 K, sigma: 514.604
+Ce: 271 uF, sigma: 144.467
+Cin: 69.4 uF, sigma: 133.843
+Cout: 169 uF, sigma: 156.733
+Rgb: 71.2 K, sigma: 171.143
+Reb: 143 K, sigma: 58.7211
+Rcb: 139 K, sigma: 24.9656
+R2b: 199 K, sigma: 374.088
+R1b: 18.3 K, sigma: 239.661
+Cm: 455 uF, sigma: 194.029
+Ce2: 28.0 uF, sigma: 69.1315
+

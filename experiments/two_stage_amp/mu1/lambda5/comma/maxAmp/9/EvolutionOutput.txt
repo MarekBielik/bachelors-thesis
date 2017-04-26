@@ -1,0 +1,93 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 1
+Parameter λ: 5
+Fitness function type: maxAmp
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 53
+objective function: 63.3924
+R1: 53.2 K, sigma: 0.82733
+R2: 118 K, sigma: 2490.42
+Re: 165 K, sigma: 0.272639
+Rc: 195 K, sigma: 740.813
+Ce: 301 uF, sigma: 13.4315
+Cin: 234 uF, sigma: 4.1877
+Cout: 16.7 uF, sigma: 68.6144
+Rgb: 1.83 K, sigma: 3.81215
+Reb: 514 R, sigma: 88247
+Rcb: 135 K, sigma: 7.15149
+R2b: 10.1 K, sigma: 130.814
+R1b: 34.3 K, sigma: 151.387
+Cm: 348 uF, sigma: 224.209
+Ce2: 48.6 uF, sigma: 279.793
+
+Generation: 119
+objective function: 3.60387
+R1: 53.2 K, sigma: 2.15758
+R2: 127 K, sigma: 689.161
+Re: 165 K, sigma: 0.0882712
+Rc: 184 K, sigma: 1188.88
+Ce: 301 uF, sigma: 158.455
+Cin: 234 uF, sigma: 0.128913
+Cout: 17.6 uF, sigma: 33.0967
+Rgb: 1.86 K, sigma: 0.00958135
+Reb: 30.9 K, sigma: 7376.4
+Rcb: 135 K, sigma: 30.2044
+R2b: 10.1 K, sigma: 4.21794
+R1b: 33.9 K, sigma: 87.3105
+Cm: 398 uF, sigma: 11348.3
+Ce2: 51.0 uF, sigma: 159.719
+
+Generation: 122
+objective function: 3.41905
+R1: 53.2 K, sigma: 1.4254
+R2: 128 K, sigma: 2219.69
+Re: 165 K, sigma: 0.149498
+Rc: 179 K, sigma: 2192.22
+Ce: 301 uF, sigma: 188.993
+Cin: 234 uF, sigma: 0.0900034
+Cout: 17.7 uF, sigma: 86.1146
+Rgb: 1.86 K, sigma: 0.0114576
+Reb: 30.8 K, sigma: 14062.1
+Rcb: 135 K, sigma: 16.3311
+R2b: 10.1 K, sigma: 3.46071
+R1b: 34.0 K, sigma: 186.751
+Cm: 404 uF, sigma: 7464.93
+Ce2: 51.1 uF, sigma: 94.6346
+
+Generation: 423
+objective function: 0.60664
+R1: 23.2 K, sigma: 617.936
+R2: 188 K, sigma: 9696.29
+Re: 164 K, sigma: 0.0611715
+Rc: 24.6 K, sigma: 0.773913
+Ce: 218 uF, sigma: 27943.5
+Cin: 234 uF, sigma: 6.60309e-05
+Cout: 321 uF, sigma: 24506.4
+Rgb: 1.86 K, sigma: 0.00420572
+Reb: 171 K, sigma: 217.085
+Rcb: 116 K, sigma: 0.206723
+R2b: 50.8 K, sigma: 5567.22
+R1b: 35.6 K, sigma: 0.0143588
+Cm: 180 uF, sigma: 77047.4
+Ce2: 42.9 uF, sigma: 73.3195
+
+Generation: 433
+objective function: 0.575249
+R1: 22.8 K, sigma: 592.805
+R2: 127 K, sigma: 3224.52
+Re: 164 K, sigma: 0.020102
+Rc: 24.6 K, sigma: 0.133367
+Ce: 301 uF, sigma: 41822.4
+Cin: 234 uF, sigma: 1.25615e-05
+Cout: 429 uF, sigma: 51784.2
+Rgb: 1.86 K, sigma: 0.00109324
+Reb: 171 K, sigma: 76.7041
+Rcb: 116 K, sigma: 0.0465901
+R2b: 50.2 K, sigma: 4765.04
+R1b: 35.6 K, sigma: 0.0872517
+Cm: 137 uF, sigma: 20989.4
+Ce2: 43.7 uF, sigma: 387.363
+

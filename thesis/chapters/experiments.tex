@@ -170,7 +170,7 @@ The maximum difference between the peak and trough of the amplifier's output wav
 Important parameters of the evolution are numbers $\mu$ and $\lambda$ which define the population size (the number of parents and children in every generation), the ratio between them which defines the selective pressure, and also the type of the selection that we choose for the evolution(($\mu$, $\lambda$)-ES or ($\mu + \lambda$)-ES). In order to determine the most suitable values of the parameters, there were various experiments carried out which are summarized in table \ref{experiments-results}.\\
 Every row of the table contains results for a different combination of $\mu$ and $\lambda$. The values of $\mu$ are set to 1, 5, 10 and 15 and the selective pressure is also 1, 5, 10 and 15 for every value of $\mu$, so there are four different values of $\lambda$ for every $\mu$. For every such combination, there are results for both selection types and under every type, there are three columns representing the results of experiments for all the three evaluation methods that are discussed in section \ref{chromosomes-evaluation}. One cell of the table corresponds to the result of one experiment in which the evolutionary algorithm was run 10 times with the same parameters and the fitness values of the best chromosomes were added up and divided by 10. The task was to optimize the single stage amplifier.\\
 We can see that there is no significant difference between the selection schemes, provided the selective pressure is higher than one. On lines 5, 9 and 13 (where the selection pressure is 1) the ($\mu$, $\lambda$)-ES scheme performs significantly worse than the ($\mu + \lambda$)-ES scheme and even increasing the population size has no effect (line 5 compared to line 9 and 13). However, when we sum up all the values in both schemes (excluding lines 1, 5, 9 and 13), the latter one gives us better results, so the ($\mu + \lambda$)-ES selection scheme was chosen as the more effective one.\\
-We can also see that when the value of $\mu$ is only 1, the algorithm's results are substantially worse than in the rest of the table and on the other hand when we increase it from 5 to 15, there is only a small change in the overall performance.//
+We can also see that when the value of $\mu$ is only 1, the algorithm's results are substantially worse than in the rest of the table and on the other hand when we increase it from 5 to 15, there is only a small change in the overall performance.\\
 The value of $\lambda$ is set according to the value of $\mu$ and selection pressure and it highly influences the overall computation time of the algorithm because it defines the number of chromosomes that have to be evaluated in every generation (the evaluation includes the amplifier's simulation which takes most of the computation time). When the selective pressure and the value of $\mu$ are higher than one, the overall efficiency of the algorithm does not increase rapidly but there is a noticeable increase in the computation time. For this reason, the values of $\mu$ and $\lambda$ were set to $\mu = 15$ and $\lambda = 150$ as a compromise between the algorithm's time requirements and the optimization efficiency. Also, higher values were examined but they did not provide any significant improvements.
 
 \begin{table}[H]
@@ -256,7 +256,7 @@ The 'best match' method can be used for finding such properties that provide us 
 \label{best-fit-solutions}
 \end{table}
 
-The 'maximal amplitude' method can be used for finding the best amplification capabilities of the circuit as it does not take into consideration the shape of the output signal. This method is useful for the 'ideal sine' method because it allows us to find the appropriate maximal amplitude and then we can find the right waveform by using the latter method. If we set the amplitude for the 'ideal sine' method too high, it would not work as effectively as when we set some realistic number. By this approach, we can find even better solutions than the analytical one. One of such solutions is shown in figure \ref{better-solution-fig} and the values of the components are summarized in table \ref{better-solution-tab}.\\
+The 'maximal amplitude' method can be used for finding the best amplification capabilities of the circuit as it does not take into consideration the shape of the output signal. This method is useful for the 'ideal sine' method because it allows us to find the appropriate maximal amplitude and then we can find the right waveform by using the latter method. If we set the amplitude for the 'ideal sine' method too high, it would not work as effectively as when we set some realistic number. By this approach, we can find even better solutions than the analytical one. One of such solutions is shown in figure \ref{better-solution-fig} and the values of the components are summarized in table \ref{better-solution-tab}. Since the amplitude of the input signal was \SI{100}{\milli\volt} and the amplitude of the output signal is approximately \SI{4.2}{\volt}, the gain of this amplifier is approximately 42 (the gain of the analytically solved amplifier is approximately 18).\\
 
 \begin{figure}[H]
     \centerline{\includegraphics[scale=0.6]{best-solution-single-stage}\label{better-solution-fig}}
@@ -267,9 +267,9 @@ The 'maximal amplitude' method can be used for finding the best amplification ca
 \centering
 \begin{tabular}{@{}cccccccc@{}}
 \toprule
-    $R1$ [\si{\kilo\ohm}] & $R2$ [\si{\kilo\ohm}] & $Re$ [\si{\ohm}] & $Rg$ [\si{\ohm}] & $Rc$ [\si{\kilo\ohm}] & $Ce$ [\si{\nano\farad}] & $Cin$ [\si{\nano\farad}] & $Cout$ [\si{\nano\farad}] \\
+    $R1$ [\si{\kilo\ohm}] & $R2$ [\si{\kilo\ohm}] & $Re$ [\si{\ohm}] & $Rg$ [\si{\ohm}] & $Rc$ [\si{\kilo\ohm}] & $Ce$ [\si{\micro\farad}] & $Cin$ [\si{\micro\farad}] & $Cout$ [\si{\nano\farad}] \\
     \midrule
-    168 & 15.1 & 169 & 49 & 4.21 & 16 000 & 274 000 & 86 \\
+    168 & 15.1 & 169 & 49 & 4.21 & 16 & 274 & 86 \\
     \bottomrule
 \end{tabular}
 \caption{The best solution}
@@ -280,4 +280,26 @@ The 'ideal sine' evaluation method also provides us a universal tool for finding
 
 \subsection{Two stage amplifier optimization} \label{2stage-results}
 This amplifier was chosen as the more complicated task to optimize. There was no analytical solution for this circuit so it was not possible to use the 'best match' evaluation method. Experimenting with this type of amplifier showed that this amplifier is much more difficult to optimize and that it does not provide any better amplification properties than the previous single stage amplifier.\\
-The same set of experiments was carried out as for the previous amplifier and the best
+The same set of experiments was carried out as for the previous amplifier and one of the best solutions is shown in figure \ref{best-solution-two-stage-fig}.\\
+
+\begin{figure}[H]
+    \centerline{\includegraphics[scale=0.6]{best-solution-two-stage}\label{best-solution-two-stage-fig}}
+    \caption{The best solution}
+\end{figure}
+
+We can see that the resulting gain is approximately 50 (the amplitude of the input voltage is \SI{100}{\milli\volt}) but the output waveform is significantly distorted --- the circuit generates a square wave. The experiments did not provide any solution that would generate a sine wave. The components' values are stated in table \ref{best-solution-two-stage-tab}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccccccccc@{}}
+\toprule
+    $R1$ [\si{\kilo\ohm}] & $R2$ [\si{\kilo\ohm}] & $Re$ [\si{\kilo\ohm}] & $Rc$ [\si{\kilo\ohm}] & $Ce$ [\si{\micro\farad}] & $Cin$ [\si{\micro\farad}] & $Cout$ [\si{\micro\farad}] \\
+    $Rgb$ [\si{\ohm}] & $Reb$ [\si{\ohm}] & $Rcb$ [\si{\kilo\ohm}] & $R2b$ [\si{\kilo\ohm}] & $R1b$ [\si{\kilo\ohm}] & $Cm$ [\si{\micro\farad}] & $Ce2$ [\si{\micro\farad}] \\
+    \midrule
+    114 & 57  & 51.6 & 81.7 & 98   & 215 & 479 & \\
+    22  & 298 & 3.37 & 9.24 & 80.5 & 351 & 139   \\
+    \bottomrule
+\end{tabular}
+\caption{The best solution}
+\label{best-solution-two-stage-tab}
+\end{table}

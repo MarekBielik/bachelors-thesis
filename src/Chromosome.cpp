@@ -232,8 +232,7 @@ Chromosome Chromosome::reproduce() {
     return Chromosome(genotype);
 }
 
-void Chromosome::plot()
-{
+void Chromosome::plot() {
     runSimulation(true);
 
     switch (objFunType) {

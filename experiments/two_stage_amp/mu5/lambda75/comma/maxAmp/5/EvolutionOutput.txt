@@ -1,0 +1,76 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 5
+Parameter λ: 75
+Fitness function type: maxAmp
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 1
+objective function: 1.00695
+R1: 115 K, sigma: 148.07
+R2: 194 K, sigma: 152.822
+Re: 81.4 K, sigma: 77.7828
+Rc: 37.2 K, sigma: 180.52
+Ce: 259 uF, sigma: 66.1019
+Cin: 29.8 uF, sigma: 263.618
+Cout: 197 uF, sigma: 66.8598
+Rgb: 108 K, sigma: 62.838
+Reb: 196 K, sigma: 139.71
+Rcb: 136 K, sigma: 153.05
+R2b: 85.2 K, sigma: 199.273
+R1b: 80.5 K, sigma: 81.5616
+Cm: 471 uF, sigma: 62.7171
+Ce2: 99.0 uF, sigma: 188.666
+
+Generation: 15
+objective function: 0.948835
+R1: 115 K, sigma: 5.37179
+R2: 193 K, sigma: 28.5543
+Re: 57.6 K, sigma: 1572.34
+Rc: 25.6 K, sigma: 4169.71
+Ce: 259 uF, sigma: 140.49
+Cin: 30.4 uF, sigma: 540.067
+Cout: 198 uF, sigma: 17.2443
+Rgb: 108 K, sigma: 44.0138
+Reb: 196 K, sigma: 31.4967
+Rcb: 136 K, sigma: 44.971
+R2b: 85.1 K, sigma: 125.437
+R1b: 80.2 K, sigma: 13.33
+Cm: 471 uF, sigma: 52.6719
+Ce2: 98.6 uF, sigma: 16.811
+
+Generation: 33
+objective function: 0.896489
+R1: 115 K, sigma: 3.55535
+R2: 194 K, sigma: 262.771
+Re: 34.3 K, sigma: 1597.21
+Rc: 16.2 K, sigma: 1042.62
+Ce: 259 uF, sigma: 7.13347
+Cin: 27.3 uF, sigma: 343.045
+Cout: 197 uF, sigma: 22.2834
+Rgb: 108 K, sigma: 32.2811
+Reb: 196 K, sigma: 1.73768
+Rcb: 136 K, sigma: 13.5629
+R2b: 84.7 K, sigma: 9.60656
+R1b: 84.5 K, sigma: 994.723
+Cm: 471 uF, sigma: 34.7649
+Ce2: 98.7 uF, sigma: 1.2745
+
+Generation: 37
+objective function: 0.849202
+R1: 115 K, sigma: 33.6994
+R2: 188 K, sigma: 2646.25
+Re: 31.0 K, sigma: 926.484
+Rc: 15.8 K, sigma: 518.704
+Ce: 259 uF, sigma: 3.5085
+Cin: 29.2 uF, sigma: 437.237
+Cout: 197 uF, sigma: 38.914
+Rgb: 108 K, sigma: 49.7766
+Reb: 196 K, sigma: 1.09143
+Rcb: 136 K, sigma: 4.03197
+R2b: 84.7 K, sigma: 28.0494
+R1b: 92.2 K, sigma: 811.91
+Cm: 471 uF, sigma: 121.205
+Ce2: 98.7 uF, sigma: 0.622227
+

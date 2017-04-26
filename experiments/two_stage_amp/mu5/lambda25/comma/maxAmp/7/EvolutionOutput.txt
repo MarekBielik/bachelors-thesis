@@ -1,0 +1,76 @@
+Evolution strategies type: (μ, λ)-ES
+Parameter μ: 5
+Parameter λ: 25
+Fitness function type: maxAmp
+Maximal number of generations: 20000
+Resistance range: 0 - 200000Ω
+Capacity range: 0 - 500000nF
+
+Generation: 158
+objective function: 6.04785
+R1: 70.3 K, sigma: 0.0311199
+R2: 161 K, sigma: 3911.82
+Re: 51.5 K, sigma: 2050.99
+Rc: 106 K, sigma: 4831.23
+Ce: 32 nF, sigma: 12986.2
+Cin: 273 uF, sigma: 1734.22
+Cout: 193 uF, sigma: 0.0990959
+Rgb: 138 K, sigma: 275.345
+Reb: 96.6 K, sigma: 0.0132122
+Rcb: 141 K, sigma: 1323.39
+R2b: 172 K, sigma: 1.60343
+R1b: 94.7 K, sigma: 3852.68
+Cm: 244 uF, sigma: 1685.03
+Ce2: 363 uF, sigma: 31.8475
+
+Generation: 288
+objective function: 1.79363
+R1: 70.3 K, sigma: 0.0531414
+R2: 67.0 K, sigma: 2800.73
+Re: 41.7 K, sigma: 0.000117878
+Rc: 79.8 K, sigma: 0.385309
+Ce: 24.2 uF, sigma: 5.67959
+Cin: 267 uF, sigma: 3.73672
+Cout: 256 uF, sigma: 42610
+Rgb: 37.8 K, sigma: 48201.8
+Reb: 96.6 K, sigma: 0.0240758
+Rcb: 63.9 K, sigma: 37426.1
+R2b: 172 K, sigma: 0.0811752
+R1b: 111 K, sigma: 1142.29
+Cm: 266 uF, sigma: 5736.52
+Ce2: 364 uF, sigma: 0.00358701
+
+Generation: 311
+objective function: 1.69057
+R1: 70.3 K, sigma: 0.0293113
+R2: 49.0 K, sigma: 3909.01
+Re: 41.7 K, sigma: 2.52826e-06
+Rc: 79.8 K, sigma: 0.00514641
+Ce: 24.2 uF, sigma: 1.71815
+Cin: 267 uF, sigma: 0.778256
+Cout: 254 uF, sigma: 1854.03
+Rgb: 78.4 K, sigma: 1001.63
+Reb: 96.6 K, sigma: 0.0399239
+Rcb: 60.7 K, sigma: 366.082
+R2b: 172 K, sigma: 0.0145262
+R1b: 113 K, sigma: 120.365
+Cm: 241 uF, sigma: 1084.77
+Ce2: 364 uF, sigma: 0.000288336
+
+Generation: 316
+objective function: 1.49303
+R1: 70.3 K, sigma: 0.111317
+R2: 47.1 K, sigma: 6009.87
+Re: 41.7 K, sigma: 1.4567e-06
+Rc: 79.8 K, sigma: 0.00116913
+Ce: 24.2 uF, sigma: 4.67099
+Cin: 267 uF, sigma: 0.498003
+Cout: 242 uF, sigma: 4566.9
+Rgb: 79.5 K, sigma: 7034.21
+Reb: 96.6 K, sigma: 0.0881516
+Rcb: 61.8 K, sigma: 870.916
+R2b: 172 K, sigma: 0.113284
+R1b: 113 K, sigma: 228.347
+Cm: 251 uF, sigma: 768.759
+Ce2: 364 uF, sigma: 0.000780579
+
