@@ -52,27 +52,28 @@ struct Params {
 };
 
 class ArgParser {
-    const struct option long_options[17] = {
-        {"mu", required_argument, 0, mu},
-        {"lambda", required_argument, 0, lambda},
-        {"max_gen", required_argument, 0, max_gen},
-        {"stop_gen", required_argument, 0, stop_gen},
-        {"print_gen", required_argument, 0, print_gen},
-        {"print_change", required_argument, 0, print_change},
-        {"stop_change", required_argument, 0, stop_change},
-        {"ES", required_argument, 0, ES_type},
-        {"max_res", required_argument, 0, max_res},
-        {"max_cap", required_argument, 0, max_cap},
-        {"sigma_init", required_argument, 0, sigma_init},
-        {"fitness", required_argument, 0, obj_fun_type},
-        {"amplitude", required_argument, 0, amp},
-        {"Rload", required_argument, 0, Rload},
-        {"max_diff", required_argument, 0, max_diff},
-        {"two_stage_amp", no_argument, 0, two_stage_amp},
-        {              0,           0, 0, 0}
+    const struct option long_options[18] = {
+            {"help", no_argument, 0, 'h'},
+            {"mu", required_argument, 0, mu},
+            {"lambda", required_argument, 0, lambda},
+            {"max-gen", required_argument, 0, max_gen},
+            {"stop-gen", required_argument, 0, stop_gen},
+            {"print-gen", required_argument, 0, print_gen},
+            {"print-change", required_argument, 0, print_change},
+            {"stop-change", required_argument, 0, stop_change},
+            {"ES", required_argument, 0, ES_type},
+            {"max-res", required_argument, 0, max_res},
+            {"max-cap", required_argument, 0, max_cap},
+            {"sigma-init", required_argument, 0, sigma_init},
+            {"fitness", required_argument, 0, obj_fun_type},
+            {"amplitude", required_argument, 0, amp},
+            {"Rload", required_argument, 0, Rload},
+            {"max-diff", required_argument, 0, max_diff},
+            {"two-stage-amp", no_argument, 0, two_stage_amp},
+            {              0,           0, 0, 0}
     };
 
-    const char * short_options = "o:";
+    const char * short_options = "ho:";
 
     Params params;
 

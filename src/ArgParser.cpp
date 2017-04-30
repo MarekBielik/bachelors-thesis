@@ -34,6 +34,8 @@ void ArgParser::parse(int argc, char **argv) {
     while ((c = getopt_long(argc, argv, short_options, long_options,
                        &option_index)) != -1) {
             switch (c) {
+                case 'h':
+                    throw std::domain_error("help msg");
                 case mu:
                     params.mu = std::stoul(optarg);
                     break;

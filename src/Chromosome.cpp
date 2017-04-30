@@ -29,7 +29,7 @@ void Chromosome::init(Params params) {
                        referenceOutVoltage, referenceTime, referenceInVoltage);
     Amplifier::getInstance().freeNetlist();
 
-    if (params.objFunType == "bestFit")
+    if (params.objFunType == "bestMatch")
         objFunType = bestFit;
     else if (params.objFunType == "idealSine")
         objFunType = idealSin;

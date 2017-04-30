@@ -9,6 +9,9 @@ int main(int argc, char *argv[])
     /*get the evolution parameters*/
     try {
         argParser.parse(argc, argv);
+    } catch (const std::domain_error& e) {
+        std::cout << helpMsg;
+        return EXIT_SUCCESS;
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
         _exit(EXIT_FAILURE);

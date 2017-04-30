@@ -17,11 +17,11 @@
 struct Params;
 class Chromosome;
 
-/* mu - cardinality of population of ancestors
- * lambda - cardinality of population of descendants
+/* mu - cardinality of the population of ancestors
+ * lambda - cardinality of the population of descendants
  * */
-#define MU 8
-#define LAMBDA 16
+#define MU 10
+#define LAMBDA 150
 
 #define MAX_GEN 3000
 #define STOP_GEN 500
