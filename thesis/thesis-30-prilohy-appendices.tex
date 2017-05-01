@@ -13,6 +13,105 @@
 
 %\chapter{Plakát} % poster
 
+\chapter{User interface}
+The program is implemented as a console application. The user can run the program in the following way:
+
+\begin{verbatim}
+bt [OPTIONS]...
+\end{verbatim}
+
+The \verb+OPTIONS+ are as follows:
+
+\begin{description}[style=nextline]
+    \item [\Q{-h, --help}] Prints the help message.
+
+    \item [\Q{-o <directory_name>}] Specifies the output directory. By default, \Q{stdout} is used for the text output and the graphs are displayed on the screen.
+
+    \item[\Q{--mu <number_of_ancestors>}] Sets the cardinality of the population of ancestors.\\
+        The default value is 10 chromosomes.
+
+    \item[\Q{--lambda <number_of_descendants>}] Sets the cardinality of the population of descendants.\\
+        The default value is 150 chromosomes.
+
+    \item[\Q{--max-gen <number_of_generations>}] Sets the maximum number of generations in the evolution.\\
+        The default value is 3000 generations.
+
+    \item[\Q{--stop-gen <number_of_generations>}] Sets the number of generations after which the terminating condition will be checked. This option is related to the \Q{stop-change} option.\\
+        The default value is 500 generations.
+
+    \item[\Q{--stop-change <value>}] The evolution terminates when the fitness of the best chromosome in the population does not decrease by a certain percentage after a certain number of generations. The percentage is set by this option. The value is in the interval $\left]0, 1\right]$.\\
+        The default value is 0.99 meaning that the evolution terminates when the fitness does not change by more than 1\%.
+
+    \item[\Q{--print-gen <number_of_generations>}] Sets the number of generations after which the print condition will be checked. This option is related to the \Q{print-change} option.\\
+        The default value is 10 generations.
+
+    \item[\Q{--print-change <value>}] The status of the evolution may be printed when the fitness of the best chromosome in the population decreases by a certain percentage after a certain number of generations. The percentage is set by this option. The value is in the interval ]0,1].\\
+        The default value is 0.9 meaning that the status will be printed every time the fitness decreases by 10\%.
+
+     \item[\Q{--ES (<'plus'> | <'comma'>)}] Specifies the selection scheme of the evolution strategies algorithm.\\
+        The default value is \Q{'plus'}.
+
+     \item[\Q{--max-res <maximum_resistance>}] Sets the maximum resistance of the circuit's resistors in ohms.\\
+        The default value is \SI{200}{\kilo\ohm}.
+
+     \item[\Q{--max-cap <maximum_capacitance>}] Sets the maximum capacitance of the circuit's capacitors in nanofarads.\\
+        The default value is \SI{500}{\nano\farad}.
+
+        \item[\Q{--sigma-init <initial_value>}] Sets the initial value of the mutation step.\\
+        The default value is 100.
+
+        \item[\Q{--fitness (<'bestMatch'> | <'idealSine'> | <'maxAmp'>)}] Specifies the evaluation method of the chromosomes' fitness.\\
+        The default value is \Q{'bestMatch'}.
+
+        \item[\Q{--amplitude <voltage>}] Sets the amplitude of the amplifier's output waveform in volts. This option only applies if the \Q{'idealSine'} evaluation method is used.\\
+        The default value is \SI{1}{\volt}.
+
+        \item[\Q{--Rload <resistance>}] Sets the resistance of the load resistor for the amplifier in ohms.\\
+        The default value is \SI{22}{\kilo\ohm}.
+
+        \item[\Q{--max-diff <difference>}] Sets the maximal percentage difference by which the trough and peak of the amplifier's output waveform may differ. The difference is in the interval ]0,100].\\
+        The default value is 100\%.
+
+        \item[\Q{--two-stage-amp}] Instead of the single stage amplifier, the subject of the optimization will be the two stage amplifier.
+\end{description}
+
+The output of the application contains graphs which were presented in the thesis and a text description which form is presented in listing \ref{evolution-output}. The description contains the values of all the optimized components of the two stage amplifier and their last mutation steps in the 270th generation. The print frequency may be set via \Q{OPTIONS}.
+
+\begin{lstlisting}[caption={Evolution text output example},
+                   label={evolution-output},
+                   captionpos=b,
+                   numbers=left]
+Generation: 270
+objective function: 22.7797
+R1: 151 K, sigma: 1417.68
+R2: 27.2 K, sigma: 49.2543
+Re: 17.0 K, sigma: 0.920929
+Rc: 40.2 K, sigma: 20.7433
+Ce: 415 uF, sigma: 0.161956
+Cin: 274 uF, sigma: 43.1271
+Cout: 162 uF, sigma: 0.00136042
+Rgb: 5.90 K, sigma: 75.8349
+Reb: 17.8 K, sigma: 97.2993
+Rcb: 10.4 K, sigma: 127.525
+R2b: 185 K, sigma: 392.402
+R1b: 200 K, sigma: 307.757
+Cm: 159 uF, sigma: 261.11
+Ce2: 184 uF, sigma: 73.005
+\end{lstlisting}
+
+You can stop the running application by sending the \Q{SIGQUIT} (\Q{Ctrl-\\}) signal. The \Q{SIGINT} signal does not work because the ngSPICE library uses it for its own purposes.
+
+\chapter{CD content}
+The attached CD contains
+
+\begin{itemize}
+    \item the modified source code of ngSPICE,
+    \item the implementation of the evolutionary algorithms in C++,
+    \item shell scripts for performing experiments with both the single and two stage amplifiers,
+    \item the electronic version of this document along with its source code in \LaTeX,
+    \item file \Q{README.txt} which describes the compilation of the application and other auxiliary files.
+\end{itemize}
+
 \chapter{Jak pracovat s touto šablonou}
 \label{jak}
 

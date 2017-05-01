@@ -76,7 +76,8 @@ const std::string helpMsg = ""
         "   every time the fitness decreases by 10%.\n\n"
 
         "--ES (<'plus'> | <'comma'>)\n"
-        "   Specifies the selection scheme of evolution strategies.\n"
+        "   Specifies the selection scheme of the evolution strategies\n"
+        "   algorithm.\n"
         "   The default value is 'plus'.\n\n"
 
         "--max-res <maximum_resistance>\n"
@@ -92,7 +93,7 @@ const std::string helpMsg = ""
         "   The default value is 100.\n\n"
 
         "--fitness (<'bestMatch'> | <'idealSine'> | <'maxAmp'>)\n"
-        "   Specifies the evaluation method of chromosomes.\n"
+        "   Specifies the evaluation method of the chromosomes' fitness.\n"
         "   The default value is 'bestMatch'.\n\n"
 
         "--amplitude <voltage>\n"
