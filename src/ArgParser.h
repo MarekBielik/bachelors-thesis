@@ -79,8 +79,25 @@ class ArgParser {
 
 public:
     ArgParser();
+
+    /**
+     * Informs whether the output should go to the stdout and the graphs should
+     * be displayed on the screen or if they should be saved as files.
+     * @return true if there was no output directory specified, false otherwise
+     */
     bool screenOutput() const;
+
+    /**
+     * Parses the command line parameters passed to the program.
+     * @param argc number of parameters
+     * @param argv parameters
+     */
     void parse(int argc, char ** argv);
+
+    /**
+     * Returns parsed parameters that were passed to the program.
+     * @return parsed parameters
+     */
     const Params & getParams() const;
 };
 

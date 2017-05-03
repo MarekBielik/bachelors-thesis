@@ -47,8 +47,23 @@ class Population {
     std::ostream & out;
 
 public:
+    /**
+     * Returns an instance of Population.
+     * @param params contains the initial values
+     * @param out the description of the simulation will be redirected to
+     * this stream
+     */
     Population(Params params, std::ostream & out);
+
+    /**
+     * Returns the fitness value of the resulting chromosome in the population.
+     * @return fitness of the resulting chromosome
+     */
     double getResult();
+
+    /**
+     * Triggers the evolution.
+     */
     void evolve();
 };
 

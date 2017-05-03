@@ -63,17 +63,58 @@ class Chromosome {
     double objFunVal;
     Genotype genotype;
 
+    /**
+     * Creates a new mutated genotype.
+     * @param genotype
+     * @return
+     */
     static Genotype mutate(Genotype genotype);
 
+    /**
+     * Runs the simulator and stores its results.
+     * @param full if true, the time vector will also be stored, otherwise only
+     * the voltage vector will be stored.
+     */
     void runSimulation(bool full = false);
+
+    /**
+     * Creates a chromosome with the passed genotype.
+     * @param genotype
+     */
     Chromosome(const Genotype & genotype);
 
 public:
+    /**
+     * Initializes the class, this method has to be called before the use
+     * of the class.
+     * @param params contains the initial values
+     */
     static void init(Params params);
+
+    /**
+     * Plots a graph of the amplifier's output waveform that the chromosome
+     * represents.
+     */
     void plot();
+
+    /**
+     * Creates a new chromosome and initializes its properties with random
+     * values.
+     */
     Chromosome();
+
+    /**
+     * Calculates the fitness of the chromosome.
+     * @return fitness of the chromosome
+     */
     double objectiveFunction();
+
+    /**
+     * Creates a mutated child chromosome.
+     * @return newly created chromosome
+     */
     Chromosome reproduce();
+
     bool operator<(Chromosome & chromosome);
     friend std::ostream & operator<<(std::ostream & os,
                                      Chromosome & chromosome);
