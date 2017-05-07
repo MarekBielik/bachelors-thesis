@@ -33,7 +33,7 @@ for mu in 1 5 10 15; do
                 for i in {1..10}; do
                     path="experiments/single_stage_amp/mu$mu/lambda$lambda/$ES/$fitness/$i";
                     mkdir -p ${path};
-                    result=`./build/bt -o ${path} --mu=${mu} --lambda=${lambda} --max_gen=20000 --stop_gen=${stop_gen} --print_gen=1 --print_change=0.95 --ES=${ES} --max_res=200000 --fitness=${fitness} --amplitude=3.5 --max_diff=25`;
+                    result=`./build/bt -o ${path} --mu=${mu} --lambda=${lambda} --max_gen=20000 --stop_gen=${stop_gen} --print_gen=1 --print_change=0.95 --ES=${ES} --max_res=200000 --fitness=${fitness} --amplitude=6 --max_diff=25`;
                     echo ${result} | tee -a experiments/single_stage_amp/results.txt;
                     avg=$(bc -l <<< "$avg + $result");
                 done

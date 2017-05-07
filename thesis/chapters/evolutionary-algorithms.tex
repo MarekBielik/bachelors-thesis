@@ -6,10 +6,14 @@
 In biological evolution, species are selected depending on their relative success in surviving and reproducing in the environment and mutations play a crucial role in this process as they are the key to the adaptation of the species \cite{natural-computing-algorithms}. This concept has been used as a metaphor in computer science and it inspired the formation of a whole new area of artificial intelligence called Evolutionary Computation. This area mainly deals with an \textit{optimization problem} which we discuss in the following section.
 
 \section{Optimization problem}
-Consider the function $f: A \to \mathbb{R}$ from a set $A$ to the real numbers and we are looking for an element $x_0$ in $A$ such that $f(x_0) \leq f(x)$ or $f(x_0) \geq f(x)$ for all $x$ in $A$ (we are looking for either the global minimum or maximum of the function $f$). The domain $A$ of $f$ is called the \textit{search space} and the elements of $A$ are called \textit{candidate solutions}. The function $f$ can be called variously (an \textit{objective function}, a \textit{loss function}), in this text we will call the function $f$ a \textit{fitness function}. A candidate solution that gives us the global maximum or minimum of the fitness function is called an \textit{optimal solution}. The search space $A$ is usually in the form of $\mathbb{R}^n$ n-dimensional Euclidean space and the function $f$ is also n-dimensional \cite{evolutionary-algorithms}.\\
-A simple approach to find the optimal solution would be to scour the whole search space and try every candidate solution. This approach will always give us the optimal solution, but the search space can be so vast, that we are not able to try every candidate solution in a reasonable time.\\
-A more sophisticated approach would be to use the technique presented in algorithm \ref{evolutionary-algorithm}. The \textit{population} $P \subseteq A$ would be a subset of the search space $A$ and every \textit{individual} of the population would represent one element of $A$. In the context of evolutionary algorithms, the individuals can be also called \textit{chromosomes}. Every loop in the algorithm represents one \textit{generation} of individuals. This approach helps us to avoid those elements in the search space which wouldn't provide any good solution but the finding of the optimal solution is not guaranteed.\\
-From the biological point of view, this algorithm can be seen as the driving force behind evolution and from the mathematical point of view it, can be seen as a stochastic, derivative-free numerical method for finding global extrema of functions that are too hard or impossible to find analytically.
+Consider the function $f: A \to \mathbb{R}$ from a set $A$ to the real numbers and we are looking for an element $x_0$ in $A$ such that $f(x_0) \leq f(x)$ or $f(x_0) \geq f(x)$ for all $x$ in $A$ (we are looking for either the global minimum or maximum of the function $f$). The domain $A$ of $f$ is called the \textit{search space} and the elements of $A$ are called \textit{candidate solutions}. The function $f$ can be called variously (an \textit{objective function}, a \textit{loss function}), in this text we will call the function $f$ a \textit{fitness function}. A candidate solution that gives us the global maximum or minimum of the fitness function is called the \textit{optimal solution}. The search space $A$ is usually in the form of n-dimensional Euclidean space $\mathbb{R}^n$ and the function $f$ is also n-dimensional \cite{evolutionary-algorithms}.
+
+A simple approach to find the optimal solution would be to scour the whole search space and try every candidate solution. This approach will always give us the optimal solution, but the search space can be so vast, that we are not able to try every candidate solution in a reasonable time.
+
+A more sophisticated approach would be to use the technique presented in algorithm \ref{evolutionary-algorithm}. The \textit{population} $P \subseteq A$ would be a subset of the search space $A$ and every \textit{individual} of the population would represent one element of $A$. In the context of evolutionary algorithms, the individuals can be also called \textit{chromosomes}. Every loop in the algorithm represents one \textit{generation} of individuals. This approach helps us to avoid those elements in the search space which wouldn't provide any good solution, but on the other hand, finding the optimal solution is not guaranteed.
+
+From the biological point of view, this algorithm can be seen as the driving force behind evolution and from the mathematical point of view, it can be seen as a stochastic, derivative-free numerical method for finding global extrema of functions that are too hard or impossible to find analytically.
+
 Biology uses this approach to create well adapted beings and humans can use this method to find optimal solutions to problems that are difficult to solve analytically.
 
 \begin{algorithm}
@@ -26,12 +30,13 @@ Biology uses this approach to create well adapted beings and humans can use this
 \end{algorithm}
 
 \section{Evolution strategies} \label{evolution-strategies}
-\textit{Evolution strategies} (ES) is a family of stochastic optimization algorithms which belongs to the general class of evolutionary algorithms. It was created by Rechenberg and Schwefel in the early 60s and attracted a lot of attention due to its strong capability to solve real-valued engineering problems. ES typically uses a real-valued representation of chromosomes and it relies primarily on selection and mutation to drive the evolutionary process. ES also often implements \textit{self-adaptaion} of the parameters used for mutating the parents in the population during the evolution, which means that these parameters coevolve with the individuals. This feature is natural in evolution strategies and other evolutionary algorithms have adopted it as well over the last years.\\
+\textit{Evolution strategies} (ES) is a family of stochastic optimization algorithms which belongs to the general class of evolutionary algorithms. It was created by Rechenberg and Schwefel in the early 60s and attracted a lot of attention due to its strong capability to solve real-valued engineering problems. ES typically uses a real-valued representation of chromosomes and the evolutionary process relies primarily on selection and mutation. ES also often implements \textit{self-adaptaion} of the parameters used for mutating the parents in the population during the evolution, which means that these parameters coevolve with the individuals. This feature is natural in evolution strategies and other evolutionary algorithms have adopted it as well over the last years \cite{natural-computing-algorithms, introduction-to-evolutionary-computing}.
+
 Algorithm \ref{evolution-strategies} is a basic non-self-adaptive form of ES. Chromosomes in this algorithm are in the form of vectors of real numbers $x = (x_1,...,x_n) \in \mathbb{R}^n$. Every vector represents one solution of the search space in our problem domain and the goal of the algorithm is to find such vector that produces global extremum of our fitness function.\\
 The terminating condition of the algorithm can have various forms which can be combined together, for example:
 
  \begin{itemize}
-    \item Wait until the algorithm finds a chromosome with a fitness function value that meets our requirements.
+    \item Wait until the algorithm finds a chromosome with such a fitness function value that meets our requirements.
     \item Limit the total number of generations.
     \item Track the best chromosome in every generation and stop the evolution if the fitness doesn't change after a certain number of generations.
  \end{itemize}
@@ -43,11 +48,11 @@ This form of the algorithm is also implemented in this thesis with various exten
 \caption{Non-self-adaptive Evolution Strategies ($\mu + \lambda$) \cite{natural-computing-algorithms}}
 \label{evolution-strategies}
 \begin{algorithmic}[1]
-    \State Randomly create an initial population $\{x^1,...,x^\mu\}$ of parent vectors, where each $\vec{x}^i$ is of the form $x^i = (x_1^i,...,x_n^i), i = 1,...,\mu$;
+    \State Randomly create an initial population $\{\vec{x}^1,...,\vec{x}^\mu\}$ of parent vectors, where each vector $\vec{x}^i$ is of the form $\vec{x}^i = (x_1^i,...,x_n^i), i = 1,...,\mu$;
     \State Evaluate the fitness function of each chromosome;
     \Repeat
         \Repeat
-            \State Randomly select a parent from $\{x^i : i = 1,...\mu\}$;
+            \State Randomly select a parent from $\{\vec{x}^i : i = 1,...\mu\}$;
             \State Create a child vector by applying a mutation operator to the parent;
         \Until{$\lambda$ children are generated}
         \State Rank the $\mu + \lambda$ chromosomes (children and parents) from the best to worst;
@@ -74,9 +79,11 @@ There are also two types of selection:
 \end{minipage}
 \end{center}
 
-In the first scheme, denoted by $(\mu + \lambda)$-ES, both parents from the previous generation and newly produced children are mixed together and compete for survival in every generation where only the best $\mu$ chromosomes (parents for the next generation) are selected and get the chance to be reproduced. This scheme implements so called \textit{elitism} because if there is a chromosome with a very good fitness function, it will survive for many generations and it can be replaced only if a better individual occurs. This approach has a higher natural tendency to get stuck in local optima than the second scheme.\\
-In the second type of selection, denoted $(\mu,\lambda)$-ES, the parents are selected only from the set of children $\lambda$, so every chromosome lives only in one generation. Even a chromosome with a very good fitness function is discarded and replaced by a child with potentially worse fitness, so the convergence is not as strict as in the previous scheme, but it is easier to move away from a local optimum for this method.\\
-Both schemes are implemented in this thesis with various values of $\mu$ and $\lambda$ parameters $(\mu \ll \lambda)$. Schemes such as $(1 + 1)$-ES and $(1, \lambda)$-ES are also possible ($(1 + 1)$-ES was mainly studied when evolution strategies were invented), but they show slower convergence properties.
+In the first scheme, denoted by $(\mu + \lambda)$-ES, both parents from the previous generation and newly produced children are mixed together and compete for survival in every generation where only the best $\mu$ chromosomes (parents for the next generation) are selected and get the chance to be reproduced. This scheme implements so called \textit{elitism} because if there is a chromosome with a very good fitness function, it will survive for many generations and it can be replaced only if a better individual occurs. This approach has a higher natural tendency to get stuck in local optima than the second scheme.
+
+In the second type of selection, denoted $(\mu,\lambda)$-ES, the parents are selected only from the set of $\lambda$ children, so every chromosome lives only in one generation. Even a chromosome with a very good fitness function is discarded and replaced by a child with potentially worse fitness, so the convergence is not as strict as in the previous scheme, but it is easier to move away from a local optimum for this method \cite{natural-computing-algorithms, introduction-to-evolutionary-computing}.
+
+Both schemes are implemented in this thesis with various values of $\mu$ and $\lambda$ parameters $(\mu \ll \lambda)$. Schemes such as $(1 + 1)$-ES and $(1, \lambda)$-ES are also possible ($(1 + 1)$-ES was mainly studied when evolution strategies were invented), but they show worse convergence properties as shown in section \ref{population-size}.
 
 \section{Mutation} \label{mutation-section}
 Chromosomes in evolution strategies are represented as vectors of real values, formula \ref{simple-chromosome-vector}.
@@ -85,9 +92,10 @@ Chromosomes in evolution strategies are represented as vectors of real values, f
 \vec{x} = (x_1,...,x_n)
  \end{equation}
 
- These values correspond to the solution variables. Mutations can be performed in various ways, the simplest form is shown in formula \ref{simple-mutation} where $m$ is a real number taken from a normal (Gaussian) distribution with the mean in $0$ and the standard deviation $\sigma$ is chosen by the user. The parameter $\sigma$ represents the mutation step size and its value is crucial since it determines the effect of the mutation operator. The value should be kept relatively small to the problem domain in order not to perform large mutations too often. The parent chromosome is denoted by $\vec{x}(t)$ and $\vec{x}(t+1)$ denotes a child. It is also important to keep the values of the candidate solution $(x_1,...,x_n)$ in their domain interval and return it back every time the mutation shifts it out of the interval.
+These values correspond to the solution variables. Mutations can be performed in various ways, the simplest form is shown in formula \ref{simple-mutation} where $m$ is a real number taken from a normal (Gaussian) distribution (formula \ref{normal-distribution}) with the mean in $0$ and the standard deviation $\sigma$ is chosen by the user. The parameter $\sigma$ represents the mutation step size and its value is crucial since it determines the effect of the mutation operator. The value should be kept relatively small to the problem domain in order not to perform large mutations too often. The parent chromosome is denoted by $\vec{x}(t)$ and $\vec{x}(t+1)$ denotes a child. It is also important to keep the values $(x_1,...,x_n)$ of the candidate solution in their domain interval and return it back every time the mutation shifts it out of the interval.
 
 \begin{equation}
+\label{normal-distribution}
     m = N(0, \sigma)
 \end{equation}
 \begin{equation} \label{simple-mutation}
@@ -96,8 +104,8 @@ Chromosomes in evolution strategies are represented as vectors of real values, f
 
 This approach ignores two important facts:
 \begin{enumerate}
-    \item When the search is close to the global optimum, it is appropriate to perform only subtle changes to the chromosomes so that the algorithm will not leave the good region.
-    \item Every dimension in the solution space may require different scaling so that one dimension can require large mutation steps while another dimension only small ones.
+    \item When the algorithm is close to the global optimum, it is appropriate to perform only subtle changes to the chromosomes so that the algorithm will not leave the good region.
+    \item Every dimension in the solution space may require different scaling so one dimension may require large mutation steps while another dimension only small ones.
 \end{enumerate}
 
 Both these facts proved to be crucial to the ability of the algorithm to find an optimal solution during the implementation, so they are discussed and examined in the following sections.
@@ -109,7 +117,7 @@ In this version of mutation, we change the vector $\vec{x}$ from the previous se
 \vec{x} = ((x_1,...,x_n),\sigma)
 \end{equation}
 
- $(x_1,...,x_n)$ is the original vector and $\sigma$ is a real-valued strategy parameter which controls the mutation process for every chromosome separately. The mutation process is described in formulas \ref{single-step-size-sigma} and \ref{single-step-size-mutation}. The constant $\tau$ is set by the user and it is inversely proportional to the square root of the problem size. It represents the learning rate of the algorithm. The $\sigma$ parameter is then mutated by multiplying with a variable with log-normal distribution, which ensures that $\sigma$ is always positive. The reasons for this form of mutation of $\sigma$ by a log-normal distribution are stated in \cite{introduction-to-evolutionary-computing}. The newly mutated $\sigma$ is then used to mutate the solution values for the child where $i = 1,...,n$ are the $n$ elements making up one chromosome. It is important to keep the right order of the mutation --- to mutate the value of $\sigma$ first and then mutate the vector's elements itself.
+$(x_1,...,x_n)$ is the original vector and $\sigma$ is a real-valued strategy parameter which controls the mutation process for every chromosome separately. The mutation process is described in formulas \ref{single-step-size-sigma} and \ref{single-step-size-mutation}. The constant $\tau$ is set by the user and it is inversely proportional to the square root of the problem size. It represents the learning rate of the algorithm. The $\sigma$ parameter is then mutated by multiplying with a variable with log-normal distribution, which ensures that $\sigma$ is always positive. The reasons for this form of mutation of $\sigma$ by a log-normal distribution are stated in \cite{introduction-to-evolutionary-computing}. The newly mutated $\sigma$ is then used to mutate the solution values for the child where $i = 1,...,n$ are the $n$ elements making up one chromosome. It is important to keep the right order of the mutation --- to mutate the value of $\sigma$ first and then mutate the vector's elements itself.
 
 \begin{equation}
     \tau \propto \frac{1}{\sqrt{n}}
@@ -125,7 +133,7 @@ In this version of mutation, we change the vector $\vec{x}$ from the previous se
 This approach allows the mutation step size to coevolve with the chromosomes since the fitness function indirectly evaluates the suitability of the mutation. It is important to vary the step size during the evolution run as we want the algorithm to prefer longer steps when it is far away from the optimum and small steps when it is close to the optimum.
 
 \subsection{Mutation with $n$ step sizes} \label{n-step}
-The fitness function surface can have a different inclination in every dimension, so while one dimension requires large mutation steps another one might require only subtle ones. We can solve this problem by adding a strategy parameter $\sigma$ to every element of the chromosome's solution vector, formula \ref{n-step-size-chromosome-vector}.
+The fitness function surface can have a different inclination in every dimension, so while one dimension requires large mutation steps, another one might require only subtle ones. We can solve this problem by adding a strategy parameter $\sigma$ to every element of the chromosome's solution vector, formula \ref{n-step-size-chromosome-vector}.
 
  \begin{equation} \label{n-step-size-chromosome-vector}
     \vec{x} = ((x_1,...,x_n), \sigma_1,...,\sigma_n)
@@ -134,6 +142,7 @@ The fitness function surface can have a different inclination in every dimension
 The mutation process is then described in formulas \ref{n-step-size-sigma} and \ref{n-step-size-mutation}.
 
 \begin{equation}
+\label{tau-prime}
 \tau' \propto \frac{1}{\sqrt{2\sqrt{n}}}
 \end{equation}
 \begin{equation} \label{n-step-size-sigma} \scalebox{1.3}{
@@ -144,10 +153,12 @@ The mutation process is then described in formulas \ref{n-step-size-sigma} and \
     x_i(t+1) = x_i(t) + \sigma_i(t+1) \cdot N(0,1)_i, \quad i = 1,...,n
 \end{equation}
 
-Equation \ref{single-step-size-sigma} differs from \ref{n-step-size-sigma}. A simple modification of \ref{single-step-size-sigma} which we could do is shown in formula \ref{single-step-size-sigma-modification}. The reason why we add one more normally distributed variable in the actual algorithm (equation \ref{n-step-size-sigma}) is because we want keep the overall change of the mutability but we also want a finer granularity on the coordinate level.
+Notice that the mutation in equation \ref{single-step-size-sigma} differs from \ref{n-step-size-sigma}, we added one more normally distributed variable (formula \ref{tau-prime}) to the exponent. A simple modification of \ref{single-step-size-sigma} which we could do is shown in formula \ref{single-step-size-sigma-modification}, where we did not add anything to the exponent. The reason why we add one more normally distributed variable in equation \ref{n-step-size-sigma}, which is used in the actual algorithm, is because we want to keep the overall change of the mutability but we also want a finer granularity on the coordinate level.
 
 \begin{equation}\label{single-step-size-sigma-modification}
 \scalebox{1.3}{
     $\sigma_i(t+1) = \sigma_i(t) \cdot e^{\tau \cdot N_i(0,1)}$
 }
 \end{equation}
+
+The preceding equations were adopted from \cite{natural-computing-algorithms, introduction-to-evolutionary-computing} where also further details are stated.
