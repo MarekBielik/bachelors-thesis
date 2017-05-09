@@ -8,7 +8,7 @@ The results are in the form of graphs and a text output which contains the detai
 The results of the experiments discussed below are related to the evolutionary algorithm itself. The results of the optimization of the amplifiers are analyzed in sections \ref{single-stage-results} and \ref{2stage-results}.
 
 \section{Initial stages of experiments}
-The first experiments were performed only in order to optimize the value of resistor $R1$ in the single stage amplifier. We used the 'best match' evaluation method and mutations with one step size. The evolution always found a value close to \SI{50}{\kilo\ohm} which was the desired solution. These experiments were always successful as this was a very simple task for the evolution.
+The first experiments were performed only in order to optimize the value of resistor $R1$ in the single stage amplifier. The 'best match' evaluation method and mutations with one step size were used. The evolution always found a value close to \SI{50}{\kilo\ohm} which was the desired solution. These experiments were always successful as this was a very simple task for the evolution.
 
 In the next stage, the task was to optimize the voltage divider constituted by $R1$ and $R2$. The 'best match' method and mutations with one step size were used again and it emerged, that the evolution was able to find the solution even faster than in the previous case. This was because we were looking only for the right ratio between the resistors and not for specific values so the set of the desired solutions was much larger in this case even though the search space was larger as well as it was two-dimensional.
 

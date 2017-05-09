@@ -1,4 +1,8 @@
 \chapter{Preface}
 The standard way to design an amplifier is to calculate the values of its components by mathematical equations. The goal of this thesis is to automate this process and make the computer determine the values without the equations.
 
-This task can be also seen as an optimization problem where we look for the most optimal solution among many others.
+Over the last few decades, computers allowed humans to develop various algorithms that are inspired by the idea of biological evolution and the first chapter describes a family of such algorithms called Evolution Strategies. The reason why Evolution Strategies were chosen is because they evince good performance capabilities in real-valued engineering problems similar to the one that this thesis deals with.
+
+The second chapter describes analog amplifiers and the ways of their simulation. The way that the evolutionary algorithms work is that they try various solutions and according to the quality of the currently proposed ones, they try to propose new and better solutions. In order to obtain the properties of every proposed solution, we can simulate the amplifier and evaluate its quality afterwards. The evaluation is described in the next chapter which also presents various techniques that we can use. The suitability of the evaluation method that we use is crucial as is determines the quality of the overall performance of the evolutionary algorithm.
+
+The last chapter contains results of experiments and their analysis. It also discusses the suitability of the proposed implementation of the algorithms described in the previous chapters.
