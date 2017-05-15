@@ -18,9 +18,9 @@
 %\documentclass[]{fitthesis} % bez zadání - pro začátek práce, aby nebyl problém s překladem
 %\documentclass[english]{fitthesis} % without assignment - for the work start to avoid compilation problem
 %\documentclass[zadani]{fitthesis} % odevzdani do wisu - odkazy jsou barevné
-\documentclass[english,zadani]{fitthesis} % for submission to the IS FIT - links are color
+%\documentclass[english,zadani]{fitthesis} % for submission to the IS FIT - links are color
 %\documentclass[zadani,print]{fitthesis} % pro tisk - odkazy jsou černé
-%\documentclass[english,zadani,print]{fitthesis} % for the print - links are black
+\documentclass[english,zadani,print]{fitthesis} % for the print - links are black
 % * Je-li prace psana v anglickem jazyce, je zapotrebi u tridy pouzit 
 %   parametr english nasledovne:
 %   If thesis is written in english, it is necessary to use 
@@ -164,7 +164,7 @@
 
 %Abstrakt (cesky, slovensky ci anglicky) / Abstract (in czech, slovak or english)
 \abstract[cs]{Táto práca demonštruje možnosti využitia evolučných algoritmov, konkrétne evolučných stratégií, v doméne dizajnu analógových zosilňovačov. Do implementácie je zahrnutý \linebreak ngSPICE simulátor, ktorý je použitý na vyhodnotenie optimalizovaných riešení a v práci je navrhnutých niekoľko vyhodnocovacích metód. Práca tiež zahŕňa experimenty a ich výsledky, ktoré boli použité na určenie najvodnejších parametrov evolučných stratégií. Cieľom bolo optimalizovať hodnoty súčiastok jedno a dvoj stupňových zosilňovačov \linebreak s bipolárnymi tranzistormi v zapojení so spoločným emitorom. Výsledkom je nástroj umožňujúci návrh zosilňovačov s ľubovoľným zosilnením v rámci možností daného obvodu bez použitia akéhokoľvek matematického aparátu.}
-\abstract[en]{This thesis demonstrates the capabilities of the evolutionary algorithms, namely the evolution strategies, in the domain of the analog amplifiers design. The ngSPICE simulator is integrated into the implementation and it is used for the evaluation of the optimized solutions. The thesis contains various evaluation methods of the amplifiers and it also contains experiments and their results which were used for the determination of the most optimal parameters for evolution strategies. The goal was to optimize the values of components of the single and two stage common emitter amplifiers. The result is a tool that provides the desing of amplifiers with an arbitrary gain, which is within the bounds of the circuit's possibilities, without using any mathematical apparatus.}
+\abstract[en]{This thesis demonstrates the capabilities of the evolutionary algorithms, namely the evolution strategies, in the domain of the analog amplifiers design. The ngSPICE simulator is integrated into the implementation and it is used for the evaluation of the optimized solutions. The thesis contains various evaluation methods of the amplifiers and it also contains experiments and their results which were used for the determination of the most optimal parameters for evolution strategies. The goal was to optimize the values of components of the single and two stage common emitter amplifiers. The result is a tool that provides the design of amplifiers with an arbitrary gain, which is within the bounds of the circuit's possibilities, without using any mathematical apparatus.}
 
 %Klicova slova (cesky, slovensky ci anglicky) / Keywords (in czech, slovak or english)
 \keywords[cs]{umelá inteligencia, evolučný algoritmus, evolučné stratégie, ngSPICE, SPICE, RInside, analógový zosilňovač, fitnes funkcia, optimalizácia}
@@ -228,6 +228,9 @@ All the relevant information sources, which were used during preparation of this
 
   % Pouzita literatura / Bibliography
   % ----------------------------------------------
+  \begingroup
+  \let\clearpage\relax
+
 \ifslovak
   \makeatletter
   \def\@openbib@code{\addcontentsline{toc}{chapter}{Literatúra}}
@@ -239,7 +242,7 @@ All the relevant information sources, which were used during preparation of this
     \def\@openbib@code{\addcontentsline{toc}{chapter}{Literatura}}
     \makeatother
     \bibliographystyle{bib-styles/czechiso}
-  \else 
+  \else
     \makeatletter
     \def\@openbib@code{\addcontentsline{toc}{chapter}{Bibliography}}
     \makeatother
@@ -256,6 +259,8 @@ All the relevant information sources, which were used during preparation of this
   \iftwoside
     \cleardoublepage
   \fi
+
+\endgroup
 
   % Prilohy / Appendices
   % ---------------------------------------------

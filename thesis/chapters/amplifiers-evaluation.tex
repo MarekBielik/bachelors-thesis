@@ -1,5 +1,5 @@
 \chapter{Evaluation of amplifiers} \label{chromosomes-evaluation}
-A fitness function provides us means by which we can determine how good the evolved solution is so that we can distinguish the more appropriate candidates from the less appropriate ones. It is important to mention that the quality of this function is essential because the ability of the algorithm to find the most suitable solution is highly dependent on the ability of the fitness function to distinguish between the individuals. The value of the function is a positive real number in our case and the algorithm uses it only for comparing the individuals between each other. We consider those individuals with the lower value as the better ones.
+A fitness function provides the means to determine how good the evolved solution is so that the most appropriate candidates can be distinguished from the less appropriate ones. It is important to mention that the quality of this function is essential because the ability of the algorithm to find the most suitable solution is highly dependent on the ability of the fitness function to distinguish between the individuals. The value of the function is a positive real number in our case and the algorithm uses it only for comparing the individuals between each other. We consider those individuals with the lower value as the better ones.
 
 The implementation required some methods of trial and error and in the end, there are three fitness functions implemented in this thesis. All of them use the ngSPICE simulator in order to obtain the output of the amplifier and assess it afterwards. The simulation is done for every candidate solution and it takes most of the computation time of the overall evolutionary algorithm.
 
@@ -91,7 +91,7 @@ We can see the technique in algorithm \ref{idealSine}. In every iteration, it ca
 \end{algorithm}
 
 \section{Maximal amplitude}
-This fitness function is designed to rate the candidate solutions only according to the amplitude of the output regardless of the waveform's shape. It can be used for finding the highest amplification capabilities of the circuit. The function finds the trough and the peak in the second amplitude and returns the multiplicative inverse of their difference.
+This fitness function is designed to rate the candidate solutions only according to the amplitude of the output regardless of the waveform's shape. It can be used for finding the highest amplification capabilities of the circuit. The function finds the trough and the peak in the second period and returns the multiplicative inverse of their difference.
 
 \begin{algorithm}[H]
 \caption{Rating the chromosomes according to the amplitude}

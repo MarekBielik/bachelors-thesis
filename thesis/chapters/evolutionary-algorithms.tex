@@ -3,14 +3,14 @@
 \textit{‘Owing to this struggle for life, variations, however slight and from whatever cause proceeding, if they be in any degree profitable to the individuals of a species, in their infinitely complex relations to other organic beings and to their physical conditions of life, will tend to the preservation of such individuals, and will generally be inherited by the offspring. The offspring, also, will thus have a better chance of surviving, for, of the many individuals of any species which are periodically born, but a small number can survive. I have called this principle, by which each slight variation, if useful, is preserved, by the term Natural Selection’.} Darwin, 1859 \cite[p.40]{Darwin}.
 \end{quotation}
 
-In biological evolution, species are selected depending on their relative success in surviving and reproducing in the environment and mutations play a crucial role in this process as they are the key to the adaptation of the species \cite{natural-computing-algorithms}. This concept has been used as a metaphor in computer science and it inspired the formation of a whole new area of artificial intelligence called Evolutionary Computation. This area mainly deals with an \textit{optimization problem} which we discuss in the following section.
+In biological evolution, species are selected depending on their relative success in surviving and reproducing within their environment and mutations play a crucial role in this process as they are the key to the adaptation of the species \cite{natural-computing-algorithms}. This concept has been used as a metaphor in computer science and it inspired the formation of a whole new area of artificial intelligence called Evolutionary Computation. This area mainly deals with an \textit{optimization problem} which we discuss in the following section.
 
 \section{Optimization problem}
 Consider the function $f: A \to \mathbb{R}$ from a set $A$ to the real numbers and we are looking for an element $x_0$ in $A$ such that $f(x_0) \leq f(x)$ or $f(x_0) \geq f(x)$ for all $x$ in $A$ (we are looking for either the global minimum or maximum of the function $f$). The domain $A$ of $f$ is called the \textit{search space} and the elements of $A$ are called \textit{candidate solutions}. The function $f$ can be called variously (an \textit{objective function}, a \textit{loss function}), in this text we will call the function $f$ a \textit{fitness function}. A candidate solution that gives us the global maximum or minimum of the fitness function is called the \textit{optimal solution}. The search space $A$ is usually in the form of n-dimensional Euclidean space $\mathbb{R}^n$ and the function $f$ is also n-dimensional \cite{evolutionary-algorithms}.
 
 A simple approach to find the optimal solution would be to scour the whole search space and try every candidate solution. This approach will always give us the optimal solution, but the search space can be so vast, that we are not able to try every candidate solution in a reasonable time.
 
-A more sophisticated approach would be to use the technique presented in algorithm \ref{evolutionary-algorithm}. The \textit{population} $P \subseteq A$ would be a subset of the search space $A$ and every \textit{individual} of the population would represent one element of $A$. In the context of evolutionary algorithms, the individuals can be also called \textit{chromosomes}. Every loop in the algorithm represents one \textit{generation} of individuals. This approach helps us to avoid those elements in the search space which wouldn't provide any good solution, but on the other hand, finding the optimal solution is not guaranteed.
+A more sophisticated approach would be to use the technique presented in algorithm \ref{evolutionary-algorithm}. The \textit{population} $P \subseteq A$ would be a subset of the search space $A$ and every \textit{individual} of the population would represent one element of $A$. In the context of evolutionary algorithms, the individuals can also be called \textit{chromosomes}. Every loop in the algorithm represents one \textit{generation} of individuals. This approach helps us to avoid those elements in the search space which wouldn't provide any good solution, but on the other hand, finding the optimal solution is not guaranteed.
 
 From the biological point of view, this algorithm can be seen as the driving force behind evolution and from the mathematical point of view, it can be seen as a stochastic, derivative-free numerical method for finding global extrema of functions that are too hard or impossible to find analytically.
 
@@ -32,7 +32,7 @@ Biology uses this approach to create well adapted beings and humans can use this
 \section{Evolution strategies} \label{evolution-strategies}
 \textit{Evolution strategies} (ES) is a family of stochastic optimization algorithms which belongs to the general class of evolutionary algorithms. It was created by Rechenberg and Schwefel in the early 60s and attracted a lot of attention due to its strong capability to solve real-valued engineering problems. ES typically uses a real-valued representation of chromosomes and the evolutionary process relies primarily on selection and mutation. ES also often implements \textit{self-adaptaion} of the parameters used for mutating the parents in the population during the evolution, which means that these parameters coevolve with the individuals. This feature is natural in evolution strategies and other evolutionary algorithms have adopted it as well over the last years \cite{natural-computing-algorithms, introduction-to-evolutionary-computing}.
 
-Algorithm \ref{evolution-strategies} is a basic non-self-adaptive form of ES. Chromosomes in this algorithm are in the form of vectors of real numbers $x = (x_1,...,x_n) \in \mathbb{R}^n$. Every vector represents one solution of the search space in our problem domain and the goal of the algorithm is to find such vector that produces global extremum of our fitness function.\\
+Algorithm \ref{alg-evolution-strategies} is a basic non-self-adaptive form of ES. Chromosomes in this algorithm are in the form of vectors of real numbers $x = (x_1,...,x_n) \in \mathbb{R}^n$. Every vector represents one solution of the search space in our problem domain and the goal of the algorithm is to find such vector that produces global extremum of our fitness function.\\
 The terminating condition of the algorithm can have various forms which can be combined together, for example:
 
  \begin{itemize}
@@ -46,7 +46,7 @@ This form of the algorithm is also implemented in this thesis with various exten
 
 \begin{algorithm}[H]
 \caption{Non-self-adaptive Evolution Strategies ($\mu + \lambda$) \cite{natural-computing-algorithms}}
-\label{evolution-strategies}
+\label{alg-evolution-strategies}
 \begin{algorithmic}[1]
     \State Randomly create an initial population $\{\vec{x}^1,...,\vec{x}^\mu\}$ of parent vectors, where each vector $\vec{x}^i$ is of the form $\vec{x}^i = (x_1^i,...,x_n^i), i = 1,...,\mu$;
     \State Evaluate the fitness function of each chromosome;
@@ -161,4 +161,4 @@ Notice that the mutation in equation \ref{single-step-size-sigma} differs from \
 }
 \end{equation}
 
-The preceding equations were adopted from \cite{natural-computing-algorithms, introduction-to-evolutionary-computing} where also further details are stated.
+The preceding equations were adopted from \cite{natural-computing-algorithms, introduction-to-evolutionary-computing} where further details are also stated.

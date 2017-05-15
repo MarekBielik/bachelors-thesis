@@ -3,7 +3,7 @@ The evolutionary algorithms described in section \ref{evolution-strategies} were
 
 The program is written as a console application and the user can specify the properties of the evolution via command-line arguments. This approach also allows the user to easily run the application multiple times and collect the results of the evolution.
 
-The results are in the form of graphs and a text output which contains the details about the evolution run. The graphs can be either dynamically generated to the screen during the program run or saved as files to the local drive as well as the text output. The user can specify how often the graphs and text description are generated, for example, each time when the fitness function of the best chromosome in the population decreases by 1\%.
+The results are in the form of graphs and a text output which contains the details about the evolution run. The graphs can be either dynamically generated to the screen during the program run or saved as files to the local drive as well as the text output. The user can specify how often the graphs and text description are generated, for example, each time the fitness function of the best chromosome in the population decreases by 1\%.
 
 The results of the experiments discussed below are related to the evolutionary algorithm itself. The results of the optimization of the amplifiers are analyzed in sections \ref{single-stage-results} and \ref{2stage-results}.
 
@@ -100,7 +100,7 @@ All the evolution parameters discussed above are summarized in table \ref{evolut
 \end{table}
 
 \section{The typical course of the evolution}
-Figure \ref{evolution-course} shows us the typical course of the evolution. The population size parameters were set to $\mu = 10$ and $\lambda = 100$ and the terminating condition of the algorithm was that the evolution ends when the value of the fitness function of the best chromosome does not decrease by more than 1\% after 300 generations.
+Figure \ref{evolution-course} shows the typical course of the evolution. The population size parameters were set to $\mu = 10$ and $\lambda = 100$ and the terminating condition of the algorithm was that the evolution ends when the value of the fitness function of the best chromosome does not decrease by more than 1\% after 300 generations.
 
 The green line represents the fitness of the best chromosome (the one with the lowest fitness) in every generation, the blue line is the fitness of the worst chromosome and the red line is the average fitness of every generation. In this case, we pick the chromosomes only from the set of $\mu$ parents. We can see that the red line is very close to the green line so the average fitness of every generation is close to the fitness of the best chromosome and that the blue line is scattered above the other two lines.
 
@@ -117,7 +117,7 @@ In this case, the evaluation method was the 'best match' method and this evoluti
 \end{figure}
 
 \section{Single stage amplifier optimization} \label{single-stage-results}
-Every evaluation method implemented in this thesis provides us different means by which we can optimize the circuit.
+Every evaluation method implemented in this thesis provides different means by which we can optimize the circuit.
 
 The 'best match' method can be used for finding such properties that provide us the most similar output compared to the analytical solution. We optimize the values of 8 electronic components and experiments with this method proved that there are many other possible combinations which provide almost identical behaviour of the amplifier. Five examples are shown in table \ref{best-fit-solutions}. The simulation output of the amplifier with these values of components was visually identical with the analytical solution.
 
@@ -159,7 +159,7 @@ The 'maximal amplitude' method can be used for finding the best amplification ca
 \label{better-solution-tab}
 \end{table}
 
-The 'ideal sine' evaluation method also provides us a universal tool for finding the appropriate values of components which produce an arbitrary amplification of the amplifier up to the maximal amplitude.
+The 'ideal sine' evaluation method also provides a universal tool for finding the appropriate values of components which produce an arbitrary amplification of the amplifier up to the maximal amplitude.
 
 \section{Two stage amplifier optimization} \label{2stage-results}
 This amplifier was chosen as the more complicated task to optimize. There was no analytical solution for this circuit so it was not possible to use the 'best match' evaluation method. Experimenting with this type of amplifier showed that this amplifier is much more difficult to optimize and that it does not provide any better amplification properties than the previous single stage amplifier.
