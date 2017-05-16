@@ -1,5 +1,5 @@
 \chapter{Evaluation of amplifiers} \label{chromosomes-evaluation}
-A fitness function provides the means to determine how good the evolved solution is so that the most appropriate candidates can be distinguished from the less appropriate ones. It is important to mention that the quality of this function is essential because the ability of the algorithm to find the most suitable solution is highly dependent on the ability of the fitness function to distinguish between the individuals. The value of the function is a positive real number in our case and the algorithm uses it only for comparing the individuals between each other. We consider those individuals with the lower value as the better ones.
+A fitness function provides the means to determine how good the evolved solution is so that the most appropriate candidates can be distinguished from the less appropriate ones. It is important to mention that the quality of this function is essential because the ability of the algorithm to find the most suitable solution is highly dependent on the ability of the fitness function to distinguish between the individuals. In our case, the value of the function is a positive real number and the algorithm uses it only for comparing the individuals with each other. We consider individuals with a lower value to be the better ones.
 
 The implementation required some methods of trial and error and in the end, there are three fitness functions implemented in this thesis. All of them use the ngSPICE simulator in order to obtain the output of the amplifier and assess it afterwards. The simulation is done for every candidate solution and it takes most of the computation time of the overall evolutionary algorithm.
 
@@ -121,7 +121,7 @@ The problem is that at the start, the output signal has zero power and as the ev
 result = (|peak + trough| + 1) \cdot fitness
 \end{equation}
 
-The $peak$ and $trough$ values are obtained in the same way as in algorithm \ref{maxAmp}. If the signal is symmetrical, the absolute value of the sum of these values is close to zero and therefore the $result$ will also be lower. We add 1 to the sum because we need to distinguish between perfectly symmetrical signals with different fitness. However, it emerged that this approach is too restrictive as it promotes only signals which are perfectly symmetrical, but often distorted. The result is shown in figure \ref{symmetrical-ideal-sine}.
+The $peak$ and $trough$ values are obtained in the same way as in algorithm \ref{maxAmp}. If the signal is symmetrical, the absolute value of the sum of these values is close to zero and therefore the $result$ will also be lower. We add 1 to the sum because we need to distinguish between perfectly symmetrical signals with different fitness. However, it emerged that this approach is too restrictive as it promotes only signals which are perfectly symmetrical but often distorted. The result is shown in figure \ref{symmetrical-ideal-sine}.
 
 \begin{figure}[!ht]
     \centerline{\includegraphics[scale=0.6]{symmetrical-ideal-sine}\label{symmetrical-ideal-sine}}

@@ -30,13 +30,13 @@ Biology uses this approach to create well adapted beings and humans can use this
 \end{algorithm}
 
 \section{Evolution strategies} \label{evolution-strategies}
-\textit{Evolution strategies} (ES) is a family of stochastic optimization algorithms which belongs to the general class of evolutionary algorithms. It was created by Rechenberg and Schwefel in the early 60s and attracted a lot of attention due to its strong capability to solve real-valued engineering problems. ES typically uses a real-valued representation of chromosomes and the evolutionary process relies primarily on selection and mutation. ES also often implements \textit{self-adaptaion} of the parameters used for mutating the parents in the population during the evolution, which means that these parameters coevolve with the individuals. This feature is natural in evolution strategies and other evolutionary algorithms have adopted it as well over the last years \cite{natural-computing-algorithms, introduction-to-evolutionary-computing}.
+\textit{Evolution strategies} (ES) is a family of stochastic optimization algorithms that belongs to the general class of evolutionary algorithms. It was created by Rechenberg and Schwefel in the early 60s and attracted a lot of attention due to its strong capability to solve real-valued engineering problems. ES typically uses a real-valued representation of chromosomes and the evolutionary process relies primarily on selection and mutation. ES also often implements \textit{self-adaptaion} of the parameters used for mutating the parents in the population during evolution, which means that these parameters coevolve with the individuals. This feature is natural within evolution strategies and other evolutionary algorithms have adopted it as well over the last years \cite{natural-computing-algorithms, introduction-to-evolutionary-computing}.
 
-Algorithm \ref{alg-evolution-strategies} is a basic non-self-adaptive form of ES. Chromosomes in this algorithm are in the form of vectors of real numbers $x = (x_1,...,x_n) \in \mathbb{R}^n$. Every vector represents one solution of the search space in our problem domain and the goal of the algorithm is to find such vector that produces global extremum of our fitness function.\\
+Algorithm \ref{alg-evolution-strategies} is a basic non-self-adaptive form of ES. Chromosomes in this algorithm are in the form of vectors of real numbers $x = (x_1,...,x_n) \in \mathbb{R}^n$. Every vector represents one solution of the search space in our problem domain and the goal of the algorithm is to find a vector that produces the global extremum of the fitness function.\\
 The terminating condition of the algorithm can have various forms which can be combined together, for example:
 
  \begin{itemize}
-    \item Wait until the algorithm finds a chromosome with such a fitness function value that meets our requirements.
+    \item Wait until the algorithm finds a chromosome with a fitness function value that meets our requirements.
     \item Limit the total number of generations.
     \item Track the best chromosome in every generation and stop the evolution if the fitness doesn't change after a certain number of generations.
  \end{itemize}
@@ -105,7 +105,7 @@ These values correspond to the solution variables. Mutations can be performed in
 This approach ignores two important facts:
 \begin{enumerate}
     \item When the algorithm is close to the global optimum, it is appropriate to perform only subtle changes to the chromosomes so that the algorithm will not leave the good region.
-    \item Every dimension in the solution space may require different scaling so one dimension may require large mutation steps while another dimension only small ones.
+    \item Every dimension in the solution space may require different scaling. Hence, one dimension may require large mutation steps whilst another dimension only small ones.
 \end{enumerate}
 
 Both these facts proved to be crucial to the ability of the algorithm to find an optimal solution during the implementation, so they are discussed and examined in the following sections.
@@ -133,7 +133,7 @@ $(x_1,...,x_n)$ is the original vector and $\sigma$ is a real-valued strategy pa
 This approach allows the mutation step size to coevolve with the chromosomes since the fitness function indirectly evaluates the suitability of the mutation. It is important to vary the step size during the evolution run as we want the algorithm to prefer longer steps when it is far away from the optimum and small steps when it is close to the optimum.
 
 \subsection{Mutation with $n$ step sizes} \label{n-step}
-The fitness function surface can have a different inclination in every dimension, so while one dimension requires large mutation steps, another one might require only subtle ones. We can solve this problem by adding a strategy parameter $\sigma$ to every element of the chromosome's solution vector, formula \ref{n-step-size-chromosome-vector}.
+The fitness function surface can have a different inclination in every dimension, so while one dimension requires large mutation steps, another might only require subtle ones. We can solve this problem by adding a strategy parameter $\sigma$ to every element of the chromosome's solution vector, formula \ref{n-step-size-chromosome-vector}.
 
  \begin{equation} \label{n-step-size-chromosome-vector}
     \vec{x} = ((x_1,...,x_n), \sigma_1,...,\sigma_n)
@@ -153,7 +153,7 @@ The mutation process is then described in formulas \ref{n-step-size-sigma} and \
     x_i(t+1) = x_i(t) + \sigma_i(t+1) \cdot N(0,1)_i, \quad i = 1,...,n
 \end{equation}
 
-Notice that the mutation in equation \ref{single-step-size-sigma} differs from \ref{n-step-size-sigma}, we added one more normally distributed variable (formula \ref{tau-prime}) to the exponent. A simple modification of \ref{single-step-size-sigma} which we could do is shown in formula \ref{single-step-size-sigma-modification}, where we did not add anything to the exponent. The reason why we add one more normally distributed variable in equation \ref{n-step-size-sigma}, which is used in the actual algorithm, is because we want to keep the overall change of the mutability but we also want a finer granularity on the coordinate level.
+Notice that the mutation in equation \ref{single-step-size-sigma} differs from \ref{n-step-size-sigma} because one more normally distributed variable (formula \ref{tau-prime}) was added to the exponent. A simple modification of \ref{single-step-size-sigma} which we could do is shown in formula \ref{single-step-size-sigma-modification}, where we did not add anything to the exponent. The reason why we add one more normally distributed variable in equation \ref{n-step-size-sigma}, which is used in the actual algorithm, is because we want to keep the overall change of the mutability but we also want a finer granularity on the coordinate level.
 
 \begin{equation}\label{single-step-size-sigma-modification}
 \scalebox{1.3}{
