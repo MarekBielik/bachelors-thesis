@@ -1,0 +1,25 @@
+Vo svojej práci som sa venoval optimalizácií analógových zosilňovačov evolučnými algoritmami.
+
+V práci som implementoval koncept evolučných stratégií a na simuláciu obvodov som použil ngSPICE simulátor.
+
+Cieľom bolo optimalizovať hodnoty súčiastok jedno a dvoj stupňových zosilňovačov s bipolárnymi tranzistormi. Na obrázku vidíme jednostupňovú verziu a predmetom optimalizácie boli všetky pasívne súčiastky okrem rezistora Rload, ktorý je úplne vpravo.
+
+Na tomto obrázku je simulácia predchádzajúceho obvodu a vidíme, že výstup je invertovaný a zosilnený.
+
+Na tomto obrázku je už aj výstup optimalizovaného obvodu, ktorý je zelenou farbou. Jednou z vyhodnocovacích metód bolo, že z výstupného signálu som vyňal iba druhú periódu a metódou najmenších štvorcov som ju porovnal s výstupom predsimulovaného analyticky vypočítaného obvodu, ktorý je červenou farbou.
+Výsledkom je hodnota fitness.
+Pri ďalšej vyhodnocovacej metóde som namiesto predsimulovaného signálu používal analyticky vypočítanú sínusovku. Jednou z výhod je, že môžeme zadať ľubovoľnú amplitúdu a teda ľubovoľné zosilnenie.
+
+Problémom často bolo, že výstupný signál bol dosť nesymetrický, tak ako na tomto obrázku.
+ Jednoduchým riešením bolo sčítať vrchol kladnej a zápornej polvlny a výsledok vynásobiť hodnotou fitness. Výsledkom ale bolo, že evolúcia preferovala len symetrické riešenia, tak ako na obrázku, ale signál bol zase dosť zkreslený. V práci som teda navrhol aj efektívnejšie riešenia.
+
+Bolo celkom zaujímavé sledovať výsledky experimentov, ktoré napríklad ukázali, že evolučné stratégie s jednokrokovými mutáciami, kde sa  všetky súčiastky mutujú rovnakou hodnotou sú v podstate nepoužiteľné. Bolo nutné implementovať n krokové mutácie, tak aby sa každá súčiastka mutovala zvlášť.
+Bolo tiež zaujímavé sledovať vplyv rôznych parametrov ako je selekčný tlak alebo typ selekcie na celkovú výkonnosť algoritmu. V práci rozoberám vplyv všetkých týchto faktorov a pokúsil som sa vybrať ich najlepšie hodnoty.
+
+Zaujímavým výsledkom bolo, že evolúcia dokázala nájsť aj obvody s lepšími parametrami ako analytické riešenie. Jedným z takých je aj obvod, ktorého výstup je na obrázku. Zosilnenie je zhruba 42, pričom pôvodný analytický obvod mal zosilnenie približne 18.
+
+Jedným z ďalších praktických výsledkov je aj príspevok do open source komunity.
+Začiatok práce bol celkom neistý, pretože nebolo jasné, či vôbec bude možné simulovať zosilňovače vo forme vhodnej pre evolučné algoritmy. Ukázalo sa, že ngSPICE je v podstate jediný simulátor analógových obvodov, ktorý poskytuje céčkové rozhranie (aj to len od poslednej verzie). Ukázalo sa tiež, že obsahuje memory leaky a keďže simulátor som potreboval spustiť niekoľko tisíckrát počas jednej evolúcie, pokúsil som sa ich odstrániť, čo sa mi aj podarilo. Na slajde je úryvok z e-mailovej komunikácie s jedným z vývojárov.
+Ďalším praktickým výsledkom je nástroj na generovanie zosilňovačov so žiadaným zosilnením bez toho, aby užívateľ niečo o tom obvode vedel.
+
+Nakoniec tu mám ukážku jedného evolučného behu, kde môžeme vidieť ako sa výstup postupne približuje k žiadanému signálu.
