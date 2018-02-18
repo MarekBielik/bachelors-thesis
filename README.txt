@@ -4,7 +4,8 @@ These instructions were tested on Ubuntu 14.04 and 16.04 and Fedora 24.
 1. Make sure you have at least the 6th version of g++.
 
 2. You need to install the modified version of ngSPICE from its source code:
-    1. cd to ngspice
+    1. download the fix-mem-leaks branch of ngSPICE from
+       https://github.com/MarekBielik/ngSPICE-fork/tree/fix-mem-leaks
     2. a) the instructions are in the file named INSTALL in sections 1.3 and
           1.4 (for Linux)
     2. b) you can run the following commands (you may need to update your
